@@ -50,12 +50,12 @@ const Navbar = () => {
         <div className={`basis-4/6 hidden md:block`}>
           <form>
             <label
-              for='default-search'
+              htmlFor='default-search'
               className={`text-sm font-medium text-gray-900 sr-only dark:text-gray-300`}
             >
               Search
             </label>
-            <div class='relative'>
+            <div className='relative'>
               <input
                 type='search'
                 id='default-search'

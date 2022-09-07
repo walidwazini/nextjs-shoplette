@@ -1,21 +1,60 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-import SearchSVG from "../components/svg/SearchSVG";
-import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
+import ErrorSnackBar from "../components/ErrorSnackBar";
 
-export default function Home() {
+import Navbar from "../components/Navbar";
+import client from "../utils/client";
+import { getAllProducts } from "../utils/queries";
+
+const Home = () => {
+  const [state, setState] = useState({
+    produks: [],
+    errorMessage: "",
+    loading: true,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const products = await client.fetch(getAllProducts());
+        setState({ produks: products, loading: false });
+      } catch (err) {
+        setState({ loading: false, errorMessage: err.message });
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <Head>
         <title>Shoplette</title>
       </Head>
       <Navbar />
-      <div>
-        <h1 className='text-lg text-white'>Body</h1>
-        <div className={`h-[100vh] w-10 bg-blue-600`}>asdas</div>
+      <div className={`flex flex-col justify-center items-center`}>
+        {state.loading ? (
+          <div className='text-center text-lg text-white'>
+            Is loading now...
+          </div>
+        ) : state.errorMessage ? (
+          <div
+            className={` h-[80vh] w-full flex flex-col justify-center items-center`}
+          >
+            <ErrorSnackBar errorText={state.errorMessage} />
+          </div>
+        ) : (
+          <div className={`border border-blue-700 h-[300px] w-28`}>
+            {state.produks?.map((prod) => (
+              <div className='text-white text-md' key={prod._id}>
+                {prod.name}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
-}
+};
+
+export default Home;
