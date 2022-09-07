@@ -14,6 +14,7 @@ export default function Home() {
       <Navbar />
       <div>
         <h1 className='text-lg text-white'>Body</h1>
+        <div className={`h-[100vh] w-10 bg-blue-600`}>asdas</div>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { BsCart4 } from "react-icons/bs";
+import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 
 import SearchSVG from "./svg/SearchSVG";
@@ -14,7 +14,9 @@ const recentSearch = [
 
 const Navbar = () => {
   return (
-    <nav className={`sticky bg-red-700 w-full h-[13vh] flex flex-col px-14`}>
+    <nav
+      className={`sticky top-0 bg-red-500 sm:bg-red-700 w-full h-[13vh] flex flex-col px-14`}
+    >
       <div
         id='nav-upper'
         className={`basis-1/5  flex flex-row justify-between mt-1`}
@@ -41,8 +43,11 @@ const Navbar = () => {
         <div className={`basis-1/6`} id='logo'>
           Shoplette Logo
         </div>
+        <div className={`block md:hidden bg-yellow-500 h-10 w-10`}>
+          <BsMenuApp className='h-8 w-8' />
+        </div>
         {/*  SEARCH BAR  */}
-        <div className={`basis-4/6`}>
+        <div className={`basis-4/6 hidden md:block`}>
           <form>
             <label
               for='default-search'
@@ -82,7 +87,8 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-        <div className={`basis-1/6 flex justify-center items-center`}>
+        {/* CART ICON N LINK  */}
+        <div className={`basis-1/6 justify-center items-center md:flex hidden`}>
           <BsCart4 className='text-white w-7 h-7' />
         </div>
       </div>
