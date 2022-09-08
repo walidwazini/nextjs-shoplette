@@ -15,7 +15,7 @@ const recentSearch = [
 const Navbar = () => {
   return (
     <nav
-      className={`sticky top-0 bg-red-500 sm:bg-red-700 w-full h-[13vh] flex flex-col px-14`}
+      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[13vh] flex flex-col px-14`}
     >
       <div
         id='nav-upper'
