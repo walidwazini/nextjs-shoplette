@@ -5,7 +5,7 @@ import imageUrlBuilder from "@sanity/image-url";
 
 import client from "../utils/client";
 
-const ProductCard = ({ title, price, imageSrc, onNavigate }) => {
+const ProductCard = ({ title, price, imageSrc, onNavigate, rating }) => {
   return (
     <div
       className={`realtive flex flex-col w-[20rem] h-[32rem] hover:border-4 hover:border-red-600  bg-white mb-28`}
@@ -43,6 +43,7 @@ const ProductCard = ({ title, price, imageSrc, onNavigate }) => {
             <BsStarFill />
             <BsStar />
             <BsStar />
+            {rating}
             <span className='ml-2'>0 sold</span>
           </div>
         </div>

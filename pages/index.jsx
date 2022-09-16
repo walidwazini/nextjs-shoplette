@@ -57,6 +57,7 @@ const Home = () => {
                 key={prod._id}
                 imageSrc={prod.image}
                 price={prod.price}
+                rating={prod.rating}
               />
             ))}
           </div>
