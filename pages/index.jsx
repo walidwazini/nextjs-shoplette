@@ -9,6 +9,7 @@ import client from "../utils/client";
 import { urlForThumbnail } from "../utils/image";
 import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
+import Layout from "../components/Layout";
 
 const Home = () => {
   const [state, setState] = useState({
@@ -33,11 +34,7 @@ const Home = () => {
   console.log(state.produks[0]?.image);
 
   return (
-    <>
-      <Head>
-        <title>Shoplette</title>
-      </Head>
-      <Navbar />
+    <Layout>
       <div className={`flex flex-col justify-center items-center p-1 w-full`}>
         {state.loading ? (
           <div className='text-center text-lg text-white'>
@@ -66,7 +63,7 @@ const Home = () => {
           </div>
         )}
       </div>
-    </>
+    </Layout>
   );
 };
 

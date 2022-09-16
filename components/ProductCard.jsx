@@ -46,8 +46,8 @@ const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
               <BsStarFill />
               <BsStar />
               <BsStar />
-              {rating}
-              <span className='ml-2'>0 sold</span>
+              <span className='ml-2'>{rating}</span>
+              <span className='ml-5'>0 sold</span>
             </div>
           </div>
           <button
