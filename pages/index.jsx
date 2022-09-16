@@ -38,7 +38,7 @@ const Home = () => {
         <title>Shoplette</title>
       </Head>
       <Navbar />
-      <div className={`flex flex-col justify-center items-center p-4 w-full`}>
+      <div className={`flex flex-col justify-center items-center p-1 w-full`}>
         {state.loading ? (
           <div className='text-center text-lg text-white'>
             Is loading now...
@@ -50,12 +50,15 @@ const Home = () => {
             <ErrorSnackBar errorText={state.errorMessage} />
           </div>
         ) : (
-          <div className={``}>
+          <div
+            className={`mt-8 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-0`}
+          >
             {state.produks?.map((prod) => (
               <ProductCard
                 title={prod.name}
                 key={prod._id}
                 imageSrc={prod.image}
+                slug={prod.slug}
                 price={prod.price}
                 rating={prod.rating}
               />
