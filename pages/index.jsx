@@ -1,12 +1,7 @@
-import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import ErrorSnackBar from "../components/ErrorSnackBar";
-import imageUrlBuilder from "@sanity/image-url";
 
-import Navbar from "../components/Navbar";
 import client from "../utils/client";
-import { urlForThumbnail } from "../utils/image";
 import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
@@ -22,7 +17,6 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const products = await client.fetch(getAllProducts());
-        console.log(products);
         setState({ produks: products, loading: false });
       } catch (err) {
         setState({ loading: false, errorMessage: err.message });
@@ -30,8 +24,6 @@ const Home = () => {
     };
     fetchData();
   }, []);
-
-  console.log(state.produks[0]?.image);
 
   return (
     <Layout>

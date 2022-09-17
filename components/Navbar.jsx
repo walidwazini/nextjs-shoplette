@@ -41,7 +41,11 @@ const Navbar = () => {
       </div>
       <div className={`basis-4/5 flex flex-row `}>
         <div className={`basis-1/6`} id='logo'>
-          Shoplette Logo
+          <Link className='' href={"/"}>
+            <div className='hover:cursor-pointer w-20 h-14 bg-orange-500 text-slate-700 '>
+              Shoplette
+            </div>
+          </Link>
         </div>
         <div className={`block md:hidden bg-yellow-500 h-10 w-10`}>
           <BsMenuApp className='h-8 w-8' />
