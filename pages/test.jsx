@@ -1,12 +1,15 @@
 import React from "react";
-// import XLogo from "../components/svg/xlogo.svg";
+import Layout from "../components/Layout";
+import XLogo from "../components/svg/xlogo.svg";
 
 const Test = () => {
   return (
-    <>
+    <Layout>
       <h1>Terst Page</h1>
-      <div className='h-10'>{/* <XLogo /> */}</div>
-    </>
+      <div>
+        <XLogo className='text-9xl' />
+      </div>
+    </Layout>
   );
 };
 
