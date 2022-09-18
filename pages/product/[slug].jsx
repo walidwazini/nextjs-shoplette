@@ -62,17 +62,65 @@ const ProductDetails = (props) => {
           {/* DETAILS  */}
           <div
             className={`basis-3/5  w-full bg-slate-700 shadow-lg
-          flex flex-col justify-start items-start 
-          py-6 pl-14`}
+          flex flex-col justify-start items-start
+          py-6 pl-4`}
           >
-            <h1 className='text-white  text-[4rem]  '>{product?.name}</h1>
-            <div className={`text-gray-400 text-2xl`}>
-              {product?.description}
+            <div className={`basis-1/3 w-full`}>
+              {/* TITLE N RATING  */}
+              <div
+                className={`basis-1/2 flex flex-col justify-start items-start
+                bg-rose-500 w-full
+           `}
+              >
+                <h1 className='text-white  text-[2.7rem]  '>{product?.name}</h1>
+                <div className={`flex justify-between items-center w-[400px]`}>
+                  <div>⭐⭐⭐</div>
+                  <div>raitng counts</div>
+                  <div>sold counts</div>
+                </div>
+              </div>
+              {/* PRICE  */}
+              <div className='basis-1/2'>
+                <div className={`mt-10 text-[3rem] text-red-500 font-medium`}>
+                  RM {product?.price}
+                </div>
+              </div>
             </div>
-            <div className={`mt-10 text-[3rem] text-red-500 font-medium`}>
-              RM {product?.price}
-            </div>
+            <form className={`basis-2/3 w-full flex flex-col`}>
+              {/* SHIPPING  */}
+              <div
+                className={`basis-1/4 bg-rose-500 w-full flex justify-center items-start`}
+              >
+                SHIPPING
+              </div>
+              {/* VARIANT  */}
+              <div className={`basis-1/4 flex w-full h-full bg-green-300 p-3`}>
+                <div className='basis-1/4 flex justify-start items-start text-slate-500'>
+                  Color
+                </div>
+                <div className={`grid grid-cols-4 gap-1`}>
+                  <div>Maroon</div>
+                  <div>Blue</div>
+                  <div>Sky blue</div>
+                  <div>red/black</div>
+                </div>
+              </div>
+              {/* QUANTITY  */}
+              <div className={`basis-1/4 flex w-full h-full bg-rose-300 p-3`}>
+                <div className='basis-1/4 flex justify-start items-start text-slate-500'>
+                  Quantity
+                </div>
+              </div>
+              {/* BUTTON TO CART / BUY  */}
+              <div className='basis-1/4 bg-green-500 w-full h-full flex p-3'>
+                <button>Add To Cart 🧺</button>
+                <button>Buy Now</button>
+              </div>
+            </form>
           </div>
+        </div>
+        <div className={`w-full mt-6 bg-slate-600 min-h-[300px]`}>
+          We can make this as description
         </div>
       </div>
     </Layout>
