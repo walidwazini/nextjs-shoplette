@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="520.48785"
+   height="632.00842"
+   viewBox="0 0 520.48785 632.00842"
+   version="1.1"
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5"
+   id="svg30"
+   sodipodi:docname="dabb8e29b28633eb74b348182eb90191.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs34" /><sodipodi:namedview
+   id="namedview32"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0" />
+    <g
+   transform="translate(-251.7456,-65.4937)"
+   id="g28">
+        <g
+   transform="matrix(2.6999,0,0,2.6999,-870.351,-631.432)"
+   id="g26">
+            <g
+   id="g16">
+                <rect
+   x="451.82999"
+   y="305.66699"
+   width="126.828"
+   height="125.209"
+   style="fill:none;stroke:#ffffff;stroke-width:3.7px"
+   id="rect2" />
+                <path
+   d="m 563.555,305.667 -0.265,105.2 -16.223,20.01 16.223,-20.01 15.369,20.01"
+   style="fill:none;stroke:#ffffff;stroke-width:3.7px"
+   id="path4" />
+                <g
+   transform="translate(-0.217295,-1.24781)"
+   id="g8">
+                    <path
+   d="m 464.24,306.416 v -18.204 h 0.096 c 1.259,-15.091 14.685,-26.984 31.04,-26.984 16.355,0 29.781,11.893 31.04,26.984 h 0.096 v 18.703"
+   style="fill:none;stroke:#ffffff;stroke-width:3.7px"
+   id="path6" />
+                </g>
+                <g
+   transform="translate(35.4326,2.14742)"
+   id="g12">
+                    <path
+   d="m 464.24,303.52 v -15.308 h 0.096 c 1.259,-15.091 14.685,-26.984 31.04,-26.984 16.355,0 29.781,11.893 31.04,26.984 h 0.096 v 15.308"
+   style="fill:none;stroke:#ffffff;stroke-width:3.7px"
+   id="path10" />
+                </g>
+                <path
+   d="m 547.067,305.667 v 125.21"
+   style="fill:none;stroke:#ffffff;stroke-width:3.7px"
+   id="path14" />
+            </g>
+            <g
+   transform="matrix(3.60766,0,0,3.60766,-423.621,-905.629)"
+   id="g20">
+                <text
+   x="232.338"
+   y="385.06"
+   style="font-weight:700;font-size:12.196px;font-family:Arial-BoldMT, Arial, sans-serif;fill:#ffffff"
+   id="text18">shoplette</text>
+            </g>
+            <g
+   transform="matrix(10.1045,0,0,13.7565,-1875.52,-4886.55)"
+   id="g24">
+                <text
+   x="232.338"
+   y="385.06"
+   style="font-weight:700;font-stretch:condensed;font-size:11.849px;font-family:ArialNarrow-Bold, Arial, sans-serif;fill:#ffffff"
+   id="text22">s</text>
+            </g>
+        </g>
+    </g>
+</svg>

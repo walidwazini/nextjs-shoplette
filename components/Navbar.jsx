@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 
-import SearchSVG from "./svg/SearchSVG";
+import SWhite1 from "./svg/conv-swhite1.svg";
 
 const recentSearch = [
   "Keyboard",
@@ -40,10 +40,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className={`basis-4/5 flex flex-row `}>
-        <div className={`basis-1/6`} id='logo'>
+        <div
+          className={`basis-1/6  flex justify-center items-center`}
+          id='logo'
+        >
           <Link className='' href={"/"}>
-            <div className='hover:cursor-pointer w-20 h-14 bg-orange-500 text-slate-700 '>
-              Shoplette
+            <div className='hover:cursor-pointer w-20 h-14 text-slate-700 text-center'>
+              <SWhite1 className={`text-6xl `} />
             </div>
           </Link>
         </div>

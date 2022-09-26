@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 521 633" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-251.75,-65.4893)">
+        <g transform="matrix(2.6999,0,0,2.6999,-870.351,-631.432)">
+            <g>
+                <rect x="451.83" y="305.667" width="126.828" height="125.209" style="fill:none;stroke:white;stroke-width:3.7px;"/>
+                <path d="M563.555,305.667L563.29,410.867L547.067,430.877L563.29,410.867L578.659,430.877" style="fill:none;stroke:white;stroke-width:3.7px;"/>
+                <g transform="matrix(1,0,0,1,-0.217295,-1.24781)">
+                    <path d="M464.24,306.416L464.24,288.212L464.336,288.212C465.595,273.121 479.021,261.228 495.376,261.228C511.731,261.228 525.157,273.121 526.416,288.212L526.512,288.212L526.512,306.915" style="fill:none;stroke:white;stroke-width:3.7px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,35.4326,2.14742)">
+                    <path d="M464.24,303.52L464.24,288.212L464.336,288.212C465.595,273.121 479.021,261.228 495.376,261.228C511.731,261.228 525.157,273.121 526.416,288.212L526.512,288.212L526.512,303.52" style="fill:none;stroke:white;stroke-width:3.7px;"/>
+                </g>
+                <path d="M547.067,305.667L547.067,430.877" style="fill:none;stroke:white;stroke-width:3.7px;"/>
+            </g>
+            <g transform="matrix(3.60766,0,0,3.60766,-423.621,-905.629)">
+                <text x="232.338px" y="385.06px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:12.196px;fill:white;">shoplette</text>
+            </g>
+            <g transform="matrix(10.1045,0,0,13.7565,-1875.52,-4886.55)">
+                <text x="232.338px" y="385.06px" style="font-family:'ArialNarrow-Bold', 'Arial', sans-serif;font-weight:700;font-stretch:condensed;font-size:11.849px;fill:white;">s</text>
+            </g>
+        </g>
+    </g>
+</svg>
