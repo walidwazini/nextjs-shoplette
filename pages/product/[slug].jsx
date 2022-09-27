@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 import Image from "next/image";
+import ReactStars from "react-rating-stars-component";
 
 import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
@@ -15,6 +16,11 @@ const ProductDetails = (props) => {
     errorMessage: "",
   });
   const { product, loading, errorMessage } = state;
+
+  let number;
+  const rating = Math.round(4.5);
+
+  console.log(rating);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,9 +79,9 @@ const ProductDetails = (props) => {
            `}
               >
                 <h1 className='text-white  text-[2.7rem]  '>{product?.name}</h1>
-                <div className={`flex justify-between items-center w-[400px]`}>
-                  <div>⭐⭐⭐</div>
-                  <div>raitng counts</div>
+                <div className={`flex gap-2 items-center w-[400px]`}>
+                  <div>⭐{product?.rating} rated</div>
+
                   <div>sold counts</div>
                 </div>
               </div>
