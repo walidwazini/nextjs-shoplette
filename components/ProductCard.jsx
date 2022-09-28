@@ -10,7 +10,10 @@ const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
   return (
     <NextLink href={`/product/${slug.current}`} passHref>
       <div
-        className={`flex flex-col w-[18rem] h-[30rem] hover:cursor-pointer 
+        className={`flex flex-col
+         
+        w-[13rem] h-[25rem] md:w-[18rem] md:h-[30rem]
+        hover:cursor-pointer 
       hover:border-4 hover:border-red-600  bg-white mb-28`}
         onClick={onNavigate}
       >
@@ -35,12 +38,14 @@ const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
 
         <div id='lower' className='flex flex-col basis-1/3 justify-between'>
           <div className='flex flex-col h-16 py-1 px-2 '>
-            <p className='font-semibold text-xl'>{title}</p>
+            <p className='font-semibold text-md md:text-xl'>{title}</p>
             {/* For sepcial tags e.g: offers, lmited deals.., COD, local seller  */}
             <div id='tags'></div>
-            <p className='text-red-500 text-lg font-semibold'>RM {price}</p>
+            <p className='text-red-500 text-sm md:text-lg font-semibold'>
+              RM {price}
+            </p>
             {/* RATING  */}
-            <div className='flex items-center justify-start mt-2'>
+            <div className='flex items-center justify-start mt-2 text-sm md:text-md '>
               <BsStarFill />
               <BsStarFill />
               <BsStarFill />
@@ -51,7 +56,7 @@ const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
             </div>
           </div>
           <button
-            className={` w-full p-4 mt-4 text-sm font-medium bg-yellow-500 rounded-sm`}
+            className={` w-full p-2 md:p-4 mt-4 text-sm font-medium bg-yellow-500 rounded-sm`}
             type='button'
           >
             Add To Cart
