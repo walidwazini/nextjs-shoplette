@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/material": "^5.10.7",
     "@sanity/client": "^3.3.6",
     "@sanity/image-url": "^1.0.1",
     "@svgr/webpack": "^6.3.1",
