@@ -2,6 +2,7 @@ import React from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import NextLink from "next/link";
 import { BsStarHalf, BsStarFill, BsStar } from "react-icons/bs";
+import { Rating } from "@mui/material";
 import imageUrlBuilder from "@sanity/image-url";
 
 import client from "../utils/client";
@@ -41,11 +42,12 @@ const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
             <p className='text-red-500 text-lg font-semibold'>RM {price}</p>
             {/* RATING  */}
             <div className='flex items-center justify-start mt-2'>
-              <BsStarFill />
+              {/* <BsStarFill />
               <BsStarFill />
               <BsStarFill />
               <BsStar />
-              <BsStar />
+              <BsStar /> */}
+              <Rating readOnly value={Math.floor(rating)} />
               <span className='ml-2'>{rating}</span>
               <span className='ml-5'>0 sold</span>
             </div>
