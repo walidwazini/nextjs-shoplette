@@ -6,6 +6,7 @@ import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
 import client from "../../utils/client";
 import Link from "next/link";
+import { Rating } from "@mui/material";
 
 const ProductDetails = (props) => {
   const { id } = props;
@@ -83,7 +84,9 @@ const ProductDetails = (props) => {
                 <h1 className='text-white  text-[2.7rem]  '>{product?.name}</h1>
                 <div className={`flex gap-2 items-center w-[400px]`}>
                   <div className='font-bold text-slate-300'>
-                    ⭐ {product?.rating} rated
+                    {/* ⭐ {product?.rating} rated */}
+                    <Rating readOnly value={Math.floor(product?.rating)} />
+                    <div>{product?.rating}</div>
                   </div>
                   {/* <div>sold counts</div> */}
                 </div>
