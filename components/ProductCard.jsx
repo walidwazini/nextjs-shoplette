@@ -6,9 +6,9 @@ import imageUrlBuilder from "@sanity/image-url";
 
 import client from "../utils/client";
 
-const ProductCard = ({ title, slug, price, imageSrc, onNavigate, rating }) => {
+const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
   return (
-    <NextLink href={`/product/${slug.current}`} passHref>
+    <NextLink href={`/product/${id.current}`} passHref>
       <div
         className={`flex flex-col
          

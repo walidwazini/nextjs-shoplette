@@ -49,7 +49,8 @@ const Home = () => {
                 title={prod.name}
                 key={prod._id}
                 imageSrc={prod.image}
-                slug={prod.slug}
+                // slug={prod.slug}
+                id={prod.slug}
                 price={prod.price}
                 rating={prod.rating}
               />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 import Image from "next/image";
-import ReactStars from "react-rating-stars-component";
 
 import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
@@ -9,7 +8,7 @@ import client from "../../utils/client";
 import Link from "next/link";
 
 const ProductDetails = (props) => {
-  const { slug } = props;
+  const { id } = props;
   const [state, setState] = useState({
     product: null,
     loading: true,
@@ -28,12 +27,12 @@ const ProductDetails = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const product = await client.fetch(getProductById(slug), {
-          slugValue: slug,
+        const product = await client.fetch(getProductById(id), {
+          slugValue: id,
         });
         // const product = await client.fetch(
-        //   `*[_type == "product" && slug.current == $slugValue ]`,
-        //   { slugValue: slug }
+        //   `*[_type == "product" && id.current == $slugValue ]`,
+        //   { slugValue: id }
         // );
         setState({ ...state, product, loading: false });
       } catch (err) {
@@ -41,7 +40,7 @@ const ProductDetails = (props) => {
       }
     };
     fetchData();
-  }, [setState, slug]);
+  }, [setState, id]);
 
   return (
     <Layout title={product?.name}>
@@ -209,7 +208,7 @@ export default ProductDetails;
 export const getServerSideProps = async (context) => {
   return {
     props: {
-      slug: context.params.slug,
+      id: context.params.id,
     },
   };
 };
