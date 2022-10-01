@@ -12,6 +12,10 @@ const recentSearch = [
   "Jam Tangan",
 ];
 
+const IconComp = React.forwardRef(function CustomComponent(props, ref) {
+  return <BsCart4 className='text-white text-3xl' />;
+});
+
 const Navbar = () => {
   return (
     <nav
@@ -101,7 +105,7 @@ const Navbar = () => {
           md:flex hidden hover:cursor-pointer`}
         >
           <Link className='' href={`/`}>
-            <BsCart4 className='text-white text-3xl' />
+            <IconComp />
           </Link>
         </div>
       </div>
