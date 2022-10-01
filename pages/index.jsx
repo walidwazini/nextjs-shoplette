@@ -5,6 +5,7 @@ import client from "../utils/client";
 import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const [state, setState] = useState({
@@ -12,6 +13,9 @@ const Home = () => {
     errorMessage: "",
     loading: true,
   });
+
+  const dispatch = useDispatch();
+  const ui = useSelector((state) => state.ui);
 
   useEffect(() => {
     const fetchData = async () => {
