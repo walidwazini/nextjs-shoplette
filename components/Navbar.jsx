@@ -12,7 +12,10 @@ const recentSearch = [
   "Jam Tangan",
 ];
 
+// ! Should receive state info as props to switch theme
 const Navbar = () => {
+  // * Create toggle to switch theme
+
   return (
     <nav
       className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[13vh] flex flex-col px-14`}
