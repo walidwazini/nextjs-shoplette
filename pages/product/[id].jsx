@@ -30,13 +30,9 @@ const ProductDetails = (props) => {
   });
   const router = useRouter();
   const { product, loading, errorMessage } = state;
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-
-  const ArrowComp = React.forwardRef(function CustomComponent(props, ref) {
-    return <IoMdArrowRoundBack className='text-gray-200 text-xl' />;
-  });
 
   const decrementCount = () => {
     if (count > 0) setCount(count - 1);
@@ -65,7 +61,13 @@ const ProductDetails = (props) => {
 
   const addToCartHandler = async (ev) => {
     ev.preventDefault();
-    dispatch(cartActions.addItemToCart(product));
+    console.log(product?.slug);
+    dispatch(
+      cartActions.addItemToCart({
+        ...product,
+        quantity: count,
+      })
+    );
   };
 
   return (
@@ -74,9 +76,6 @@ const ProductDetails = (props) => {
         className={`px-10 lg:px-24  py-4 min-h-[100vh] w-full
        flex flex-col `}
       >
-        {/* <Link className='' href={`/`} passHref>
-          Back to result
-        </Link> */}
         <div className='flex justify-start'>
           <button
             onClick={() => router.back()}
@@ -154,7 +153,6 @@ const ProductDetails = (props) => {
                 <h1 className='text-white  text-[2.7rem]  '>{product?.name}</h1>
                 <div className={`flex gap-2 items-center w-[400px]`}>
                   <div className='font-bold text-slate-300'>
-                    {/* ⭐ {product?.rating} rated */}
                     <Rating readOnly value={Math.floor(product?.rating)} />
                     <div>{product?.rating}</div>
                   </div>
@@ -231,9 +229,11 @@ const ProductDetails = (props) => {
                       <BiMinus />
                     </button>
                     <input
-                      placeholder={count}
+                      // placeholder={count}
+                      readOnly
+                      value={count}
                       type='number'
-                      className=' w-20 text-black text-center'
+                      className=' w-20  text-center'
                       onKeyDown={(event) => {
                         event.preventDefault();
                       }}
