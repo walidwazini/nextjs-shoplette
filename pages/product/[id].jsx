@@ -7,6 +7,8 @@ import Layout from "../../components/Layout";
 import client from "../../utils/client";
 import Link from "next/link";
 import { Rating } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../store/cart-slice";
 
 const ProductDetails = (props) => {
   const { id } = props;
@@ -17,6 +19,9 @@ const ProductDetails = (props) => {
   });
   const { product, loading, errorMessage } = state;
   const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
   const decrementCount = () => {
     if (count > 0) setCount(count - 1);
@@ -42,6 +47,11 @@ const ProductDetails = (props) => {
     };
     fetchData();
   }, [setState, id]);
+
+  const addToCartHandler = async (ev) => {
+    ev.preventDefault();
+    dispatch(cartActions.addItemToCart(product));
+  };
 
   return (
     <Layout title={product?.name}>
@@ -184,6 +194,7 @@ const ProductDetails = (props) => {
                   <button
                     className={`p-3 border-2 rounded-sm border-red-800 bg-rose-200 text-red-800 min-w-[150px] font-medium
                     hover:bg-white hover:border-[3px] `}
+                    onClick={addToCartHandler}
                   >
                     Add To Cart 🧺
                   </button>

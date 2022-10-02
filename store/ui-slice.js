@@ -14,7 +14,7 @@ const uiSlice = createSlice({
     dismissNotification(state) {
       state.notification = null
     }
-  }
+  },
 })
 
 export const uiActions = uiSlice.actions
