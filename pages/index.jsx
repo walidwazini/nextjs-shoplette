@@ -6,6 +6,7 @@ import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAsyncProducts } from "../store/product-slice";
 
 const Home = () => {
   const [state, setState] = useState({
@@ -15,7 +16,11 @@ const Home = () => {
   });
 
   const dispatch = useDispatch();
-  const ui = useSelector((state) => state.ui);
+  const {
+    items: productsList,
+    loading,
+    errorMessage,
+  } = useSelector((state) => state.product);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,18 +34,22 @@ const Home = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchAsyncProducts());
+  }, []);
+
   return (
     <Layout>
       <div className={`flex flex-col justify-center items-center p-1 w-full`}>
-        {state.loading ? (
+        {loading ? (
           <div className='text-center text-lg text-white'>
             Is loading now...
           </div>
-        ) : state.errorMessage ? (
+        ) : errorMessage ? (
           <div
             className={` h-[80vh] w-full flex flex-col justify-center items-center`}
           >
-            <ErrorSnackBar errorText={state.errorMessage} />
+            <ErrorSnackBar errorText={errorMessage} />
           </div>
         ) : (
           <div
@@ -48,7 +57,7 @@ const Home = () => {
              grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-0
             `}
           >
-            {state.produks?.map((prod) => (
+            {productsList?.map((prod) => (
               <ProductCard
                 title={prod.name}
                 key={prod._id}
