@@ -6,6 +6,7 @@ import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/product-slice";
 
 const Home = () => {
   const [state, setState] = useState({
@@ -15,32 +16,37 @@ const Home = () => {
   });
 
   const dispatch = useDispatch();
-  const ui = useSelector((state) => state.ui);
+  const productState = useSelector((state) => state.product);
+  const { items: productsList, loading, errorMessage } = productState;
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const products = await client.fetch(getAllProducts());
+  //       setState({ produks: products, loading: false });
+  //     } catch (err) {
+  //       setState({ loading: false, errorMessage: err.message });
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const products = await client.fetch(getAllProducts());
-        setState({ produks: products, loading: false });
-      } catch (err) {
-        setState({ loading: false, errorMessage: err.message });
-      }
-    };
-    fetchData();
+    dispatch(fetchProducts());
   }, []);
 
   return (
     <Layout>
       <div className={`flex flex-col justify-center items-center p-1 w-full`}>
-        {state.loading ? (
-          <div className='text-center text-lg text-white'>
+        {loading ? (
+          <div className='text-center mt-20 text-lg text-white'>
             Is loading now...
           </div>
-        ) : state.errorMessage ? (
+        ) : errorMessage ? (
           <div
             className={` h-[80vh] w-full flex flex-col justify-center items-center`}
           >
-            <ErrorSnackBar errorText={state.errorMessage} />
+            <ErrorSnackBar errorText={errorMessage} />
           </div>
         ) : (
           <div
@@ -48,7 +54,7 @@ const Home = () => {
              grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-0
             `}
           >
-            {state.produks?.map((prod) => (
+            {productsList?.map((prod) => (
               <ProductCard
                 title={prod.name}
                 key={prod._id}
