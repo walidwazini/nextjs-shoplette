@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import imageUrlBuilder from "@sanity/image-url";
+import { useDispatch, useSelector } from "react-redux";
 import {
   IoLogoWhatsapp,
   IoMdShare,
   IoLogoFacebook,
   IoLogoTwitter,
   IoMdAdd,
+  IoMdArrowRoundBack,
+  IoIosArrowBack,
 } from "react-icons/io";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { BiMinus } from "react-icons/bi";
 
 import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
 import client from "../../utils/client";
-import Link from "next/link";
 import { Rating } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../store/cart-slice";
 
 const ProductDetails = (props) => {
@@ -25,11 +28,15 @@ const ProductDetails = (props) => {
     loading: true,
     errorMessage: "",
   });
+  const router = useRouter();
   const { product, loading, errorMessage } = state;
   const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
+
+  const ArrowComp = React.forwardRef(function CustomComponent(props, ref) {
+    return <IoMdArrowRoundBack className='text-gray-200 text-xl' />;
+  });
 
   const decrementCount = () => {
     if (count > 0) setCount(count - 1);
@@ -65,14 +72,24 @@ const ProductDetails = (props) => {
     <Layout title={product?.name}>
       <div
         className={`px-10 lg:px-24  py-4 min-h-[100vh] w-full
-       flex flex-col`}
+       flex flex-col `}
       >
-        <Link className='' href={`/`} passHref>
-          back to result
-        </Link>
+        {/* <Link className='' href={`/`} passHref>
+          Back to result
+        </Link> */}
+        <div className='flex justify-start'>
+          <button
+            onClick={() => router.back()}
+            className={`flex text-center items-center justify-center py-1 px-3 rounded-lg
+          hover:bg-slate-600 gap-1 hover:text-gray-300 `}
+          >
+            <IoIosArrowBack />
+            <span>Back to results</span>
+          </button>
+        </div>
         <div
           className={`basis-1/2 md:basis-4/5 
-          flex flex-col lg:flex-row  mt-6 h-[600px] gap-x-6
+          flex flex-col lg:flex-row  mt-6 h-[600px] gap-6
           mb-8
           `}
         >
@@ -99,16 +116,22 @@ const ProductDetails = (props) => {
             >
               <div className={`basis-3/4 p-3`}>
                 <h1 className='text-black font-semibold'>Share now :</h1>
-                <div className='mt-2 flex justify-evenly items-center'>
-                  <IoLogoFacebook className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100 ' />
-                  <IoLogoTwitter className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100' />
-                  <IoLogoWhatsapp className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100' />
-                  <IoMdShare className='text-[2rem]  hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                <div
+                  className={` my-2 flex justify-evenly items-center
+                  text-md md:text-lg lg:text-2xl`}
+                >
+                  <IoLogoFacebook className=' hover:cursor-pointer hover:text-blue-500 transition duration-100 ' />
+                  <IoLogoTwitter className=' hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                  <IoLogoWhatsapp className=' hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                  <IoMdShare className='  hover:cursor-pointer hover:text-blue-500 transition duration-100' />
                 </div>
               </div>
-              <div className={`basis-1/4 p-1 flex items-center justify-center`}>
+              <div
+                className={`basis-1/4 p-1 flex items-center justify-center
+                text-lg md:text-xl lg:text-2xl `}
+              >
                 <MdFavoriteBorder
-                  className={`text-[2rem] text-rose-400 
+                  className={` text-rose-400 
                 hover:cursor-pointer hover:text-rose-600
                 `}
                 />
