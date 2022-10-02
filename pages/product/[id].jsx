@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import imageUrlBuilder from "@sanity/image-url";
-import Image from "next/image";
+import {
+  IoLogoWhatsapp,
+  IoMdShare,
+  IoLogoFacebook,
+  IoLogoTwitter,
+  IoMdAdd,
+} from "react-icons/io";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { BiMinus } from "react-icons/bi";
 
 import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
@@ -55,13 +63,21 @@ const ProductDetails = (props) => {
 
   return (
     <Layout title={product?.name}>
-      <div className='px-24 py-6 min-h-[100vh] w-full'>
+      <div
+        className={`px-10 lg:px-24  py-4 min-h-[100vh] w-full
+       flex flex-col`}
+      >
         <Link className='' href={`/`} passHref>
           back to result
         </Link>
-        <div className={`flex mt-6 h-[600px] gap-x-6`}>
+        <div
+          className={`basis-1/2 md:basis-4/5 
+          flex flex-col lg:flex-row  mt-6 h-[600px] gap-x-6
+          mb-8
+          `}
+        >
           {/* IMAGE n Favour  */}
-          <div className='flex flex-col basis-2/5 shadow-lg  bg-red-500'>
+          <div className='flex flex-col basis-2/5 shadow-lg '>
             {/* IMAGE DIV  */}
             <div
               className={`basis-4/5 flex justify-center items-center bg-slate-700
@@ -76,7 +92,28 @@ const ProductDetails = (props) => {
               )}
             </div>
             {/* RATING N SHARE  */}
-            <div className={`bg-blue-500 basis-1/5`}>Share n Favourite</div>
+            <div
+              className={` basis-1/5 bg-slate-200
+            flex 
+            `}
+            >
+              <div className={`basis-3/4 p-3`}>
+                <h1 className='text-black font-semibold'>Share now :</h1>
+                <div className='mt-2 flex justify-evenly items-center'>
+                  <IoLogoFacebook className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100 ' />
+                  <IoLogoTwitter className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                  <IoLogoWhatsapp className='text-[2rem] hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                  <IoMdShare className='text-[2rem]  hover:cursor-pointer hover:text-blue-500 transition duration-100' />
+                </div>
+              </div>
+              <div className={`basis-1/4 p-1 flex items-center justify-center`}>
+                <MdFavoriteBorder
+                  className={`text-[2rem] text-rose-400 
+                hover:cursor-pointer hover:text-rose-600
+                `}
+                />
+              </div>
+            </div>
           </div>
           {/* DETAILS  */}
           <div
@@ -168,7 +205,7 @@ const ProductDetails = (props) => {
                       type='button'
                       className='text-xl font-medium rounded-l inline-block px-6 py-2.5 bg-blue-600 text-white  leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out'
                     >
-                      -
+                      <BiMinus />
                     </button>
                     <input
                       placeholder={count}
@@ -183,7 +220,7 @@ const ProductDetails = (props) => {
                       type='button'
                       className='text-xl font-medium rounded-r inline-block px-6 py-2.5 bg-blue-600 text-white leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 ease-in-out'
                     >
-                      +
+                      <IoMdAdd className='text-white ' />
                     </button>
                   </div>
                 </div>
@@ -209,7 +246,13 @@ const ProductDetails = (props) => {
             </form>
           </div>
         </div>
-        <div className={`w-full mt-6 bg-slate-600 min-h-[300px]`}>
+        {/* PRODUCT DESCRIPTION  */}
+        <div
+          className={`basis-1/2 md:basis-1/5 w-full 
+          bg-slate-600 shadow-lg 
+          min-h-[300px]
+          `}
+        >
           We can make this as description
         </div>
       </div>
