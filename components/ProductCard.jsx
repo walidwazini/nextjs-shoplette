@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import NextLink from "next/link";
-import { BsStarHalf, BsStarFill, BsStar } from "react-icons/bs";
 import { Rating } from "@mui/material";
 import imageUrlBuilder from "@sanity/image-url";
+import { useRouter } from "next/router";
 
 import client from "../utils/client";
 
 const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
+  const [favor, setFavor] = useState(false);
+  const router = useRouter();
+
+  const favorHandler = () => setFavor((state) => !state);
+
   return (
-    <NextLink href={`/product/${id.current}`} passHref>
+    <div>
       <div
         className={`flex flex-col
-         
-        w-[13rem] h-[25rem] md:w-[18rem] md:h-[30rem]
-        hover:cursor-pointer 
-      hover:border-4 hover:border-red-600  bg-white mb-28`}
+       
+      w-[13rem] h-[25rem] md:w-[18rem] md:h-[30rem]
+      hover:cursor-pointer 
+    hover:border-4 hover:border-red-600  bg-white mb-28`}
         onClick={onNavigate}
       >
         {/* IMAGE N ICON  */}
@@ -26,8 +31,13 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
           <button
             className='absolute mt-2 ml-2 text-white bg-black rounded-full p-2'
             type='button'
+            onClick={favorHandler}
           >
-            <MdFavoriteBorder className='w-4 h-4' />
+            {favor ? (
+              <MdFavorite className='w-4 h-4' />
+            ) : (
+              <MdFavoriteBorder className='w-4 h-4' />
+            )}
           </button>
           <img
             className=' w-full h-full object-cover'
@@ -47,25 +57,26 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
             </p>
             {/* RATING  */}
             <div className='flex items-center justify-start mt-2 text-sm md:text-md '>
-              {/* <BsStarFill />
-              <BsStarFill />
-              <BsStarFill />
-              <BsStar />
-              <BsStar /> */}
               <Rating readOnly value={Math.floor(rating)} />
               <span className='ml-2'>{rating}</span>
               <span className='ml-5'>0 sold</span>
             </div>
           </div>
-          <button
-            className={` w-full p-2 md:p-4 mt-4 text-sm font-medium bg-yellow-500 rounded-sm`}
-            type='button'
+          <div
+            className={` w-full text-center p-2 md:p-4 mt-4
+            text-sm hover:text-md font-medium bg-yellow-500 hover:bg-yellow-400 `}
           >
-            Add To Cart
-          </button>
+            <NextLink
+              // type='button'
+              href={`/product/${id.current}`}
+              passHref
+            >
+              View Item
+            </NextLink>
+          </div>
         </div>
       </div>
-    </NextLink>
+    </div>
   );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
+import { useSelector } from "react-redux";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
 
@@ -17,9 +18,10 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 });
 
 const Navbar = () => {
+  const cartState = useSelector((state) => state.cart);
   return (
     <nav
-      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[13vh] flex flex-col px-1 sm:px-4 lg:px-12`}
+      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[15vh] flex flex-col px-1 sm:px-4 lg:px-12`}
     >
       <div
         id='nav-upper'
@@ -105,7 +107,12 @@ const Navbar = () => {
           md:flex hidden hover:cursor-pointer`}
         >
           <Link className='' href={`/`}>
-            <IconComp />
+            <div className={` relative p-2`}>
+              <IconComp />
+              <div className='absolute bg-white rounded-full py-1 px-2 text-sm -top-2 -right-2 text-rose-600 font-bold '>
+                {cartState.items.length}
+              </div>
+            </div>
           </Link>
         </div>
       </div>
