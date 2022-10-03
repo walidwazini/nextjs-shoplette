@@ -11,7 +11,6 @@ import {
   IoIosArrowBack,
 } from "react-icons/io";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { BiMinus } from "react-icons/bi";
 
@@ -19,7 +18,7 @@ import { getProductById } from "../../utils/queries";
 import Layout from "../../components/Layout";
 import client from "../../utils/client";
 import { Rating } from "@mui/material";
-import { cartActions } from "../../store/cart-slice";
+import { addItemToCart } from "../../store/cart-slice";
 
 const ProductDetails = (props) => {
   const { id } = props;
@@ -61,13 +60,10 @@ const ProductDetails = (props) => {
 
   const addToCartHandler = async (ev) => {
     ev.preventDefault();
-    console.log(product?.slug);
-    dispatch(
-      cartActions.addItemToCart({
-        ...product,
-        quantity: count,
-      })
-    );
+
+    const itemDetails = { ...product, quantity: count };
+    dispatch(addItemToCart(itemDetails));
+    // console.log(product);
   };
 
   return (
