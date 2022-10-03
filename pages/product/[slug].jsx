@@ -14,14 +14,18 @@ import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useRouter } from "next/router";
 import { BiMinus } from "react-icons/bi";
 
-import { getProductById } from "../../utils/queries";
+import { getProductById, getProductBySlug } from "../../utils/queries";
 import Layout from "../../components/Layout";
 import client from "../../utils/client";
 import { Rating } from "@mui/material";
 import { addItemToCart } from "../../store/cart-slice";
 
 const ProductDetails = (props) => {
-  const { id } = props;
+  /**
+   * * We use slug to fetch products details thru PARAMS
+   * * _id is for redux cart and order flow
+   */
+  const { slug } = props;
   const [state, setState] = useState({
     product: null,
     loading: true,
@@ -43,20 +47,16 @@ const ProductDetails = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const product = await client.fetch(getProductById(id), {
-          slugValue: id,
+        const product = await client.fetch(getProductBySlug(slug), {
+          slugValue: slug,
         });
-        // const product = await client.fetch(
-        //   `*[_type == "product" && id.current == $slugValue ]`,
-        //   { slugValue: id }
-        // );
         setState({ ...state, product, loading: false });
       } catch (err) {
         setState({ ...state, errorMessage: err.message, loading: false });
       }
     };
     fetchData();
-  }, [setState, id]);
+  }, [setState, slug]);
 
   const addToCartHandler = async (ev) => {
     ev.preventDefault();
@@ -284,7 +284,7 @@ export default ProductDetails;
 export const getServerSideProps = async (context) => {
   return {
     props: {
-      id: context.params.id,
+      slug: context.params.slug,
     },
   };
 };

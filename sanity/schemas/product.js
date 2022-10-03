@@ -28,6 +28,7 @@ export default {
       type: 'string',
     },
     {
+      // ? Used for req.params
       name: 'slug',
       title: 'Slug',
       type: 'slug',

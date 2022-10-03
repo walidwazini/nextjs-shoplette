@@ -3,7 +3,7 @@ export const getAllProducts = () => {
   return query
 }
 
-export const getProductById = (slug) => {
+export const getProductBySlug = (slug) => {
   const query = `*[_type == "product" && slug.current == $slugValue][0]`
   // const query = `*[_type == "product" && slug.current == ${slug}][0]`
   return query
