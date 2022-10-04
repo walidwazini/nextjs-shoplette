@@ -13,6 +13,7 @@ import {
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useRouter } from "next/router";
 import { BiMinus } from "react-icons/bi";
+import axios from "axios";
 
 import { getProductById, getProductBySlug } from "../../utils/queries";
 import Layout from "../../components/Layout";
@@ -37,6 +38,12 @@ const ProductDetails = (props) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
+  // Test product by id api route
+  const testProductById = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    console.log(data);
+  };
+
   const decrementCount = () => {
     if (count > 0) setCount(count - 1);
   };
@@ -47,7 +54,7 @@ const ProductDetails = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const product = await client.fetch(getProductBySlug(slug), {
+        const product = await client.fetch(getProductBySlug(), {
           slugValue: slug,
         });
         setState({ ...state, product, loading: false });
@@ -72,7 +79,7 @@ const ProductDetails = (props) => {
         className={`px-10 lg:px-24  py-4 min-h-[100vh] w-full
        flex flex-col `}
       >
-        <div className='flex justify-start'>
+        <div className='flex justify-between items-center'>
           <button
             onClick={() => router.back()}
             className={`flex text-center items-center justify-center py-1 px-3 rounded-lg
@@ -80,6 +87,12 @@ const ProductDetails = (props) => {
           >
             <IoIosArrowBack />
             <span>Back to results</span>
+          </button>
+          <button
+            onClick={testProductById}
+            className='bg-transparent text-slate-800 hover:bg-slate-500 rounded-md px-2'
+          >
+            Test API
           </button>
         </div>
         <div

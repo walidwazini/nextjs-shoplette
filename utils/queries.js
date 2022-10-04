@@ -3,9 +3,14 @@ export const getAllProducts = () => {
   return query
 }
 
-export const getProductBySlug = (slug) => {
+export const getProductBySlug = () => {
   const query = `*[_type == "product" && slug.current == $slugValue][0]`
   // const query = `*[_type == "product" && slug.current == ${slug}][0]`
+  return query
+}
+
+export const getProductById = () => {
+  const query = `*[_type == "product" && _id == $id][0]`
   return query
 }
 
