@@ -106,7 +106,7 @@ const Navbar = () => {
           
           md:flex hidden hover:cursor-pointer`}
         >
-          <Link className='' href={`/`}>
+          <Link className='' href={`/cart`}>
             <div className={` relative p-2`}>
               <IconComp />
               <div className='absolute bg-white rounded-full py-1 px-2 text-sm -top-2 -right-2 text-rose-600 font-bold '>
