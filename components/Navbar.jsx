@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
 
@@ -19,15 +20,21 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 
 const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
+
+  // console.log(cartState.items);
+  // const cartItemsFromLocalStorage = localStorage.getItem("kartItems")
+  //   ? JSON.parse(localStorage.getItem("kartItems"))
+  //   : [];
+
   return (
     <nav
-      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[15vh] flex flex-col px-1 sm:px-4 lg:px-12`}
+      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[18vh] flex flex-col px-1 sm:px-4 lg:px-12`}
     >
       <div
         id='nav-upper'
-        className={`basis-1/5  flex flex-row justify-between mt-1`}
+        className={`basis-1/5 flex justify-between mt-1 md:px-14`}
       >
-        <div className={`text-white text-[0.65rem] md:text-xs `}>
+        <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='ml-0 mr-2 hover:text-red-300'>
             <Link href={"/"}>Seller Centre</Link>
           </span>{" "}
@@ -36,7 +43,7 @@ const Navbar = () => {
           </span>
           <span> Follow us on ..</span>
         </div>
-        <div className={`text-white text-[0.65rem] `}>
+        <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
             <Link href={"/"}>Sign Up</Link>
           </span>
@@ -61,32 +68,32 @@ const Navbar = () => {
         </div>
         {/*  SEARCH BAR  */}
         <div className={`basis-4/6 hidden sm:flex flex-col`}>
-          <form className='basis-[70%] relative py-0 bg-purple-500 h-full'>
-            <label
+          <form className='basis-[70%] relative py-3 '>
+            {/* <label
               htmlFor='default-search'
               className={`text-sm font-medium text-gray-900 sr-only dark:text-gray-300`}
             >
               Search
-            </label>
+            </label> */}
 
             <input
               type='search'
               id='default-search'
               className={`block px-2 py-2 pl-10 w-full text-sm h-full
-                  focus:ring-red-500 focus:border-red-500 bg-slate-600  
-                  border-gray-600 dark:placeholder-gray-400 text-black
-                   dark:focus:ring-red-500 dark:focus:border-red-500`}
+                   bg-slate-600  
+                  border-gray-600 d text-white
+                   `}
               placeholder='Search Mockups, Logos...'
               required=''
             />
             <button
               type='submit'
-              className={`text-white absolute right-2.5 bottom-2.5  focus:ring-4 focus:outline-none focus:ring-blue-300 
+              className={`text-white absolute right-2.5 top-[1.2rem] 
                  md:font-medium rounded-lg text-sm px-3 md:px-4 py-2
-                  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 bg-red-700 hover:bg-red-800`}
+                 bg-red-700 hover:bg-red-600`}
             >
               {/* <SearchSVG /> */}
-              <GoSearch className='text-xs ' />
+              <GoSearch className='text-sm lg:text-lg ' />
             </button>
           </form>
           <div className='basis-[30%] flex flex-row justify-start items-center gap-5 mb-[0.1rem] mt-1  '>

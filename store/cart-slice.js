@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
+// const cartItemsFromLocalStorage = localStorage.getItem('kartItems')
+//   ? JSON.parse(localStorage.getItem('kartItems'))
+//   : []
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -10,6 +16,9 @@ const cartSlice = createSlice({
     changed: false
   },
   reducers: {
+    getCartData(state, action) {
+      state.items = action.payload
+    },
     addCartItem(state, action) {
       const newItem = action.payload
       const existingItem = state.items.find(itemCart => newItem._id === itemCart.id)
@@ -45,9 +54,16 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   // * qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
 
-  localStorage.setItem('cartItems', JSON.stringify(getState().cart.items))
+  // localStorage.setItem('kartItems', JSON.stringify(getState().cart.items))
 
+  // Cookies.set('kartItems', JSON.stringify(getState().cart.items))
 }
+
+// export const fetchCartData = () => (dispatch, getState) => {
+//   const data = JSON.parse(localStorage.getItem('kartItems'))
+
+//   dispatch(cartActions.getCartData(data))
+// }
 
 export const cartActions = cartSlice.actions
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ErrorSnackBar from "../components/ErrorSnackBar";
+import { useDispatch, useSelector } from "react-redux";
 
+import ErrorSnackBar from "../components/ErrorSnackBar";
 import client from "../utils/client";
 import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/product-slice";
 
 const Home = () => {

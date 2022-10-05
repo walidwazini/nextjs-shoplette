@@ -6,7 +6,7 @@ import SWhite1 from "./svg/conv-swhite1.svg";
 
 const CartNavbar = () => {
   return (
-    <nav className={`relative top-0  w-screen h-[18vh] flex flex-col`}>
+    <nav className={`relative top-0  w-full h-[18vh] flex flex-col`}>
       <div
         id='upper'
         className={`basis-1/5 flex justify-between items-center 
@@ -42,18 +42,19 @@ const CartNavbar = () => {
       bg-slate-600
       `}
       >
-        <div id='link' className={`basis-1/2 flex items-center`}>
-          <div className={`flex gap-1 justify-center items-center `}>
-            <span>
+        <div id='link' className={`basis-1/2  flex items-center justify-start`}>
+          <div className='flex items-center divide-x w-auto '>
+            <div className='px-6'>
               <Link className='' href={"/"}>
-                <SWhite1 className={`text-5xl hover:cursor-pointer`} />
-                {/* <IconComp /> */}
+                <SWhite1 className={`text-6xl hover:cursor-pointer`} />
               </Link>
-            </span>
-            <span className='mx-6 text-white'> | </span>
-            <span className='text-white text-xl lg:text-[2rem] font-semibold shadow-sm'>
+            </div>
+            <div
+              className={`flex px-6 justify-center items-center
+            text-white lg:text-3xl md:text-2xl text-lg `}
+            >
               Shopping Cart
-            </span>
+            </div>
           </div>
         </div>
         <div
