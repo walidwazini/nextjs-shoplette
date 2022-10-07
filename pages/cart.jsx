@@ -9,6 +9,42 @@ import CartNavbar from "../components/CartNavbar";
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
 
+const CartItem = () => (
+  <li class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
+    <div class='flex w-2/6'>
+      <div class='w-20'>
+        <img class='h-24' src={unsplashPhoto1} alt='' />
+      </div>
+      <div class='flex flex-col justify-between ml-4 flex-grow'>
+        <span class='font-bold text-sm'>Xiaomi Mi 20000mAh</span>
+        <span class='text-red-500 text-xs'>Xiaomi</span>
+        <a
+          href='#'
+          class='font-semibold hover:text-red-500 text-gray-500 text-xs'
+        >
+          Remove
+        </a>
+      </div>
+    </div>
+    <div class='flex justify-center w-1/6'>
+      <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
+        <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+      </svg>
+
+      <input class='mx-2 border text-center w-8' type='text' value='1' />
+
+      <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
+        <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+      </svg>
+    </div>
+    <span class='text-center w-1/6 font-semibold text-sm'>$40.00</span>
+    <span class='text-center w-1/6 font-semibold text-sm'>$40.00</span>
+    <span class='text-center w-1/6 font-semibold text-sm'>
+      <BsTrashFill />
+    </span>
+  </li>
+);
+
 const CartPage = () => {
   const cartState = useSelector((state) => state.cart);
   const { items, totalQuantity, totalProduct, totalAmount } = cartState;
@@ -30,170 +66,124 @@ const CartPage = () => {
       {
         <div class='container mx-auto mt-10'>
           <div class='flex shadow-md my-10'>
-            <div class='w-3/4 bg-white px-10 py-10'>
-              <div class='flex justify-between border-b pb-8'>
+            <div id='order_details' class='w-3/4 bg-gray-900 px-10 py-10'>
+              <div class='flex justify-between border-b pb-8 text-white'>
                 <h1 class='font-semibold text-2xl'>Shopping Cart</h1>
-                <h2 class='font-semibold text-2xl'>3 Items</h2>
+                <h2 class='font-semibold text-2xl'>{totalProduct} Items</h2>
               </div>
               <div class='flex mt-10 mb-5'>
-                <h3 class='font-semibold text-gray-600 text-xs uppercase w-2/5'>
+                <h3 class='font-semibold text-gray-600 text-xs uppercase w-2/6'>
                   Product Details
                 </h3>
-                <h3 class='font-semibold text-center text-gray-600 text-xs uppercase w-1/5 '>
+                <h3 class='font-semibold text-center text-gray-600 text-xs uppercase w-1/6 '>
                   Quantity
                 </h3>
-                <h3 class='font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center'>
+                <h3 class='font-semibold  text-gray-600 text-xs uppercase w-1/6 text-center'>
                   Price
                 </h3>
-                <h3 class='font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center'>
+                <h3 class='font-semibold  text-gray-600 text-xs uppercase w-1/6 text-center'>
                   Total
                 </h3>
+                <h3 class='font-semibold  text-gray-600 text-xs uppercase w-1/6 text-center'></h3>
               </div>
-              <div class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
-                <div class='flex w-2/5'>
-                  <div class='w-20'>
-                    <img
-                      class='h-24'
-                      src='https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z'
-                      alt=''
-                    />
+              <ul className='flex flex-col divide-y divide-gray-100'>
+                <li class='flex items-center hover:bg-gray-700 -mx-8 px-6 py-5'>
+                  <div class='flex w-2/5'>
+                    <div class='w-20'>
+                      <img
+                        class='h-24'
+                        src='https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z'
+                        alt=''
+                      />
+                    </div>
+                    <div class='flex flex-col justify-between ml-4 flex-grow'>
+                      <span class='font-bold text-sm'>Iphone 6S</span>
+                      <span class='text-red-500 text-xs'>Apple</span>
+                      <a
+                        href='#'
+                        class='font-semibold hover:text-red-500 text-gray-500 text-xs'
+                      >
+                        Remove
+                      </a>
+                    </div>
                   </div>
-                  <div class='flex flex-col justify-between ml-4 flex-grow'>
-                    <span class='font-bold text-sm'>Iphone 6S</span>
-                    <span class='text-red-500 text-xs'>Apple</span>
-                    <a
-                      href='#'
-                      class='font-semibold hover:text-red-500 text-gray-500 text-xs'
+                  <div class='flex justify-center w-1/5'>
+                    <svg
+                      class='fill-current text-gray-600 w-3'
+                      viewBox='0 0 448 512'
                     >
-                      Remove
-                    </a>
-                  </div>
-                </div>
-                <div class='flex justify-center w-1/5'>
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
+                      <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+                    </svg>
 
-                  <input
-                    class='mx-2 border text-center w-8'
-                    type='text'
-                    value='1'
-                  />
-
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
-                </div>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $400.00
-                </span>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $400.00
-                </span>
-              </div>
-
-              <div class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
-                <div class='flex w-2/5'>
-                  <div class='w-20'>
-                    <img
-                      class='h-24'
-                      src='https://drive.google.com/uc?id=10ht6a9IR3K2i1j0rHofp9-Oubl1Chraw'
-                      alt=''
+                    <input
+                      class='mx-2 border text-center w-8'
+                      type='text'
+                      value='1'
                     />
-                  </div>
-                  <div class='flex flex-col justify-between ml-4 flex-grow'>
-                    <span class='font-bold text-sm'>Xiaomi Mi 20000mAh</span>
-                    <span class='text-red-500 text-xs'>Xiaomi</span>
-                    <a
-                      href='#'
-                      class='font-semibold hover:text-red-500 text-gray-500 text-xs'
+
+                    <svg
+                      class='fill-current text-gray-600 w-3'
+                      viewBox='0 0 448 512'
                     >
-                      Remove
-                    </a>
+                      <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+                    </svg>
                   </div>
-                </div>
-                <div class='flex justify-center w-1/5'>
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
+                  <span class='text-center w-1/5 font-semibold text-sm'>
+                    $400.00
+                  </span>
+                  <span class='text-center w-1/5 font-semibold text-sm'>
+                    $400.00
+                  </span>
+                </li>
 
-                  <input
-                    class='mx-2 border text-center w-8'
-                    type='text'
-                    value='1'
-                  />
+                <li class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
+                  <div class='flex w-2/6'>
+                    <div class='w-20'>
+                      <img class='h-24' src={unsplashPhoto1} alt='' />
+                    </div>
+                    <div class='flex flex-col justify-between ml-4 flex-grow'>
+                      <span class='font-bold text-sm'>Xiaomi Mi 20000mAh</span>
+                      <span class='text-red-500 text-xs'>Xiaomi</span>
+                      <a
+                        href='#'
+                        class='font-semibold hover:text-red-500 text-gray-500 text-xs'
+                      >
+                        Remove
+                      </a>
+                    </div>
+                  </div>
+                  <div class='flex justify-center w-1/6'>
+                    <svg
+                      class='fill-current text-gray-600 w-3'
+                      viewBox='0 0 448 512'
+                    >
+                      <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+                    </svg>
 
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
-                </div>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $40.00
-                </span>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $40.00
-                </span>
-              </div>
-
-              <div class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
-                <div class='flex w-2/5'>
-                  <div class='w-20'>
-                    <img
-                      class='h-24'
-                      src='https://drive.google.com/uc?id=1vXhvO9HoljNolvAXLwtw_qX3WNZ0m75v'
-                      alt=''
+                    <input
+                      class='mx-2 border text-center w-8'
+                      type='text'
+                      value='1'
                     />
-                  </div>
-                  <div class='flex flex-col justify-between ml-4 flex-grow'>
-                    <span class='font-bold text-sm'>Airpods</span>
-                    <span class='text-red-500 text-xs'>Apple</span>
-                    <a
-                      href='#'
-                      class='font-semibold hover:text-red-500 text-gray-500 text-xs'
-                    >
-                      Remove
-                    </a>
-                  </div>
-                </div>
-                <div class='flex justify-center w-1/5'>
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
-                  <input
-                    class='mx-2 border text-center w-8'
-                    type='text'
-                    value='1'
-                  />
 
-                  <svg
-                    class='fill-current text-gray-600 w-3'
-                    viewBox='0 0 448 512'
-                  >
-                    <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                  </svg>
-                </div>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $150.00
-                </span>
-                <span class='text-center w-1/5 font-semibold text-sm'>
-                  $150.00
-                </span>
-              </div>
+                    <svg
+                      class='fill-current text-gray-600 w-3'
+                      viewBox='0 0 448 512'
+                    >
+                      <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+                    </svg>
+                  </div>
+                  <span class='text-center w-1/6 font-semibold text-sm'>
+                    $40.00
+                  </span>
+                  <span class='text-center w-1/6 font-semibold text-sm'>
+                    $40.00
+                  </span>
+                  <span class='text-center w-1/6 font-semibold text-sm'>
+                    <BsTrashFill />
+                  </span>
+                </li>
+              </ul>
 
               <a
                 href='#'
@@ -209,7 +199,7 @@ const CartPage = () => {
               </a>
             </div>
 
-            <div id='summary' class='w-1/4 px-8 py-10'>
+            <div id='order_summary' class='w-1/4 px-8 py-10 bg-red-500'>
               <h1 class='font-semibold text-2xl border-b pb-8'>
                 Order Summary
               </h1>
