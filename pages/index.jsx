@@ -19,18 +19,6 @@ const Home = () => {
   const productState = useSelector((state) => state.product);
   const { items: productsList, loading, errorMessage } = productState;
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const products = await client.fetch(getAllProducts());
-  //       setState({ produks: products, loading: false });
-  //     } catch (err) {
-  //       setState({ loading: false, errorMessage: err.message });
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
