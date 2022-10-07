@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
-// const cartItemsFromLocalStorage = localStorage.getItem('kartItems')
-//   ? JSON.parse(localStorage.getItem('kartItems'))
-//   : []
-
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -38,7 +32,8 @@ const cartSlice = createSlice({
       }
       else {
         existingItem.quantity++
-        existingItem.totalPrice = existingItem.totalPrice + (newItem.price * qty)
+        existingItem.totalPrice = existingItem.totalPrice + (newItem.price * newItem.quantity)
+        state.totalQuantity = state.totalQuantity + newItem.quantity
         state.totalAmount = state.totalAmount + existingItem.totalPrice
       }
     },
@@ -50,20 +45,11 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   // ? API Call for product by id
   // const { data } = await axios.get(`api/products/${id}`)
 
-  // * data is teh newItem send to the Reducer
+  // * data is the newItem send to the Reducer
   // * qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
 
-  // localStorage.setItem('kartItems', JSON.stringify(getState().cart.items))
-
-  // Cookies.set('kartItems', JSON.stringify(getState().cart.items))
 }
-
-// export const fetchCartData = () => (dispatch, getState) => {
-//   const data = JSON.parse(localStorage.getItem('kartItems'))
-
-//   dispatch(cartActions.getCartData(data))
-// }
 
 export const cartActions = cartSlice.actions
 

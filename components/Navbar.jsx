@@ -21,11 +21,6 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
 
-  // console.log(cartState.items);
-  // const cartItemsFromLocalStorage = localStorage.getItem("kartItems")
-  //   ? JSON.parse(localStorage.getItem("kartItems"))
-  //   : [];
-
   return (
     <nav
       className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[18vh] flex flex-col px-1 sm:px-4 lg:px-12`}
@@ -69,13 +64,6 @@ const Navbar = () => {
         {/*  SEARCH BAR  */}
         <div className={`basis-4/6 hidden sm:flex flex-col`}>
           <form className='basis-[70%] relative py-3 '>
-            {/* <label
-              htmlFor='default-search'
-              className={`text-sm font-medium text-gray-900 sr-only dark:text-gray-300`}
-            >
-              Search
-            </label> */}
-
             <input
               type='search'
               id='default-search'
@@ -117,7 +105,8 @@ const Navbar = () => {
             <div className={` relative p-2`}>
               <IconComp />
               <div className='absolute bg-white rounded-full py-1 px-2 text-sm -top-2 -right-2 text-rose-600 font-bold '>
-                {cartState.items.length}
+                {/* {cartState.items.length} */}
+                {cartState.totalProduct}
               </div>
             </div>
           </Link>

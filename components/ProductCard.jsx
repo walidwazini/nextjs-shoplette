@@ -66,11 +66,7 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
             className={` w-full text-center p-2 md:p-4 mt-4
             text-sm hover:text-md font-medium bg-yellow-500 hover:bg-yellow-400 `}
           >
-            <NextLink
-              // type='button'
-              href={`/product/${id.current}`}
-              passHref
-            >
+            <NextLink type='button' href={`/product/${id.current}`} passHref>
               View Item
             </NextLink>
           </div>

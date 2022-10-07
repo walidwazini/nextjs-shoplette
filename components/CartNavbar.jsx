@@ -62,8 +62,6 @@ const CartNavbar = () => {
           id='search'
         >
           <form className={`relative h-14 md:w-[520px] lg:w-[620px] px-4`}>
-            {/* <input className={`block p-2 w-full text-sm  rounded-sm`} />
-            <button className={`absolute right-2.5 bottom-2.5`}>🔍</button> */}
             <input
               type='search'
               id='default-search'
