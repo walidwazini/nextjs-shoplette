@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import NextLink from "next/link";
 import { Rating } from "@mui/material";
 import imageUrlBuilder from "@sanity/image-url";
 import { useRouter } from "next/router";
@@ -12,6 +11,10 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
   const router = useRouter();
 
   const favorHandler = () => setFavor((state) => !state);
+
+  const navigateHandler = (idCurrent) => {
+    router.push(`/product/${idCurrent}`);
+  };
 
   return (
     <div>
@@ -63,12 +66,11 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
             </div>
           </div>
           <div
+            onClick={() => navigateHandler(id.current)}
             className={` w-full text-center p-2 md:p-4 mt-4
             text-sm hover:text-md font-medium bg-yellow-500 hover:bg-yellow-400 `}
           >
-            <NextLink type='button' href={`/product/${id.current}`} passHref>
-              View Item
-            </NextLink>
+            View Item
           </div>
         </div>
       </div>
