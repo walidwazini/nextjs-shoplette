@@ -46,7 +46,9 @@ const CartNavbar = () => {
           <div className='flex items-center divide-x w-auto '>
             <div className='px-6'>
               <Link className='' href={"/"}>
-                <SWhite1 className={`text-6xl hover:cursor-pointer`} />
+                <div className='hover:cursor-pointer'>
+                  <SWhite1 className={`text-6xl`} />
+                </div>
               </Link>
             </div>
             <div
