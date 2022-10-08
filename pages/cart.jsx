@@ -3,47 +3,56 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { BsTrashFill } from "react-icons/bs";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
+import { BiMinus } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
 
-const CartItem = () => (
-  <li class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
-    <div class='flex w-2/6'>
-      <div class='w-20'>
-        <img class='h-24' src={unsplashPhoto1} alt='' />
+const CartItem = () => {
+  return (
+    <li class='flex items-center hover:bg-gray-800 -mx-8 px-5 py-5 text-white'>
+      <div class='flex w-2/6 '>
+        <div class='w-20'>
+          <img class='h-24' src={unsplashPhoto1} alt='' />
+        </div>
+        <div class='flex flex-col justify-between ml-4 py-4'>
+          <span class='font-bold text-lg'>Product Name</span>
+          <span class='text-blue-500 font-semibold text-xs'>Brand Name</span>
+        </div>
       </div>
-      <div class='flex flex-col justify-between ml-4 flex-grow'>
-        <span class='font-bold text-sm'>Xiaomi Mi 20000mAh</span>
-        <span class='text-red-500 text-xs'>Xiaomi</span>
-        <a
-          href='#'
-          class='font-semibold hover:text-red-500 text-gray-500 text-xs'
-        >
-          Remove
-        </a>
+      <div class='flex justify-center w-1/6'>
+        {/* <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
+          <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+        </svg> */}
+        <button>
+          <BiMinus />
+        </button>
+
+        <input
+          class='mx-2 border text-center w-8 text-black'
+          type='text'
+          value='1'
+        />
+        <button>
+          {/* <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
+            <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
+          </svg> */}
+          <IoMdAdd />
+        </button>
       </div>
-    </div>
-    <div class='flex justify-center w-1/6'>
-      <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
-        <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-      </svg>
-
-      <input class='mx-2 border text-center w-8' type='text' value='1' />
-
-      <svg class='fill-current text-gray-600 w-3' viewBox='0 0 448 512'>
-        <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-      </svg>
-    </div>
-    <span class='text-center w-1/6 font-semibold text-sm'>$40.00</span>
-    <span class='text-center w-1/6 font-semibold text-sm'>$40.00</span>
-    <span class='text-center w-1/6 font-semibold text-sm'>
-      <BsTrashFill />
-    </span>
-  </li>
-);
+      <div class='text-center w-1/6 font-semibold text-sm'>$40.00</div>
+      <div class='text-center w-1/6 font-semibold text-sm'>$40.00</div>
+      <div class='text-center w-1/6 font-semibold text-sm'>
+        <button onClick={() => {}}>
+          <BsTrashFill className='text-red-600 hover:text-red-400 text-xl' />
+        </button>
+      </div>
+    </li>
+  );
+};
 
 const CartPage = () => {
   const cartState = useSelector((state) => state.cart);
@@ -71,7 +80,7 @@ const CartPage = () => {
                 <h1 class='font-semibold text-2xl'>Shopping Cart</h1>
                 <h2 class='font-semibold text-2xl'>{totalProduct} Items</h2>
               </div>
-              <div class='flex mt-10 mb-5'>
+              <div class='flex mt-10 mb-5 w-full'>
                 <h3 class='font-semibold text-gray-600 text-xs uppercase w-2/6'>
                   Product Details
                 </h3>
@@ -86,7 +95,11 @@ const CartPage = () => {
                 </h3>
                 <h3 class='font-semibold  text-gray-600 text-xs uppercase w-1/6 text-center'></h3>
               </div>
-              <ul className='flex flex-col divide-y divide-gray-100'>
+              <ul
+                className={`flex flex-col lg:h-[60%] w-full
+              overflow-y-scroll 
+              divide-y divide-gray-100`}
+              >
                 <li class='flex items-center hover:bg-gray-700 -mx-8 px-6 py-5'>
                   <div class='flex w-2/5'>
                     <div class='w-20'>
@@ -136,53 +149,9 @@ const CartPage = () => {
                   </span>
                 </li>
 
-                <li class='flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
-                  <div class='flex w-2/6'>
-                    <div class='w-20'>
-                      <img class='h-24' src={unsplashPhoto1} alt='' />
-                    </div>
-                    <div class='flex flex-col justify-between ml-4 flex-grow'>
-                      <span class='font-bold text-sm'>Xiaomi Mi 20000mAh</span>
-                      <span class='text-red-500 text-xs'>Xiaomi</span>
-                      <a
-                        href='#'
-                        class='font-semibold hover:text-red-500 text-gray-500 text-xs'
-                      >
-                        Remove
-                      </a>
-                    </div>
-                  </div>
-                  <div class='flex justify-center w-1/6'>
-                    <svg
-                      class='fill-current text-gray-600 w-3'
-                      viewBox='0 0 448 512'
-                    >
-                      <path d='M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                    </svg>
-
-                    <input
-                      class='mx-2 border text-center w-8'
-                      type='text'
-                      value='1'
-                    />
-
-                    <svg
-                      class='fill-current text-gray-600 w-3'
-                      viewBox='0 0 448 512'
-                    >
-                      <path d='M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z' />
-                    </svg>
-                  </div>
-                  <span class='text-center w-1/6 font-semibold text-sm'>
-                    $40.00
-                  </span>
-                  <span class='text-center w-1/6 font-semibold text-sm'>
-                    $40.00
-                  </span>
-                  <span class='text-center w-1/6 font-semibold text-sm'>
-                    <BsTrashFill />
-                  </span>
-                </li>
+                <CartItem />
+                <CartItem />
+                <CartItem />
               </ul>
 
               <a
