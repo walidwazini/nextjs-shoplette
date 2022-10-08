@@ -71,8 +71,12 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
 
 const CartPage = () => {
   const cartState = useSelector((state) => state.cart);
-  const { items, totalQuantity, totalProduct, totalAmount } = cartState;
-  console.log(items);
+  const {
+    items: dummyItems,
+    totalQuantity,
+    totalProduct,
+    totalAmount,
+  } = cartState;
 
   const shippingCharge = 7;
 
@@ -115,7 +119,7 @@ const CartPage = () => {
               overflow-y-scroll overflow-x-hidden
               divide-y divide-gray-100`}
               >
-                {items.map((item) => (
+                {dummyItems.map((item) => (
                   <CartItem
                     key={item.id}
                     initialCount={item.quantity}

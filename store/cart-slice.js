@@ -39,16 +39,18 @@ const dummyStates = {
   changed: true
 }
 
+const originalStates = {
+  items: [],
+  totalQuantity: 0,
+  totalProduct: 0,
+  totalAmount: 0,
+  changed: false
+}
+
 const cartSlice = createSlice({
   name: 'cart',
-  // initialState: {
-  //   items: [],
-  //   totalQuantity: 0,
-  //   totalProduct: 0,
-  //   totalAmount: 0,
-  //   changed: false
-  // },
-  initialState: dummyStates,
+  initialState: originalStates,
+  // initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload

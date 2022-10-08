@@ -70,6 +70,7 @@ const ProductDetails = (props) => {
 
     const itemDetails = { ...product, quantity: count };
     dispatch(addItemToCart(itemDetails));
+    router.push("/cart");
     // console.log(product);
   };
 
