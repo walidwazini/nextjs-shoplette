@@ -168,6 +168,10 @@ export const editQuantity = (info) => (dispatch) => {
   dispatch(cartActions.changeQuantity(info))
 }
 
+export const plusOne = (info) => (dispatch) => {
+  dispatch(cartActions.increaseQty(info))
+}
+
 export const decreaseOne = (info) => (dispatch) => {
   dispatch(cartActions.decreaseQty(info))
 }

@@ -9,7 +9,12 @@ import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
 import axios from "axios";
-import { addItemToCart, decreaseOne, editQuantity } from "../store/cart-slice";
+import {
+  addItemToCart,
+  decreaseOne,
+  editQuantity,
+  plusOne,
+} from "../store/cart-slice";
 import { fetchProducts } from "../store/product-slice";
 
 const unsplashPhoto1 =
@@ -41,8 +46,12 @@ const CartItem = ({
     }
   };
   const incrementCount = () => {
-    if (count < 10) setCount(count + 1);
-    const info = { count, id };
+    if (count < 10) {
+      setCount(count + 1);
+      const info = { count, id };
+
+      dispatch(plusOne(info));
+    }
   };
   const updateCartHandler = async (id, qty) => {
     const { data } = await axios.get(`/api/products/${id}`);
@@ -75,7 +84,7 @@ const CartItem = ({
         </div>
       </div>
       <div className='flex justify-center w-1/6 '>
-        <button disabled={count >= 1} onClick={decrementCount}>
+        <button disabled={count === 1} onClick={decrementCount}>
           <BiMinus />
         </button>
 
