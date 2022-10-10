@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,19 +8,55 @@ import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
+import axios from "axios";
+import { addItemToCart, decreaseOne, editQuantity } from "../store/cart-slice";
+import { fetchProducts } from "../store/product-slice";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
 
-const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
+const CartItem = ({
+  initialCount,
+  productName,
+  brandName,
+  price,
+  slug,
+  id,
+  productList,
+}) => {
   const router = useRouter();
-  const [count, setCount] = useState(initialCount ? initialCount : 1);
+  const dispatch = useDispatch();
+  const [count, setCount] = useState(initialCount);
+
   const decrementCount = () => {
-    if (count > 1) setCount(count - 1);
+    if (count >= 1) {
+      setCount(count - 1);
+      const info = { count, id };
+
+      const itemList = productList;
+      const selectedIndex = itemList.findIndex((item) => info.id === item._id);
+      const selectedItem = itemList[selectedIndex];
+
+      dispatch(decreaseOne(info));
+    }
   };
   const incrementCount = () => {
     if (count < 10) setCount(count + 1);
+    const info = { count, id };
   };
+  const updateCartHandler = async (id, qty) => {
+    const { data } = await axios.get(`/api/products/${id}`);
+    console.log(data);
+    dispatch(addItemToCart(data));
+  };
+
+  // useEffect(() => {
+  //   const getProd = async () => {
+  //     const { data } = await axios.get(`/api/products/${id}`);
+  //     console.log(data);
+  //   };
+  //   getProd();
+  // });
 
   return (
     <li className='flex items-center hover:bg-gray-800  py-5 text-white'>
@@ -39,7 +75,7 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
         </div>
       </div>
       <div className='flex justify-center w-1/6 '>
-        <button onClick={decrementCount}>
+        <button disabled={count >= 1} onClick={decrementCount}>
           <BiMinus />
         </button>
 
@@ -48,9 +84,10 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
           className='mx-2 border text-center w-8 text-black'
           type='number'
           value={count}
-          // onKeyDown={(event) => {
-          //   event.preventDefault();
-          // }}
+          // onChange={(ev) => updateCartHandler(id, ev.target.value)}
+          onKeyDown={(event) => {
+            event.preventDefault();
+          }}
         />
         <button onClick={incrementCount}>
           <IoMdAdd />
@@ -70,7 +107,10 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
 };
 
 const CartPage = () => {
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
+  const productList = useSelector((state) => state.product.items);
+  // console.log(productList);
   const {
     items: dummyItems,
     totalQuantity,
@@ -78,7 +118,15 @@ const CartPage = () => {
     totalAmount,
   } = cartState;
 
+  const [sumAmount, setSumAmount] = useState(totalAmount);
+
   const shippingCharge = 7;
+
+  const updateSumAmount = () => {
+    let value;
+    value = dummyItems.reduce((a, c) => a + c.price * c.quantity, 0);
+    setSumAmount(value);
+  };
 
   return (
     <>
@@ -122,11 +170,13 @@ const CartPage = () => {
                 {dummyItems.map((item) => (
                   <CartItem
                     key={item.id}
+                    id={item.id}
                     initialCount={item.quantity}
                     brandName={item.brand}
                     slug={item.slug}
                     productName={item.name}
                     price={item.price}
+                    productList={productList}
                   />
                 ))}
               </ul>
@@ -148,8 +198,9 @@ const CartPage = () => {
                 <span className='font-semibold text-sm uppercase'>Items 3</span>
                 <span className='font-semibold text-sm'>
                   {/* Not reactive yet due to changes of item count  */}
-                  {/* RM {items.reduce((a, c) => a + c.price * c.quantity, 0)} */}
-                  RM {totalAmount}
+                  {/* RM {dummyItems.reduce((a, c) => a + c.price * c.quantity, 0)} */}
+                  {/* RM {totalAmount} */}
+                  RM {sumAmount}
                 </span>
               </div>
               <div>

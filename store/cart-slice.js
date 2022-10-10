@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+
+export const CART_STORAGE_KEY = 'kartItems'
 
 const dummyStates = {
   items: [
@@ -8,7 +11,7 @@ const dummyStates = {
       brand: "Odaman",
       slug: 'reeve-sky-blue-shirt',
       price: 10,
-      quantity: 1,
+      quantity: 5,
       countInStock: 27,
       totalPrice: 10
     },
@@ -33,7 +36,8 @@ const dummyStates = {
       totalPrice: 10,
     }
   ],
-  totalQuantity: 4,
+  newItems: [],
+  totalQuantity: 8,
   totalProduct: 3,
   totalAmount: 70,
   changed: true
@@ -41,6 +45,7 @@ const dummyStates = {
 
 const originalStates = {
   items: [],
+  newItems: [],
   totalQuantity: 0,
   totalProduct: 0,
   totalAmount: 0,
@@ -49,8 +54,8 @@ const originalStates = {
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: originalStates,
-  // initialState: dummyStates,
+  // initialState: originalStates,
+  initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload
@@ -84,6 +89,66 @@ const cartSlice = createSlice({
         state.totalAmount = state.totalAmount + existingItem.totalPrice
       }
     },
+    changeQuantity(state, action) {
+      // ? newquanity and id as payload
+      const info = action.payload
+      const itemList = state.items
+      // * Item will bew always existingItem
+      const selectedIndex = state.items.findIndex(item => info.id === item.id)
+      const currentItem = state.items[selectedIndex]
+
+      const updateTheItem = { ...currentItem, quantity: info.count }
+      itemList.splice(selectedIndex, 1, updateTheItem)
+    },
+    increaseQty: (state, action) => {
+      const info = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => info.id === item.id)
+      const selectedItem = state.items[selectedIndex]
+      // update selectedItem details
+      const newItemDetails = {
+        ...selectedItem,
+        quantity: selectedItem.quantity + 1,
+        totalPrice: selectedItem.price * (selectedItem.quantity + 1)
+      }
+      state.totalQuantity++
+      state.totalAmount = state.totalAmount + selectedItem.price
+      // * Replace oldDetails with newDetails
+      itemList.splice(selectedIndex, 1, newItemDetails)
+    },
+    decreaseQty(state, action) {
+      const info = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => info.id === item.id)
+      const selectedItem = state.items[selectedIndex]
+      // update selectedItem details
+      const newItemDetails = {
+        ...selectedItem,
+        quantity: selectedItem.quantity - 1,
+        totalPrice: selectedItem.price * (selectedItem.quantity - 1)
+      }
+      state.totalQuantity--
+      state.totalAmount = state.totalAmount - selectedItem.price
+      itemList.splice(selectedIndex, 1, newItemDetails)
+      state.items = itemList
+    },
+    // from reference
+    newAddToCart: (state, action) => {
+      const newItem = action.payload
+      const existItem = state.newItems.find(
+        (item) => item._id === newItem._id
+      );
+      const cartItems = existItem
+        ? state.newItems.map((item) =>
+          item._id === existItem._id ? newItem : item
+        )
+        : [...state.newItems, newItem];
+      Cookies.set(CART_STORAGE_KEY, JSON.stringify(cartItems));
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems))
+      return { ...state, newItems: cartItems };
+    },
     removeItemFromCart(state, action) { }
   }
 })
@@ -95,7 +160,16 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   // * data is the newItem send to the Reducer
   // * qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
+  dispatch(cartActions.newAddToCart(product))
 
+}
+
+export const editQuantity = (info) => (dispatch) => {
+  dispatch(cartActions.changeQuantity(info))
+}
+
+export const decreaseOne = (info) => (dispatch) => {
+  dispatch(cartActions.decreaseQty(info))
 }
 
 export const cartActions = cartSlice.actions
