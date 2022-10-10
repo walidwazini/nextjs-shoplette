@@ -8,7 +8,7 @@ const dummyStates = {
       brand: "Odaman",
       slug: 'reeve-sky-blue-shirt',
       price: 10,
-      quantity: 1,
+      quantity: 5,
       countInStock: 27,
       totalPrice: 10
     },
@@ -33,7 +33,7 @@ const dummyStates = {
       totalPrice: 10,
     }
   ],
-  totalQuantity: 4,
+  totalQuantity: 8,
   totalProduct: 3,
   totalAmount: 70,
   changed: true
@@ -49,8 +49,8 @@ const originalStates = {
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: originalStates,
-  // initialState: dummyStates,
+  // initialState: originalStates,
+  initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload
@@ -84,6 +84,42 @@ const cartSlice = createSlice({
         state.totalAmount = state.totalAmount + existingItem.totalPrice
       }
     },
+    increaseQty: (state, action) => {
+      const info = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => info.id === item.id)
+      const selectedItem = state.items[selectedIndex]
+      //  Update selectedItem details
+      const newItemDetails = {
+        ...selectedItem,
+        quantity: selectedItem.quantity + 1,
+        totalPrice: selectedItem.price * (selectedItem.quantity + 1)
+      }
+
+      state.totalQuantity++
+      state.totalAmount = state.totalAmount + selectedItem.price
+      //  Replace oldDetails with newDetails
+      itemList.splice(selectedIndex, 1, newItemDetails)
+    },
+    decreaseQty: (state, action) => {
+      const info = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => info.id === item.id)
+      const selectedItem = state.items[selectedIndex]
+
+      const newItemDetails = {
+        ...selectedItem,
+        quantity: selectedItem.quantity - 1,
+        totalPrice: selectedItem.price * (selectedItem.quantity - 1)
+      }
+
+      state.totalQuantity--
+      state.totalAmount = state.totalAmount - selectedItem.price
+
+      itemList.splice(selectedIndex, 1, newItemDetails)
+    },
     removeItemFromCart(state, action) { }
   }
 })
@@ -92,10 +128,17 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   // ? API Call for product by id
   // const { data } = await axios.get(`api/products/${id}`)
 
-  // * data is the newItem send to the Reducer
-  // * qty need to be included in the newItem Object
+  //  data is the newItem send to the Reducer
+  //  qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
+}
 
+export const plusOne = (info) => (dispatch, getState) => {
+  dispatch(cartActions.increaseQty(info))
+}
+
+export const minusOne = (info) => (dispatch) => {
+  dispatch(cartActions.decreaseQty(info))
 }
 
 export const cartActions = cartSlice.actions
