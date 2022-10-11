@@ -8,7 +8,7 @@ import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
-import { minusOne, plusOne } from "../store/cart-slice";
+import { minusOne, plusOne, removeItemFromCart } from "../store/cart-slice";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
@@ -38,6 +38,10 @@ const CartItem = ({
       const info = { count, id };
       dispatch(plusOne(info));
     }
+  };
+
+  const removeHandler = () => {
+    dispatch(removeItemFromCart(id));
   };
 
   return (
@@ -87,7 +91,7 @@ const CartItem = ({
         RM {price * count}
       </div>
       <div className='text-center w-1/6 font-semibold text-sm'>
-        <button onClick={() => {}}>
+        <button onClick={removeHandler}>
           <BsTrashFill className='text-red-600 hover:text-red-400 text-xl' />
         </button>
       </div>

@@ -35,7 +35,7 @@ const dummyStates = {
   ],
   totalQuantity: 8,
   totalProduct: 3,
-  totalAmount: 70,
+  totalAmount: 110,
   changed: true
 }
 
@@ -49,8 +49,8 @@ const originalStates = {
 
 const cartSlice = createSlice({
   name: 'cart',
-  // initialState: originalStates,
-  initialState: dummyStates,
+  initialState: originalStates,
+  // initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload
@@ -82,6 +82,21 @@ const cartSlice = createSlice({
           existingItem.totalPrice + (newItem.price * newItem.quantity)
         state.totalQuantity = state.totalQuantity + newItem.quantity
         state.totalAmount = state.totalAmount + existingItem.totalPrice
+      }
+    },
+    removeCartItem: (state, action) => {
+      const cartItemId = action.payload
+      const selectedItem = state.items.find(item => item.id === cartItemId)
+
+      const newCartItems = state.items.filter(
+        item => item.id !== cartItemId
+      )
+      return {
+        ...state,
+        items: newCartItems,
+        totalProduct: state.totalProduct - 1,
+        totalQuantity: state.totalQuantity - selectedItem.quantity,
+        totalAmount: state.totalAmount - (selectedItem.price * selectedItem.quantity)
       }
     },
     increaseQty: (state, action) => {
@@ -131,6 +146,10 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   //  data is the newItem send to the Reducer
   //  qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
+}
+
+export const removeItemFromCart = (itemId) => (dispatch) => {
+  dispatch(cartActions.removeCartItem(itemId))
 }
 
 export const plusOne = (info) => (dispatch, getState) => {
