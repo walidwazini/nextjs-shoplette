@@ -13,7 +13,7 @@ const dummyStates = {
       price: 10,
       quantity: 5,
       countInStock: 27,
-      totalPrice: 10
+      totalPrice: 50
     },
     {
       id: "1bcdd762-a321-4b4d-80dc-e606a779fc80",
@@ -36,7 +36,7 @@ const dummyStates = {
       totalPrice: 10,
     }
   ],
-  newItems: [],
+  // newItems: [],
   totalQuantity: 8,
   totalProduct: 3,
   totalAmount: 70,
@@ -89,24 +89,13 @@ const cartSlice = createSlice({
         state.totalAmount = state.totalAmount + existingItem.totalPrice
       }
     },
-    changeQuantity(state, action) {
-      // ? newquanity and id as payload
-      const info = action.payload
-      const itemList = state.items
-      // * Item will bew always existingItem
-      const selectedIndex = state.items.findIndex(item => info.id === item.id)
-      const currentItem = state.items[selectedIndex]
-
-      const updateTheItem = { ...currentItem, quantity: info.count }
-      itemList.splice(selectedIndex, 1, updateTheItem)
-    },
     increaseQty: (state, action) => {
       const info = action.payload
       const itemList = state.items
 
       const selectedIndex = itemList.findIndex(item => info.id === item.id)
       const selectedItem = state.items[selectedIndex]
-      // update selectedItem details
+
       const newItemDetails = {
         ...selectedItem,
         quantity: selectedItem.quantity + 1,
@@ -114,7 +103,7 @@ const cartSlice = createSlice({
       }
       state.totalQuantity++
       state.totalAmount = state.totalAmount + selectedItem.price
-      // * Replace oldDetails with newDetails
+
       itemList.splice(selectedIndex, 1, newItemDetails)
     },
     decreaseQty(state, action) {
@@ -123,7 +112,7 @@ const cartSlice = createSlice({
 
       const selectedIndex = itemList.findIndex(item => info.id === item.id)
       const selectedItem = state.items[selectedIndex]
-      // update selectedItem details
+
       const newItemDetails = {
         ...selectedItem,
         quantity: selectedItem.quantity - 1,
@@ -149,7 +138,14 @@ const cartSlice = createSlice({
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems))
       return { ...state, newItems: cartItems };
     },
-    removeItemFromCart(state, action) { }
+    removeCartItem(state, action) {
+      console.log(action.payload.itemId)
+      state.items.filter(
+        item => item.id !== action.payload.itemId
+      )
+      Cookies.set(CART_STORAGE_KEY, JSON.stringify(state.items));
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(state.items))
+    }
   }
 })
 
@@ -161,7 +157,11 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   //  qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
   dispatch(cartActions.newAddToCart(product))
+}
 
+export const removeItemFromCart = (itemId) => (dispatch) => {
+  console.log(itemId)
+  dispatch(cartActions.removeCartItem(itemId))
 }
 
 export const editQuantity = (info) => (dispatch) => {
@@ -172,7 +172,7 @@ export const plusOne = (info) => (dispatch) => {
   dispatch(cartActions.increaseQty(info))
 }
 
-export const decreaseOne = (info) => (dispatch) => {
+export const minusOne = (info) => (dispatch) => {
   dispatch(cartActions.decreaseQty(info))
 }
 

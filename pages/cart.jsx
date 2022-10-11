@@ -8,27 +8,40 @@ import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
+import { minusOne, plusOne, removeItemFromCart } from "../store/cart-slice";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
 
-const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
+const CartItem = ({
+  initialCount,
+  productName,
+  brandName,
+  price,
+  slug,
+  id,
+}) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [count, setCount] = useState(initialCount ? initialCount : 1);
+
   const decrementCount = () => {
     if (count > 1) setCount(count - 1);
+
+    const info = { id, count };
+    dispatch(minusOne(info));
   };
   const incrementCount = () => {
     if (count < 10) setCount(count + 1);
+    const info = { id, count };
+    dispatch(plusOne(info));
   };
 
-  // useEffect(() => {
-  //   const getProd = async () => {
-  //     const { data } = await axios.get(`/api/products/${id}`);
-  //     console.log(data);
-  //   };
-  //   getProd();
-  // });
+  const deleteHandler = (ev) => {
+    ev.preventDefault();
+    dispatch(removeItemFromCart(id));
+    console.log(id);
+  };
 
   return (
     <li className='flex items-center hover:bg-gray-800  py-5 text-white'>
@@ -47,7 +60,7 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
         </div>
       </div>
       <div className='flex justify-center w-1/6 '>
-        <button onClick={decrementCount}>
+        <button disabled={count === 1} onClick={decrementCount}>
           <BiMinus />
         </button>
 
@@ -74,7 +87,7 @@ const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
         RM {price * count}
       </div>
       <div className='text-center w-1/6 font-semibold text-sm'>
-        <button onClick={() => {}}>
+        <button onClick={deleteHandler}>
           <BsTrashFill className='text-red-600 hover:text-red-400 text-xl' />
         </button>
       </div>
@@ -146,6 +159,7 @@ const CartPage = () => {
                 {dummyItems.map((item) => (
                   <CartItem
                     key={item.id}
+                    id={item.id}
                     initialCount={item.quantity}
                     brandName={item.brand}
                     slug={item.slug}
