@@ -157,8 +157,8 @@ export const addItemToCart = (product) => async (dispatch, getState) => {
   // ? API Call for product by id
   // const { data } = await axios.get(`api/products/${id}`)
 
-  // * data is the newItem send to the Reducer
-  // * qty need to be included in the newItem Object
+  //  data is the newItem send to the Reducer
+  //  qty need to be included in the newItem Object
   dispatch(cartActions.addCartItem(product))
   dispatch(cartActions.newAddToCart(product))
 

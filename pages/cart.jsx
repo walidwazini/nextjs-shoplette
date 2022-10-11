@@ -8,55 +8,18 @@ import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 
 import CartNavbar from "../components/CartNavbar";
-import axios from "axios";
-import {
-  addItemToCart,
-  decreaseOne,
-  editQuantity,
-  plusOne,
-} from "../store/cart-slice";
-import { fetchProducts } from "../store/product-slice";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
 
-const CartItem = ({
-  initialCount,
-  productName,
-  brandName,
-  price,
-  slug,
-  id,
-  productList,
-}) => {
+const CartItem = ({ initialCount, productName, brandName, price, slug }) => {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [count, setCount] = useState(initialCount);
-
+  const [count, setCount] = useState(initialCount ? initialCount : 1);
   const decrementCount = () => {
-    if (count >= 1) {
-      setCount(count - 1);
-      const info = { count, id };
-
-      const itemList = productList;
-      const selectedIndex = itemList.findIndex((item) => info.id === item._id);
-      const selectedItem = itemList[selectedIndex];
-
-      dispatch(decreaseOne(info));
-    }
+    if (count > 1) setCount(count - 1);
   };
   const incrementCount = () => {
-    if (count < 10) {
-      setCount(count + 1);
-      const info = { count, id };
-
-      dispatch(plusOne(info));
-    }
-  };
-  const updateCartHandler = async (id, qty) => {
-    const { data } = await axios.get(`/api/products/${id}`);
-    console.log(data);
-    dispatch(addItemToCart(data));
+    if (count < 10) setCount(count + 1);
   };
 
   // useEffect(() => {
@@ -84,7 +47,7 @@ const CartItem = ({
         </div>
       </div>
       <div className='flex justify-center w-1/6 '>
-        <button disabled={count === 1} onClick={decrementCount}>
+        <button onClick={decrementCount}>
           <BiMinus />
         </button>
 
@@ -98,7 +61,11 @@ const CartItem = ({
             event.preventDefault();
           }}
         />
-        <button onClick={incrementCount}>
+        <button
+          className='disabled:text-slate-700 text-white '
+          disabled={count === 5}
+          onClick={incrementCount}
+        >
           <IoMdAdd />
         </button>
       </div>
@@ -179,7 +146,6 @@ const CartPage = () => {
                 {dummyItems.map((item) => (
                   <CartItem
                     key={item.id}
-                    id={item.id}
                     initialCount={item.quantity}
                     brandName={item.brand}
                     slug={item.slug}
