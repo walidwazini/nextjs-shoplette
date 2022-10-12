@@ -4,17 +4,24 @@ import React, { useState } from "react";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
 
-const signInState = { title: "Sign In", button: "Login" };
-const registerState = { title: "Register", button: "Submit" };
+const signInState = { title: "Login now to start shopping!", button: "Log In" };
+const registerState = { title: "Sign Up now today!", button: "Submit" };
 
 const LoginScreen = () => {
-  const [title, setTitle] = useState("Login");
-  const [pageState, setPageState] = useState(signInState);
+  const [pageState, setPageState] = useState(registerState);
+
+  const changeStateHandler = () => {
+    if (pageState === registerState) {
+      setPageState(signInState);
+    } else if (pageState === signInState) {
+      setPageState(registerState);
+    }
+  };
 
   return (
     <>
       <Head>
-        <title>Authorization</title>
+        <title>{pageState.title}</title>
       </Head>
       <nav
         className={`relative top-0  w-full h-[13vh] flex items-center 
@@ -41,23 +48,25 @@ const LoginScreen = () => {
             }}
           />
         </div>
-        <div
-          className={`basis-[45%] h-full bg-red-700 flex justify-center items-center`}
-        >
+        <div className={`basis-[45%] h-full flex justify-center items-center`}>
           <form
-            className={`w-[75%] h-[85%] flex flex-col justify-start items-center
-           bg-slate-300 shadow-md rounded-md py-4 px-12`}
+            className={`w-[75%] min-h-[85%] flex flex-col justify-start items-center
+           bg-slate-300 shadow-md rounded-md py-2 px-12`}
           >
             <div className={`flex w-full items-start py-2 my-2`}>
-              <h1 className='text-2xl'>{pageState.title}</h1>
+              <h1 className='text-2xl'>
+                {pageState === registerState ? "Sign Up" : "Login"}
+              </h1>
             </div>
-            <div className='p-2 mt-6 flex flex-col gap-6 w-full'>
-              <input
-                type={`text`}
-                placeholder='Fullname'
-                className={`w-full h-10 text-xs p-2
+            <div className='p-2 mt-1  h-full flex flex-col gap-3 w-full'>
+              {pageState === registerState && (
+                <input
+                  type={`text`}
+                  placeholder='Fullname'
+                  className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
-              />
+                />
+              )}
               {/* <input
                 FOR USERNAME 
               /> */}
@@ -79,19 +88,67 @@ const LoginScreen = () => {
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
               />
-              {/* <input
-                type={"password"}
-                placeholder='Confirm Password'
-                className={`w-full h-10 text-xs p-2
+              {pageState === registerState && (
+                <input
+                  type={"password"}
+                  placeholder='Confirm Password'
+                  className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
-              /> */}
+                />
+              )}
+              <div className={`flex flex-col w-full gap-1`}>
+                <button
+                  className={`mt-3 w-full px-6 py-2 rounded-sm  text-white
+                hover:bg-blue-500 bg-blue-700 uppercase`}
+                >
+                  {pageState.button}
+                </button>
+                {pageState === signInState && (
+                  <Link href={"/"}>
+                    <div className='hover:text-slate-500 text-xs hover:cursor-pointer '>
+                      Forgot Password
+                    </div>
+                  </Link>
+                )}
+              </div>
+              {/* <span className='p-1 bg-red-600 w-full my-6'></span> */}
+              <div class='relative h-[10%] flex py-auto items-center'>
+                <div class='flex-grow border-t border-gray-600'></div>
+                <span class='flex-shrink mx-4 text-gray-600'>or</span>
+                <div class='flex-grow border-t border-gray-600'></div>
+              </div>
+              <div className=' flex justify-center items-center'>
+                <button disabled className='py-2 px-4 bg-white rounded-sm'>
+                  Google Login
+                </button>
+              </div>
+              <div className='flex justify-center items-center gap-1'>
+                {pageState === registerState && (
+                  <>
+                    <p>Have an account ?</p>
+                    {"   "}
+                    <span
+                      onClick={changeStateHandler}
+                      className={`text-red-600 hover:cursor-pointer font-semibold`}
+                    >
+                      Log In
+                    </span>
+                  </>
+                )}
+                {pageState === signInState && (
+                  <>
+                    <p>New to Shoplette ?</p>
+                    {"   "}
+                    <span
+                      onClick={changeStateHandler}
+                      className={`text-red-600 hover:cursor-pointer font-semibold`}
+                    >
+                      Sign Up
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
-            <button
-              className={`mt-3 w-1/2 px-6 py-2 rounded-md  text-white
-            hover:bg-blue-500 bg-blue-700 uppercase`}
-            >
-              {pageState.button}
-            </button>
           </form>
         </div>
       </div>

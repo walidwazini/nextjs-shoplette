@@ -32,7 +32,7 @@ const CartNavbar = () => {
             <Link href={"/"}>Help</Link>
           </span>
           <span className='hover:text-red-400 hover:cursor-pointer'>
-            <Link href={"/"}>Online User</Link>
+            <Link href={"/login"}>Online User</Link>
           </span>
         </div>
       </div>
