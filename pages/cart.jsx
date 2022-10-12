@@ -101,14 +101,12 @@ const CartItem = ({
 
 const CartPage = () => {
   const cartState = useSelector((state) => state.cart);
-  const {
-    items: dummyItems,
-    totalQuantity,
-    totalProduct,
-    totalAmount,
-  } = cartState;
+  const { items, totalQuantity, totalProduct, totalAmount } = cartState;
 
   const shippingCharge = 7;
+  const router = useRouter();
+
+  let test = 1;
 
   return (
     <>
@@ -116,52 +114,69 @@ const CartPage = () => {
         <title>{"Shopping Cart"}</title>
       </Head>
       <CartNavbar />
-      {totalProduct === 0 && (
-        <div className=' flex text-center mt-10'>
-          <h1>Your cart is empty</h1>
-        </div>
-      )}
-      {
-        <div className='container mx-auto mt-10'>
-          <div className='flex shadow-md my-10'>
-            <div id='order_details' className='w-3/4 bg-gray-900 px-10 py-10'>
-              <div className='flex justify-between border-b pb-8 text-white'>
-                <h1 className='font-semibold text-2xl'>Shopping Cart</h1>
-                <h2 className='font-semibold text-2xl'>{totalProduct} Items</h2>
+      <div className='container mx-auto mt-10 w-full flex justify-center '>
+        <div className='flex shadow-md my-6 w-[95%]'>
+          <div id='order_details' className='w-3/4 bg-gray-900 px-10 py-16'>
+            <div className='flex justify-between border-b pb-8 text-white'>
+              <h1 className='font-semibold text-2xl'>Shopping Cart</h1>
+              <h2 className='font-semibold text-2xl'>{totalProduct} Items</h2>
+            </div>
+            {totalProduct === 0 && (
+              <div className='w-full h-full px-4 py-6 flex flex-col justify-center items-center'>
+                <div
+                  className={`w-[30rem] h-16 flex justify-center items-center`}
+                >
+                  <h1 className='text-white text-3xl font-thin'>
+                    Your cart is empty.
+                  </h1>
+                </div>
+                <span className='p-1 bg-red-600 w-1/3 my-6'></span>
+                <button
+                  onClick={() => router.push(`/`)}
+                  className={`rounded-md mt-2 py-3 w-32 text-white bg-red-600 
+                  hover:font-semibold hover:bg-red-500`}
+                >
+                  Go to Shop
+                </button>
               </div>
-              <div className='flex mt-10 mb-5 w-full text-gray-400 '>
-                <h3 className='font-semibold  text-xs uppercase w-2/6'>
-                  Product Details
-                </h3>
-                <h3 className='font-semibold text-center  text-xs uppercase w-1/6 '>
-                  Quantity
-                </h3>
-                <h3 className='font-semibold  text-xs uppercase w-1/6 text-center'>
-                  Price
-                </h3>
-                <h3 className='font-semibold  text-xs uppercase w-1/6 text-center'>
-                  Total
-                </h3>
-                <h3 className='font-semibold 0 text-xs uppercase w-1/6 text-center'></h3>
-              </div>
-              <ul
-                className={`flex flex-col lg:h-[70%] w-full
+            )}
+            {totalProduct > 0 && (
+              <>
+                <div className='flex mt-10 mb-5 w-full text-gray-400 '>
+                  <h3 className='font-semibold  text-xs uppercase w-2/6'>
+                    Product Details
+                  </h3>
+                  <h3 className='font-semibold text-center  text-xs uppercase w-1/6 '>
+                    Quantity
+                  </h3>
+                  <h3 className='font-semibold  text-xs uppercase w-1/6 text-center'>
+                    Price
+                  </h3>
+                  <h3 className='font-semibold  text-xs uppercase w-1/6 text-center'>
+                    Total
+                  </h3>
+                  <h3 className='font-semibold 0 text-xs uppercase w-1/6 text-center'></h3>
+                </div>
+                <ul
+                  className={`flex flex-col lg:h-[70%] w-full
               overflow-y-scroll overflow-x-hidden
               divide-y divide-gray-100`}
-              >
-                {dummyItems.map((item) => (
-                  <CartItem
-                    key={item.id}
-                    id={item.id}
-                    initialCount={item.quantity}
-                    brandName={item.brand}
-                    slug={item.slug}
-                    productName={item.name}
-                    price={item.price}
-                  />
-                ))}
-              </ul>
-
+                >
+                  {items.map((item) => (
+                    <CartItem
+                      key={item.id}
+                      id={item.id}
+                      initialCount={item.quantity}
+                      brandName={item.brand}
+                      slug={item.slug}
+                      productName={item.name}
+                      price={item.price}
+                    />
+                  ))}
+                </ul>
+              </>
+            )}
+            {totalProduct > 0 && (
               <a
                 href='/'
                 className='flex items-center gap-2 font-semibold text-indigo-600 hover:text-indigo-400 text-sm mt-10'
@@ -169,58 +184,72 @@ const CartPage = () => {
                 <BsArrowLeftCircle className='text-lg' />
                 Continue Shopping
               </a>
-            </div>
+            )}
+          </div>
 
-            <div id='order_summary' className='w-1/4 px-8 py-10 bg-slate-500'>
-              <h1 className='font-semibold text-2xl border-b pb-8'>
-                Order Summary
-              </h1>
-              <div className='flex justify-between mt-10 mb-5'>
-                <span className='font-semibold text-sm uppercase'>Items 3</span>
-                <span className='font-semibold text-sm'>
-                  {/* Not reactive yet due to changes of item count  */}
-                  {/* RM {items.reduce((a, c) => a + c.price * c.quantity, 0)} */}
-                  RM {totalAmount}
+          <div id='order_summary' className='w-1/4 px-8 py-10 bg-slate-500'>
+            <h1 className='font-semibold text-2xl border-b pb-8'>
+              Order Summary
+            </h1>
+            <div className='flex justify-between mt-10 mb-5'>
+              <span className='font-semibold text-sm uppercase'>
+                Item(s) {totalProduct}
+              </span>
+              <span className='font-semibold text-sm'>
+                {/* RM {items.reduce((a, c) => a + c.price * c.quantity, 0)} */}
+                RM {totalAmount}
+              </span>
+            </div>
+            <div>
+              <label className='font-medium inline-block mb-3 text-sm uppercase'>
+                Shipping
+              </label>
+              <select
+                disabled={!totalProduct}
+                className='block p-2 text-gray-600 w-full text-sm'
+              >
+                <option>Standard shipping - RM 7.00</option>
+              </select>
+            </div>
+            <div className='py-10'>
+              <label
+                htmlFor='promo'
+                className='font-semibold inline-block mb-3 text-sm uppercase'
+              >
+                Promo Code
+              </label>
+              <input
+                type='text'
+                id='promo'
+                placeholder='Enter your code'
+                className='p-2 text-sm w-full'
+                disabled
+              />
+              <button
+                disabled
+                className='disabled:bg-slate-400 bg-red-500 hover:bg-red-600 mt-6 px-5 py-2 text-sm text-white uppercase'
+              >
+                Apply
+              </button>
+            </div>
+            <div className='border-t mt-8'>
+              <div className='flex font-semibold justify-between py-6 text-lg uppercase'>
+                <span>Total cost</span>
+
+                <span>
+                  RM {totalProduct > 0 ? totalAmount + shippingCharge : "0"}
                 </span>
               </div>
-              <div>
-                <label className='font-medium inline-block mb-3 text-sm uppercase'>
-                  Shipping
-                </label>
-                <select className='block p-2 text-gray-600 w-full text-sm'>
-                  <option>Standard shipping - RM 7.00</option>
-                </select>
-              </div>
-              <div className='py-10'>
-                <label
-                  htmlFor='promo'
-                  className='font-semibold inline-block mb-3 text-sm uppercase'
-                >
-                  Promo Code
-                </label>
-                <input
-                  type='text'
-                  id='promo'
-                  placeholder='Enter your code'
-                  className='p-2 text-sm w-full'
-                />
-                <button className='bg-red-500 hover:bg-red-600 mt-6 px-5 py-2 text-sm text-white uppercase'>
-                  Apply
-                </button>
-              </div>
-              <div className='border-t mt-8'>
-                <div className='flex font-semibold justify-between py-6 text-lg uppercase'>
-                  <span>Total cost</span>
-                  <span>RM {totalAmount + shippingCharge}</span>
-                </div>
-                <button className='bg-indigo-900 font-semibold hover:bg-indigo-700 py-3 text-sm text-white uppercase w-full'>
-                  Checkout
-                </button>
-              </div>
+              <button
+                disabled={!totalProduct}
+                className='disabled:bg-slate-400 bg-indigo-900 font-semibold hover:bg-indigo-700 py-3 text-sm text-white uppercase w-full'
+              >
+                Checkout
+              </button>
             </div>
           </div>
         </div>
-      }
+      </div>
     </>
   );
 };

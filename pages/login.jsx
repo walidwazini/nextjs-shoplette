@@ -88,7 +88,7 @@ const LoginScreen = () => {
             </div>
             <button
               className={`mt-3 w-1/2 px-6 py-2 rounded-md  text-white
-            hover:bg-blue-500 bg-blue-700 `}
+            hover:bg-blue-500 bg-blue-700 uppercase`}
             >
               {pageState.button}
             </button>
