@@ -10,7 +10,7 @@ module.exports = {
         '2xs': {
           'font-size': '0.60rem',
           'line-height': '0.75rem',
-        }
+        },
       }
     },
   },

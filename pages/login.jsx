@@ -34,21 +34,18 @@ const LoginScreen = () => {
         </Link>
       </nav>
       <div
-        className={`container bg-red-600 h-[80vh] w-full px-4 md:px-10 lg:px-24
+        className={`bg-red-600 h-[80vh] w-full px-4 md:px-10 lg:px-24
       flex justify-center items-center gap-4`}
       >
         <div
           className={`flex justify-center items-center
-        basis-[55%] h-full  `}
+        basis-[40%] lg:basis-[55%] h-full  `}
         >
-          <SWhite1
-            style={{
-              lineHeight: "12rem",
-              fontSize: "14rem",
-            }}
-          />
+          <SWhite1 className={`text-[9rem] lg:text-[11rem]`} />
         </div>
-        <div className={`basis-[45%] h-full flex justify-center items-center`}>
+        <div
+          className={`basis-3/5 lg:basis-[45%] h-full flex justify-center items-center`}
+        >
           <form
             className={`w-[75%] min-h-[85%] flex flex-col justify-start items-center
            bg-slate-300 shadow-md rounded-md py-2 px-12`}
@@ -112,10 +109,10 @@ const LoginScreen = () => {
                 )}
               </div>
               {/* <span className='p-1 bg-red-600 w-full my-6'></span> */}
-              <div class='relative h-[10%] flex py-auto items-center'>
-                <div class='flex-grow border-t border-gray-600'></div>
-                <span class='flex-shrink mx-4 text-gray-600'>or</span>
-                <div class='flex-grow border-t border-gray-600'></div>
+              <div className='relative h-[10%] flex py-auto items-center'>
+                <div className='flex-grow border-t border-gray-600'></div>
+                <span className='flex-shrink mx-4 text-gray-600'>or</span>
+                <div className='flex-grow border-t border-gray-600'></div>
               </div>
               <div className=' flex justify-center items-center'>
                 <button disabled className='py-2 px-4 bg-white rounded-sm'>
