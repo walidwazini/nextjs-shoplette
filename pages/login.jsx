@@ -3,19 +3,34 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
+import useInput from "../hooks/use-input";
 
 const signInState = { title: "Login now to start shopping!", button: "Log In" };
-const registerState = { title: "Sign Up now today!", button: "Submit" };
 
 const LoginScreen = () => {
-  const [pageState, setPageState] = useState(registerState);
+  const [pageState, setPageState] = useState(signInState);
+  const [input, setInput] = useState({ email: "", password: "" });
+  const [formErrors, setFormErrors] = useState({});
+  const { value, isValid, blurHandler, changeHandler, hasError, reset } =
+    useInput((value) => value.trim() !== "");
 
-  const changeStateHandler = () => {
-    if (pageState === registerState) {
-      setPageState(signInState);
-    } else if (pageState === signInState) {
-      setPageState(registerState);
+  const validate = (values) => {
+    const errors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!emailRegex.test(values.email)) {
+      errors.email = "This is not a valid email format!";
     }
+    return errors;
+  };
+
+  const submitHandler = (ev) => {
+    ev.preventDefault();
+
+    console.log(input);
+    setFormErrors(validate(input));
   };
 
   return (
@@ -47,66 +62,52 @@ const LoginScreen = () => {
           className={`basis-3/5 lg:basis-[45%] h-full flex justify-center items-center`}
         >
           <form
+            onSubmit={submitHandler}
             className={`w-[75%] min-h-[85%] flex flex-col justify-start items-center
            bg-slate-300 shadow-md rounded-md py-2 px-12`}
           >
             <div className={`flex w-full items-start py-2 my-2`}>
-              <h1 className='text-2xl'>
-                {pageState === registerState ? "Sign Up" : "Login"}
-              </h1>
+              <h1 className='text-2xl'>Login</h1>
             </div>
             <div className='p-2 mt-1  h-full flex flex-col gap-3 w-full'>
-              {pageState === registerState && (
-                <input
-                  type={`text`}
-                  placeholder='Fullname'
-                  className={`w-full h-10 text-xs p-2
-              focus:ring  focus:ring-red-400 `}
-                />
-              )}
-              {/* <input
-                FOR USERNAME 
-              /> */}
               <input
                 type='text'
                 placeholder='Username / Email'
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
+                value={input.email}
+                onChange={(ev) =>
+                  setInput({ ...input, email: ev.target.value })
+                }
               />
-              {/* <input
-                type={`tel`}
-                placeholder='Phone Number'
-                className={`w-full h-10 text-xs p-2
-              focus:ring  focus:ring-red-400 `}
-              /> */}
+              <p className='text-red-500 text-sm font-bold'>
+                {formErrors.email}
+              </p>
               <input
                 type={"password"}
                 placeholder='Password'
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
+                value={input.password}
+                onChange={(ev) =>
+                  setInput({ ...input, password: ev.target.value })
+                }
               />
-              {pageState === registerState && (
-                <input
-                  type={"password"}
-                  placeholder='Confirm Password'
-                  className={`w-full h-10 text-xs p-2
-              focus:ring  focus:ring-red-400 `}
-                />
-              )}
+
               <div className={`flex flex-col w-full gap-1`}>
                 <button
+                  type={`submit`}
                   className={`mt-3 w-full px-6 py-2 rounded-sm  text-white
                 hover:bg-blue-500 bg-blue-700 uppercase`}
                 >
-                  {pageState.button}
+                  Log In
                 </button>
-                {pageState === signInState && (
-                  <Link href={"/"}>
-                    <div className='hover:text-slate-500 text-xs hover:cursor-pointer '>
-                      Forgot Password
-                    </div>
-                  </Link>
-                )}
+
+                <Link href={"/"}>
+                  <div className='hover:text-slate-500 text-xs hover:cursor-pointer '>
+                    Forgot Password
+                  </div>
+                </Link>
               </div>
               {/* <span className='p-1 bg-red-600 w-full my-6'></span> */}
               <div className='relative h-[10%] flex py-auto items-center'>
@@ -120,30 +121,14 @@ const LoginScreen = () => {
                 </button>
               </div>
               <div className='flex justify-center items-center gap-1'>
-                {pageState === registerState && (
-                  <>
-                    <p>Have an account ?</p>
-                    {"   "}
-                    <span
-                      onClick={changeStateHandler}
-                      className={`text-red-600 hover:cursor-pointer font-semibold`}
-                    >
-                      Log In
-                    </span>
-                  </>
-                )}
-                {pageState === signInState && (
-                  <>
-                    <p>New to Shoplette ?</p>
-                    {"   "}
-                    <span
-                      onClick={changeStateHandler}
-                      className={`text-red-600 hover:cursor-pointer font-semibold`}
-                    >
-                      Sign Up
-                    </span>
-                  </>
-                )}
+                <p>New to Shoplette ?</p>
+                {"   "}
+                <span
+                  onClick={() => {}}
+                  className={`text-indigo-600 hover:text-indigo-900 font-semibold underline  hover:cursor-pointer `}
+                >
+                  Sign Up Now
+                </span>
               </div>
             </div>
           </form>
