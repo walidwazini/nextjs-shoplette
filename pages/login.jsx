@@ -1,30 +1,53 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
 
-// const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
 const LoginScreen = () => {
   const [input, setInput] = useState({ email: "", password: "" });
-  const [formErrors, setFormErrors] = useState({});
+  const [emailError, setEmailError] = useState(null);
+  const [passwError, setPasswError] = useState(null);
+  // const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  const validate = (values) => {
-    if (!values.email) {
-      errors.email = "Email is required!";
-    } else if (!emailRegex.test(values.email)) {
-      errors.email = "This is not a valid email format!";
+  const ValidateEmail = (email) => {
+    if (emailRegex.test(email)) {
+      return true;
     }
-    return errors;
+    setEmailError("Invalid email format !");
+    return false;
+  };
+
+  const ValidatePassword = (password) => {
+    if (password.trim("").length === 0) {
+      setPasswError("Please enter your password");
+      console.log(passwError);
+      return false;
+    } else if (password.trim("").length > 13 || password.trim("").length < 6) {
+      setPasswError("Password length not valid.");
+      console.log(passwError);
+      return false;
+    } else return true;
   };
 
   const submitHandler = (ev) => {
     ev.preventDefault();
+    setEmailError(null);
+    setPasswError(null);
 
-    setFormErrors(validate(input));
-    console.log(input);
+    if (
+      ValidateEmail(input.email) === false ||
+      ValidatePassword(input.password) === false
+    ) {
+      console.log("false");
+    } else {
+      setEmailError(null);
+      // API call
+      console.log(input);
+    }
+
     setInput({ email: "", password: "" });
   };
 
@@ -66,7 +89,7 @@ const LoginScreen = () => {
             </div>
             <div className='p-2 mt-1  h-full flex flex-col gap-3 w-full'>
               <input
-                type='text'
+                type={`text`}
                 placeholder='Username / Email'
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
@@ -76,12 +99,16 @@ const LoginScreen = () => {
                   setInput({ ...input, email: ev.target.value })
                 }
               />
-              <p className='text-red-500 text-sm font-bold'>
-                {formErrors.email}
-              </p>
+              {emailError && (
+                <p className='text-red-500 -mt-2 text-xs font-semibold'>
+                  {/* {formErrors.email} */}
+                  {emailError}
+                </p>
+              )}
               <input
                 type={"password"}
                 placeholder='Password'
+                autoComplete={"false"}
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
                 value={input.password}
@@ -89,6 +116,11 @@ const LoginScreen = () => {
                   setInput({ ...input, password: ev.target.value })
                 }
               />
+              {passwError && (
+                <p className='text-red-500 -mt-2 text-xs font-semibold'>
+                  {passwError}
+                </p>
+              )}
 
               <div className={`flex flex-col w-full gap-1`}>
                 <button
