@@ -1,23 +1,17 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
-import useInput from "../hooks/use-input";
 
-const signInState = { title: "Login now to start shopping!", button: "Log In" };
+// const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
 const LoginScreen = () => {
-  const [pageState, setPageState] = useState(signInState);
   const [input, setInput] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({});
-  const { value, isValid, blurHandler, changeHandler, hasError, reset } =
-    useInput((value) => value.trim() !== "");
 
   const validate = (values) => {
-    const errors = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
     if (!values.email) {
       errors.email = "Email is required!";
     } else if (!emailRegex.test(values.email)) {
@@ -29,14 +23,15 @@ const LoginScreen = () => {
   const submitHandler = (ev) => {
     ev.preventDefault();
 
-    console.log(input);
     setFormErrors(validate(input));
+    console.log(input);
+    setInput({ email: "", password: "" });
   };
 
   return (
     <>
       <Head>
-        <title>{pageState.title}</title>
+        <title>Login now to start shopping!</title>
       </Head>
       <nav
         className={`relative top-0  w-full h-[13vh] flex items-center 
@@ -76,6 +71,7 @@ const LoginScreen = () => {
                 className={`w-full h-10 text-xs p-2
               focus:ring  focus:ring-red-400 `}
                 value={input.email}
+                // pattern={/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/}
                 onChange={(ev) =>
                   setInput({ ...input, email: ev.target.value })
                 }
