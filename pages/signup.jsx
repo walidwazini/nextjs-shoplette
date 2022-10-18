@@ -1,12 +1,40 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const SignUpPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const initialInputState = { email: "", password: "", confirmPassword: "" };
 
+const SignUpPage = () => {
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [input, setInput] = useState(initialInputState);
   const passwordToggle = () => setShowPassword((prevState) => !prevState);
+
+  const submitHandler = async (ev) => {
+    ev.preventDefault();
+    // const { name, email, password, confirmPassword } = details;
+    if (input.confirmPassword !== input.password) {
+      alert("Password not match");
+    }
+
+    try {
+      const { data } = await axios.post("/api/users/register", {
+        email: input.email,
+        password: input.password,
+      });
+      console.log(data);
+      // Dispatch USER_LOGIN
+
+      router.push("/");
+      console.log("Nice sign up");
+    } catch (err) {
+      console.log(err);
+    }
+    setInput(initialInputState);
+  };
 
   return (
     <div>
@@ -28,6 +56,7 @@ const SignUpPage = () => {
       flex justify-center items-center gap-4`}
       >
         <form
+          onSubmit={submitHandler}
           className={`w-[35%] min-h-[85%] flex flex-col justify-start items-center
         bg-slate-300 shadow-md rounded-md py-2 px-4 `}
         >
@@ -38,12 +67,19 @@ const SignUpPage = () => {
             <input
               className='w-full h-10 text-xs p-2 focus:ring focus:ring-red-400'
               placeholder='Email'
+              value={input.email}
+              onChange={(ev) => setInput({ ...input, email: ev.target.value })}
               type={"email"}
             />
             <div className='relative'>
               <input
                 className='w-full h-10 text-xs p-2 focus:ring focus:ring-red-400'
                 placeholder='Password'
+                autoComplete='false'
+                value={input.password}
+                onChange={(ev) =>
+                  setInput({ ...input, password: ev.target.value })
+                }
                 type={showPassword ? "text" : "password"}
               />
               <span
@@ -57,6 +93,11 @@ const SignUpPage = () => {
               className='w-full h-10 text-xs p-2 focus:ring focus:ring-red-400'
               placeholder='Confirm Password'
               type={"password"}
+              value={input.confirmPassword}
+              onChange={(ev) =>
+                setInput({ ...input, confirmPassword: ev.target.value })
+              }
+              autoComplete='false'
             />
           </div>
 

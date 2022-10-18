@@ -4,7 +4,7 @@ import axios from "axios";
 
 import config from "../../../utils/config";
 import client from '../../../utils/client';
-import nextConnect from "next-connect";
+import { signToken } from '../../../utils/auth';
 
 const handler = nextConnect()
 
@@ -34,7 +34,7 @@ handler.post(async (req, res) => {
     return res.status(401).send({ message: 'Email aleardy exists' });
   }
 
-  const { data } = axios.post(
+  const { data } = await axios.post(
     `https://${projectId}.api.sanity.io/v1/data/mutate/${dataset}?returnIds=true`,
     { mutations: createMutations },
     {
@@ -44,14 +44,16 @@ handler.post(async (req, res) => {
       },
     }
   )
+  console.log(data)
   const userId = data.results[0].id;
   const user = {
     _id: userId,
-    name: req.body.name,
+    // name: req.body.name,
+    name: 'Demo User',
     email: req.body.email,
     isAdmin: false,
   };
-  const token = signToken(user);
+  const token = signToken(user)
   res.send({ ...user, token });
 })
 
