@@ -1,16 +1,23 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
 
 const LoginScreen = () => {
+  const router = useRouter();
   const [input, setInput] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(null);
   const [passwError, setPasswError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
   // const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  const passwordToggle = () => setShowPassword((prevState) => !prevState);
 
   const ValidateEmail = (email) => {
     if (emailRegex.test(email)) {
@@ -23,11 +30,9 @@ const LoginScreen = () => {
   const ValidatePassword = (password) => {
     if (password.trim("").length === 0) {
       setPasswError("Please enter your password");
-      console.log(passwError);
       return false;
     } else if (password.trim("").length > 13 || password.trim("").length < 6) {
       setPasswError("Password length not valid.");
-      console.log(passwError);
       return false;
     } else return true;
   };
@@ -105,17 +110,25 @@ const LoginScreen = () => {
                   {emailError}
                 </p>
               )}
-              <input
-                type={"password"}
-                placeholder='Password'
-                autoComplete={"false"}
-                className={`w-full h-10 text-xs p-2
-              focus:ring  focus:ring-red-400 `}
-                value={input.password}
-                onChange={(ev) =>
-                  setInput({ ...input, password: ev.target.value })
-                }
-              />
+              <div className='relative'>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder='Password'
+                  autoComplete={"false"}
+                  className={`w-full h-10 text-xs p-2
+                focus:ring  focus:ring-red-400 `}
+                  value={input.password}
+                  onChange={(ev) =>
+                    setInput({ ...input, password: ev.target.value })
+                  }
+                />
+                <span
+                  onClick={passwordToggle}
+                  className='absolute inset-y-0 right-4 inline-flex items-center hover:cursor-pointer'
+                >
+                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </span>
+              </div>
               {passwError && (
                 <p className='text-red-500 -mt-2 text-xs font-semibold'>
                   {passwError}
@@ -152,7 +165,7 @@ const LoginScreen = () => {
                 <p>New to Shoplette ?</p>
                 {"   "}
                 <span
-                  onClick={() => {}}
+                  onClick={() => router.push("/signup")}
                   className={`text-indigo-600 hover:text-indigo-900 font-semibold underline  hover:cursor-pointer `}
                 >
                   Sign Up Now

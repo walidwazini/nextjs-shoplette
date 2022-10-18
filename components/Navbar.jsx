@@ -40,7 +40,7 @@ const Navbar = () => {
         </div>
         <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-            <Link href={"/login"}>Sign Up</Link>
+            <Link href={"/signup"}>Sign Up</Link>
           </span>
           <span className='hover:text-red-400 hover:cursor-pointer'>
             <Link href={"/login"}>Login</Link>
