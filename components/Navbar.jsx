@@ -20,6 +20,11 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 
 const Navbar = () => {
   const cartState = useSelector((state) => state.cart);
+  const onlineUser =
+    typeof window !== "undefined" && localStorage.getItem("online-user")
+      ? JSON.parse(localStorage.getItem("online-user"))
+      : [];
+  console.log(typeof onlineUser);
 
   return (
     <nav
@@ -39,12 +44,17 @@ const Navbar = () => {
           <span> Follow us on ..</span>
         </div>
         <div className={`text-white text-[0.65rem] md:text-sm `}>
-          <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-            <Link href={"/signup"}>Sign Up</Link>
-          </span>
-          <span className='hover:text-red-400 hover:cursor-pointer'>
-            <Link href={"/login"}>Login</Link>
-          </span>
+          {Array.isArray(onlineUser) && (
+            <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
+              <Link href={"/signup"}>Sign Up</Link>
+            </span>
+          )}
+          {Array.isArray(onlineUser) && (
+            <span className='hover:text-red-400 hover:cursor-pointer'>
+              <Link href={"/login"}>Login</Link>
+            </span>
+          )}
+          {!Array.isArray(onlineUser) && <span>👻 is online...</span>}
         </div>
       </div>
       <div className={`basis-4/5  flex flex-row max-h-full `}>

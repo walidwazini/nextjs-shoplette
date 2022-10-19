@@ -1,3 +1,4 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -37,7 +38,7 @@ const LoginScreen = () => {
     } else return true;
   };
 
-  const submitHandler = (ev) => {
+  const submitHandler = async (ev) => {
     ev.preventDefault();
     setEmailError(null);
     setPasswError(null);
@@ -50,7 +51,21 @@ const LoginScreen = () => {
     } else {
       setEmailError(null);
       // API call
-      console.log(input);
+      try {
+        const { data } = await axios.post("/api/users/login", {
+          email: input.email,
+          password: input.password,
+        });
+        // Dispatch to STORE
+
+        // LocalStorage
+        localStorage.setItem("online-user", JSON.stringify(data));
+
+        // console.log("Login success");
+        router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     setInput({ email: "", password: "" });
