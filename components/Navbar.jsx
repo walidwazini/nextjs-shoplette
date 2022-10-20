@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
+import { AiOutlineLogout } from "react-icons/ai";
 import { GoSearch } from "react-icons/go";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
+import { userActions } from "../store/user-slice";
+import { useRouter } from "next/router";
 
 const recentSearch = [
   "Keyboard",
@@ -18,13 +21,21 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 });
 
 const Navbar = () => {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const cartState = useSelector((state) => state.cart);
   const onlineUser = useSelector((state) => state.user.userInfo);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const logoutHandler = () => {
+    dispatch(userActions.userLogout());
+    localStorage.removeItem("online-user");
+    router.push("/");
+  };
 
   return (
     <nav
@@ -44,12 +55,6 @@ const Navbar = () => {
           <span> Follow us on ..</span>
         </div>
         <div className={`text-white text-[0.65rem] md:text-sm `}>
-          {/* <button
-            className='bg-blue-700 rounded-lg mx-2 p-1'
-            onClick={() => console.log(onlineUser)}
-          >
-            Test
-          </button> */}
           {mounted && (
             <>
               {Array.isArray(onlineUser) && (
@@ -62,8 +67,14 @@ const Navbar = () => {
                   <Link href={"/login"}>Login</Link>
                 </span>
               )}
+              {!Array.isArray(onlineUser) && <span>{onlineUser.name}</span>}
               {!Array.isArray(onlineUser) && (
-                <span>{onlineUser.name} is online...</span>
+                <button
+                  onClick={logoutHandler}
+                  className={`mx-2 h-full py-auto px-2 rounded-md bg-red-800 hover:bg-red-500`}
+                >
+                  Logout
+                </button>
               )}
             </>
           )}
