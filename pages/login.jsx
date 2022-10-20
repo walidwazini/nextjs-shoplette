@@ -4,21 +4,22 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
+import { userActions } from "../store/user-slice";
 
 const LoginScreen = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [input, setInput] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(null);
   const [passwError, setPasswError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-
+  const passwordToggle = () => setShowPassword((prevState) => !prevState);
   // const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
   // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-  const passwordToggle = () => setShowPassword((prevState) => !prevState);
 
   const ValidateEmail = (email) => {
     if (emailRegex.test(email)) {
@@ -47,6 +48,7 @@ const LoginScreen = () => {
       ValidateEmail(input.email) === false ||
       ValidatePassword(input.password) === false
     ) {
+      // Display error on UI
       console.log("false");
     } else {
       setEmailError(null);
@@ -56,12 +58,8 @@ const LoginScreen = () => {
           email: input.email,
           password: input.password,
         });
-        // Dispatch to STORE
-
-        // LocalStorage
+        dispatch(userActions.userLogin(data));
         localStorage.setItem("online-user", JSON.stringify(data));
-
-        // console.log("Login success");
         router.push("/");
       } catch (err) {
         console.log(err);
@@ -165,7 +163,6 @@ const LoginScreen = () => {
                   </div>
                 </Link>
               </div>
-              {/* <span className='p-1 bg-red-600 w-full my-6'></span> */}
               <div className='relative h-[10%] flex py-auto items-center'>
                 <div className='flex-grow border-t border-gray-600'></div>
                 <span className='flex-shrink mx-4 text-gray-600'>or</span>

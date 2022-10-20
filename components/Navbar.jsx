@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
 import { useSelector } from "react-redux";
-import Cookies from "js-cookie";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
 
@@ -19,12 +18,13 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
 });
 
 const Navbar = () => {
+  const [mounted, setMounted] = useState(false);
   const cartState = useSelector((state) => state.cart);
-  const onlineUser =
-    typeof window !== "undefined" && localStorage.getItem("online-user")
-      ? JSON.parse(localStorage.getItem("online-user"))
-      : [];
-  console.log(typeof onlineUser);
+  const onlineUser = useSelector((state) => state.user.userInfo);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav
@@ -37,24 +37,36 @@ const Navbar = () => {
         <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='ml-0 mr-2 hover:text-red-300'>
             <Link href={"/"}>Seller Centre</Link>
-          </span>{" "}
+          </span>
           <span className='mr-2 hover:text-red-300'>
             <Link href={"/"}>Download</Link>
           </span>
           <span> Follow us on ..</span>
         </div>
         <div className={`text-white text-[0.65rem] md:text-sm `}>
-          {Array.isArray(onlineUser) && (
-            <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-              <Link href={"/signup"}>Sign Up</Link>
-            </span>
+          {/* <button
+            className='bg-blue-700 rounded-lg mx-2 p-1'
+            onClick={() => console.log(onlineUser)}
+          >
+            Test
+          </button> */}
+          {mounted && (
+            <>
+              {Array.isArray(onlineUser) && (
+                <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
+                  <Link href={"/signup"}>Sign Up</Link>
+                </span>
+              )}
+              {Array.isArray(onlineUser) && (
+                <span className='hover:text-red-400 hover:cursor-pointer'>
+                  <Link href={"/login"}>Login</Link>
+                </span>
+              )}
+              {!Array.isArray(onlineUser) && (
+                <span>{onlineUser.name} is online...</span>
+              )}
+            </>
           )}
-          {Array.isArray(onlineUser) && (
-            <span className='hover:text-red-400 hover:cursor-pointer'>
-              <Link href={"/login"}>Login</Link>
-            </span>
-          )}
-          {!Array.isArray(onlineUser) && <span>👻 is online...</span>}
         </div>
       </div>
       <div className={`basis-4/5  flex flex-row max-h-full `}>

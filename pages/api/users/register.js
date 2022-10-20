@@ -17,7 +17,8 @@ handler.post(async (req, res) => {
     {
       create: {
         _type: 'user',
-        name: req.body.name,
+        // name: req.body.name,
+        name: 'Demo User',
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password),
         isAdmin: false,
@@ -44,12 +45,12 @@ handler.post(async (req, res) => {
       },
     }
   )
-  console.log(data)
+  // console.log(data)
   const userId = data.results[0].id;
   const user = {
     _id: userId,
-    // name: req.body.name,
-    name: 'Demo User',
+    name: req.body.name,
+    // name: 'Demo User',
     email: req.body.email,
     isAdmin: false,
   };
