@@ -20,27 +20,6 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
   return <BsCart4 className='text-white text-3xl' />;
 });
 
-const DropdownBtn = () => {
-  return (
-    <span className='dropdown'>
-      <button tabIndex={0} className='mx-1 bg-red-900 px-2 py-1 rounded-lg '>
-        Click
-      </button>
-      <ul
-        tabIndex={0}
-        className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'
-      >
-        <li>
-          <a>Item 1</a>
-        </li>
-        <li>
-          <a>Item 2</a>
-        </li>
-      </ul>
-    </span>
-  );
-};
-
 const Navbar = () => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);

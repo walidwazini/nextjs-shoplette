@@ -126,7 +126,7 @@ const ProductDetails = (props) => {
               <div className={`basis-3/4 p-3`}>
                 <h1 className='text-black font-semibold'>Share now :</h1>
                 <div
-                  className={` my-2 flex justify-evenly items-center
+                  className={` my-2 flex justify-evenly items-center text-base-200
                   text-md md:text-lg lg:text-2xl`}
                 >
                   <IoLogoFacebook className=' hover:cursor-pointer hover:text-blue-500 transition duration-100 ' />
@@ -137,10 +137,10 @@ const ProductDetails = (props) => {
               </div>
               <div
                 className={`basis-1/4 p-1 flex items-center justify-center
-                text-lg md:text-xl lg:text-2xl `}
+                text-lg md:text-xl lg:text-3xl `}
               >
                 <MdFavoriteBorder
-                  className={` text-rose-400 
+                  className={` text-rose-400
                 hover:cursor-pointer hover:text-rose-600
                 `}
                 />

@@ -58,7 +58,7 @@ const SignUpPage = () => {
         <form
           onSubmit={submitHandler}
           className={`w-[35%] min-h-[85%] flex flex-col justify-start items-center
-        bg-slate-300 shadow-md rounded-md py-2 px-4 `}
+        bg-slate-300 text-base-200 shadow-md rounded-md py-2 px-4 `}
         >
           <div className={`flex w-full justify-center py-2 my-2`}>
             <h1 className='text-2xl'>Sign Up</h1>

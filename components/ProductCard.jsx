@@ -52,22 +52,24 @@ const ProductCard = ({ title, id, price, imageSrc, onNavigate, rating }) => {
 
         <div id='lower' className='flex flex-col basis-1/3 justify-between'>
           <div className='flex flex-col h-16 py-1 px-2 '>
-            <p className='font-semibold text-md md:text-xl'>{title}</p>
+            <p className='font-semibold text-md md:text-xl text-base-100 '>
+              {title}
+            </p>
             {/* For sepcial tags e.g: offers, lmited deals.., COD, local seller  */}
             <div id='tags'></div>
             <p className='text-red-500 text-sm md:text-lg font-semibold'>
               RM {price}
             </p>
             {/* RATING  */}
-            <div className='flex items-center justify-start mt-2 text-sm md:text-md '>
+            <div className='flex items-center justify-start text-base-200 mt-2 text-sm md:text-md '>
               <Rating readOnly value={Math.floor(rating)} />
-              <span className='ml-2'>{rating}</span>
-              <span className='ml-5'>0 sold</span>
+              <span className='ml-2 '>{rating}</span>
+              <span className='ml-5 '>0 sold</span>
             </div>
           </div>
           <div
             onClick={() => navigateHandler(id.current)}
-            className={` w-full text-center p-2 md:p-4 mt-4
+            className={` w-full text-center p-2 md:p-4 mt-4 text-base-200
             text-sm hover:text-md font-medium bg-yellow-500 hover:bg-yellow-400 `}
           >
             View Item
