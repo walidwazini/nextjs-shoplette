@@ -62,7 +62,7 @@ const LoginScreen = () => {
         localStorage.setItem("online-user", JSON.stringify(data));
         router.push("/");
       } catch (err) {
-        console.log(err);
+        console.log(err.response.data.message);
       }
     }
 
@@ -109,7 +109,7 @@ const LoginScreen = () => {
               <input
                 type={`text`}
                 placeholder='Username / Email'
-                className={`w-full h-10 text-xs p-2
+                className={`w-full h-10 text-xs p-2 placeholder:text-green-700
               focus:ring  focus:ring-red-400 `}
                 value={input.email}
                 // pattern={/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/}

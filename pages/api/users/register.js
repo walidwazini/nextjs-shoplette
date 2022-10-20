@@ -25,13 +25,11 @@ handler.post(async (req, res) => {
       },
     },
   ];
-  const existUser = await client.fetch(
+  const existingUser = await client.fetch(
     `*[_type == "user" && email == $email][0]`,
-    {
-      email: req.body.email,
-    }
+    { email: req.body.email }
   );
-  if (existUser) {
+  if (existingUser) {
     return res.status(401).send({ message: 'Email aleardy exists' });
   }
 
@@ -45,12 +43,12 @@ handler.post(async (req, res) => {
       },
     }
   )
-  // console.log(data)
+  console.log(data)
   const userId = data.results[0].id;
   const user = {
     _id: userId,
-    name: req.body.name,
-    // name: 'Demo User',
+    // name: req.body.name,
+    name: 'Demo User',
     email: req.body.email,
     isAdmin: false,
   };

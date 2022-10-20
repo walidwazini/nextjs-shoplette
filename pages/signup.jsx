@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { userActions } from "../store/user-slice";
 
 const initialInputState = { email: "", password: "", confirmPassword: "" };
 
 const SignUpPage = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState(initialInputState);
@@ -15,25 +18,22 @@ const SignUpPage = () => {
 
   const submitHandler = async (ev) => {
     ev.preventDefault();
-    // const { name, email, password, confirmPassword } = details;
     if (input.confirmPassword !== input.password) {
       alert("Password not match");
+    } else {
+      try {
+        const { data } = await axios.post("/api/users/register", {
+          email: input.email,
+          password: input.password,
+        });
+        // Dispatch USER_LOGIN
+        dispatch(userActions.userLogin(data));
+        setInput(initialInputState);
+        router.push("/");
+      } catch (err) {
+        console.log(err.response.data.message);
+      }
     }
-
-    try {
-      const { data } = await axios.post("/api/users/register", {
-        email: input.email,
-        password: input.password,
-      });
-      console.log(data);
-      // Dispatch USER_LOGIN
-
-      router.push("/");
-      console.log("Nice sign up");
-    } catch (err) {
-      console.log(err);
-    }
-    setInput(initialInputState);
   };
 
   return (
