@@ -20,12 +20,49 @@ const IconComp = React.forwardRef(function CustomComponent(props, ref) {
   return <BsCart4 className='text-white text-3xl' />;
 });
 
+const DropdownBtn = () => {
+  return (
+    <span className='dropdown'>
+      <button tabIndex={0} className='mx-1 bg-red-900 px-2 py-1 rounded-lg '>
+        Click
+      </button>
+      <ul
+        tabIndex={0}
+        className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52'
+      >
+        <li>
+          <a>Item 1</a>
+        </li>
+        <li>
+          <a>Item 2</a>
+        </li>
+      </ul>
+    </span>
+  );
+};
+
 const Navbar = () => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const cartState = useSelector((state) => state.cart);
   const onlineUser = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
+  const dropdownMenu = [
+    {
+      id: "m1",
+      title: "Logout",
+      function: () => {
+        dispatch(userActions.userLogout());
+        localStorage.removeItem("online-user");
+        router.push("/");
+      },
+    },
+    {
+      id: "m2",
+      title: "Notifications",
+      function: () => {},
+    },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -43,7 +80,7 @@ const Navbar = () => {
     >
       <div
         id='nav-upper'
-        className={`basis-1/5 flex justify-between mt-1 md:px-14`}
+        className={`basis-1/5 flex  justify-between items-center mt-1 md:px-14`}
       >
         <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='ml-0 mr-2 hover:text-red-300'>
@@ -67,14 +104,31 @@ const Navbar = () => {
                   <Link href={"/login"}>Login</Link>
                 </span>
               )}
-              {!Array.isArray(onlineUser) && <span>{onlineUser.name}</span>}
+              {/* {!Array.isArray(onlineUser) && <span>{onlineUser.name}</span>} */}
               {!Array.isArray(onlineUser) && (
-                <button
-                  onClick={logoutHandler}
-                  className={`mx-2 h-full py-auto px-2 rounded-md bg-red-800 hover:bg-red-500`}
-                >
-                  Logout
-                </button>
+                <span className='dropdown dropdown-hover '>
+                  <label
+                    tabIndex={0}
+                    className={`mx-2 h-full py-0.5 px-2 flex items-center rounded-md bg-red-800 hover:bg-red-600`}
+                  >
+                    {onlineUser.name}
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className='dropdown-content p-2 shadow-md bg-rose-600 rounded-md w-40'
+                  >
+                    {dropdownMenu.map((menu) => (
+                      <li key={menu.id} className='hover:bg-red-500 p-1'>
+                        <button
+                          onClick={menu.function}
+                          className='p-1 rounded-md '
+                        >
+                          {menu.title}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </span>
               )}
             </>
           )}
