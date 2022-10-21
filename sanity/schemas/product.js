@@ -48,6 +48,17 @@ export default {
       type: 'string',
     },
     {
+      name: 'likes',
+      title: 'Likes',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'user' }]
+        }
+      ]
+    },
+    {
       name: 'rating',
       title: 'Rating',
       type: 'number',
