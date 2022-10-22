@@ -2,6 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -11,6 +12,7 @@ const initialInputState = { email: "", password: "", confirmPassword: "" };
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState(initialInputState);
@@ -19,7 +21,7 @@ const SignUpPage = () => {
   const submitHandler = async (ev) => {
     ev.preventDefault();
     if (input.confirmPassword !== input.password) {
-      alert("Password not match");
+      enqueueSnackbar("Password not match", { variant: "error" });
     } else {
       try {
         const { data } = await axios.post("/api/users/register", {
@@ -31,7 +33,11 @@ const SignUpPage = () => {
         setInput(initialInputState);
         router.push("/");
       } catch (err) {
-        console.log(err.response.data.message);
+        // console.log(err.response.data.message);
+        enqueueSnackbar(err.response.data.message, {
+          variant: "error",
+          autoHideDuration: 4000,
+        });
       }
     }
   };

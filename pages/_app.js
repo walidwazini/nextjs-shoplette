@@ -1,13 +1,18 @@
 import '../styles/globals.css'
-import { Provider } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
+import { SnackbarProvider } from 'notistack';
 import ReduxStore from '../store'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider store={ReduxStore} >
-
-      <Component {...pageProps} />
-    </Provider>
+    <SnackbarProvider
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      autoHideDuration={2000}
+    >
+      <ReduxProvider store={ReduxStore} >
+        <Component {...pageProps} />
+      </ReduxProvider>
+    </SnackbarProvider>
   )
 }
 

@@ -28,6 +28,16 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const dropdownMenu = [
     {
+      id: "m2",
+      title: "My Account",
+      function: () => {},
+    },
+    {
+      id: "m3",
+      title: "My Purchase",
+      function: () => {},
+    },
+    {
       id: "m1",
       title: "Logout",
       function: () => {
@@ -35,11 +45,6 @@ const Navbar = () => {
         localStorage.removeItem("online-user");
         router.push("/");
       },
-    },
-    {
-      id: "m2",
-      title: "Notifications",
-      function: () => {},
     },
   ];
 
@@ -85,7 +90,7 @@ const Navbar = () => {
               )}
               {/* {!Array.isArray(onlineUser) && <span>{onlineUser.name}</span>} */}
               {!Array.isArray(onlineUser) && (
-                <span className='dropdown dropdown-hover '>
+                <span className='dropdown dropdown-end dropdown-hover '>
                   <label
                     tabIndex={0}
                     className={`mx-2 h-full py-0.5 px-2 flex items-center rounded-md bg-red-800 hover:bg-red-600`}
@@ -98,12 +103,24 @@ const Navbar = () => {
                   >
                     {dropdownMenu.map((menu) => (
                       <li key={menu.id} className='hover:bg-red-500 p-1'>
-                        <button
-                          onClick={menu.function}
-                          className='p-1 rounded-md '
-                        >
-                          {menu.title}
-                        </button>
+                        {menu.title !== "Logout" ? (
+                          <button
+                            onClick={menu.function}
+                            className='p-1 rounded-md '
+                          >
+                            {menu.title}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={menu.function}
+                            className='p-1 rounded-md flex justify-between items-center w-full '
+                          >
+                            <span>{menu.title}</span>
+                            <span>
+                              <AiOutlineLogout />
+                            </span>
+                          </button>
+                        )}
                       </li>
                     ))}
                   </ul>

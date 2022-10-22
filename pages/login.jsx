@@ -2,6 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -12,6 +13,7 @@ import { userActions } from "../store/user-slice";
 const LoginScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [input, setInput] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState(null);
   const [passwError, setPasswError] = useState(null);
@@ -49,7 +51,7 @@ const LoginScreen = () => {
       ValidatePassword(input.password) === false
     ) {
       // Display error on UI
-      console.log("false");
+      enqueueSnackbar("Inputs invalid.", { variant: "error" });
     } else {
       setEmailError(null);
       // API call
@@ -63,6 +65,10 @@ const LoginScreen = () => {
         router.push("/");
       } catch (err) {
         console.log(err.response.data.message);
+        enqueueSnackbar(err.response.data.message, {
+          variant: "error",
+          autoHideDuration: 4000,
+        });
       }
     }
 

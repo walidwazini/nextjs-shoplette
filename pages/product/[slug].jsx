@@ -14,8 +14,9 @@ import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useRouter } from "next/router";
 import { BiMinus } from "react-icons/bi";
 import axios from "axios";
+import { useSnackbar } from "notistack";
 
-import { getProductById, getProductBySlug } from "../../utils/queries";
+import { getProductBySlug } from "../../utils/queries";
 import Layout from "../../components/Layout";
 import client from "../../utils/client";
 import { Rating } from "@mui/material";
@@ -33,6 +34,7 @@ const ProductDetails = (props) => {
     errorMessage: "",
   });
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { product, loading, errorMessage } = state;
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
@@ -70,8 +72,8 @@ const ProductDetails = (props) => {
 
     const itemDetails = { ...product, quantity: count };
     dispatch(addItemToCart(itemDetails));
-    router.push("/cart");
-    // console.log(product);
+    // router.push("/cart");
+    enqueueSnackbar(`${product.name} added to cart.`, { variant: "success" });
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { BsTrashFill, BsArrowLeftCircle } from "react-icons/bs";
@@ -23,6 +24,7 @@ const CartItem = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [count, setCount] = useState(initialCount ? initialCount : 1);
 
   const decrementCount = () => {
@@ -42,6 +44,9 @@ const CartItem = ({
 
   const removeHandler = () => {
     dispatch(removeItemFromCart(id));
+    enqueueSnackbar(`${productName} removed from cart!`, {
+      variant: "warning",
+    });
   };
 
   return (
@@ -71,8 +76,8 @@ const CartItem = ({
 
         <input
           readOnly
-          className='mx-2 border text-center w-8 text-black'
-          type='number'
+          className='mx-2 border text-center w-10 text-base-200 '
+          type='text'
           value={count}
           // onKeyDown={(event) => {
           //   event.preventDefault();
@@ -100,14 +105,10 @@ const CartItem = ({
 };
 
 const CartPage = () => {
+  const router = useRouter();
   const cartState = useSelector((state) => state.cart);
   const { items, totalQuantity, totalProduct, totalAmount } = cartState;
-
   const shippingCharge = 7;
-  const router = useRouter();
-
-  let test = 1;
-
   return (
     <>
       <Head>
@@ -187,7 +188,10 @@ const CartPage = () => {
             )}
           </div>
 
-          <div id='order_summary' className='w-1/4 px-8 py-10 bg-slate-500'>
+          <div
+            id='order_summary'
+            className='w-1/4 px-8 py-10 bg-slate-400 text-black '
+          >
             <h1 className='font-semibold text-2xl border-b pb-8'>
               Order Summary
             </h1>
