@@ -30,12 +30,14 @@ const Navbar = () => {
     {
       id: "m2",
       title: "My Account",
-      function: () => {},
+      function: () => {
+        router.push("/user/account/profile");
+      },
     },
     {
       id: "m3",
       title: "My Purchase",
-      function: () => {},
+      function: () => router.push("/user/purchase"),
     },
     {
       id: "m1",
