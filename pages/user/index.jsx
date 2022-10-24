@@ -74,7 +74,7 @@ const User = ({ children }) => {
                 title='My Account'
               />
               {accountOpen && (
-                <div className={`px-2 text-sm `}>
+                <div className={`p-2 flex flex-col gap-2 text-sm `}>
                   <AccChildBtn route={profileRoute} title={"Profile"} />
                   <AccChildBtn route={addressesRoute} title={"Addresses"} />
                 </div>
@@ -94,7 +94,7 @@ const User = ({ children }) => {
             </div>
           </div>
         </div>
-        <div className={`basis-4/5 h-full bg-red-300 text-base-200 `}>
+        <div className={`basis-4/5 h-full bg-blue-200 text-base-200 `}>
           {children}
         </div>
       </div>

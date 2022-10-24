@@ -1,16 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
+import { AiOutlineLogout } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
+import { userActions } from "../store/user-slice";
 
 const CartNavbar = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const onlineUser = useSelector((state) => state.user.userInfo);
+  const [mounted, setMounted] = useState(false);
+
+  const dropdownMenu = [
+    {
+      id: "m2",
+      title: "My Account",
+      function: () => {
+        router.push("/user/account/profile");
+      },
+    },
+    {
+      id: "m3",
+      title: "My Purchase",
+      function: () => router.push("/user/purchase"),
+    },
+    {
+      id: "m1",
+      title: "Logout",
+      function: () => {
+        dispatch(userActions.userLogout());
+        localStorage.removeItem("online-user");
+        router.push("/");
+      },
+    },
+  ];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  console.log(onlineUser.name);
+
   return (
-    <nav className={`relative top-0  w-full h-[18vh] flex flex-col`}>
+    <nav className={`relative top-0  w-full h-[18vh] flex flex-col `}>
       <div
         id='upper'
-        className={`basis-1/5 flex justify-between items-center 
-      bg-red-700 md:px-14
+        className={`basis-1/5 flex justify-between items-center
+      bg-red-700 md:px-16
       `}
       >
         <div className={` text-white text-[0.65rem] md:text-sm flex `}>
@@ -25,15 +64,59 @@ const CartNavbar = () => {
           </span>
         </div>
         <div className={`text-white text-[0.65rem] md:text-sm `}>
-          <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-            <Link href={"/"}>Notification</Link>
-          </span>
-          <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-            <Link href={"/"}>Help</Link>
-          </span>
-          <span className='hover:text-red-400 hover:cursor-pointer'>
-            <Link href={"/login"}>Online User</Link>
-          </span>
+          {mounted && (
+            <>
+              {Array.isArray(onlineUser) && (
+                <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
+                  <Link href={"/signup"}>Sign Up</Link>
+                </span>
+              )}
+              {Array.isArray(onlineUser) && (
+                <span className='hover:text-red-400 hover:cursor-pointer'>
+                  <Link href={"/login"}>Login</Link>
+                </span>
+              )}
+              {!Array.isArray(onlineUser) && (
+                <span className='dropdown dropdown-end dropdown-hover '>
+                  <label
+                    tabIndex={0}
+                    className={`mx-2 h-full py-0.5 px-2 flex items-center rounded-md bg-red-800 hover:bg-red-600`}
+                  >
+                    {onlineUser.name}
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className='dropdown-content p-2 shadow-md bg-rose-600 rounded-md w-40'
+                  >
+                    {dropdownMenu.map((menu) => (
+                      <li key={menu.id} className='hover:bg-red-500 p-1'>
+                        {menu.title !== "Logout" ? (
+                          <button
+                            onClick={menu.function}
+                            className='p-1 rounded-md '
+                          >
+                            {menu.title}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={menu.function}
+                            className='p-1 rounded-md flex justify-between items-center w-full '
+                          >
+                            <span>{menu.title}</span>
+                            <span>
+                              <AiOutlineLogout />
+                            </span>
+                          </button>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </span>
+              )}
+            </>
+          )}
+          {/* <Link href={"/login"}>Online User</Link> */}
+          {/* </span> */}
         </div>
       </div>
       <div

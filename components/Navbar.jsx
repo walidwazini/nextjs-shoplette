@@ -62,11 +62,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[18vh] flex flex-col px-1 sm:px-4 lg:px-12`}
+      className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[18vh] 
+      flex flex-col py-1 px-1 sm:px-4 lg:px-32`}
     >
       <div
         id='nav-upper'
-        className={`basis-1/5 flex  justify-between items-center mt-1 md:px-14`}
+        className={`basis-1/5 flex justify-between items-center md:px-14 `}
       >
         <div className={`text-white text-[0.65rem] md:text-sm `}>
           <span className='ml-0 mr-2 hover:text-red-300'>
