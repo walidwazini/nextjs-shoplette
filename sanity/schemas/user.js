@@ -25,7 +25,7 @@ export default {
       type: 'boolean',
     },
     {
-      name: 'adresses',
+      name: 'addresses',
       title: 'Addresses',
       type: 'array',
       of: [

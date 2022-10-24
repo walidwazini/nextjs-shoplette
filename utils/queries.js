@@ -15,3 +15,5 @@ export const getProductById = () => {
 }
 
 export const getProductQuery = `*[_type == "product" && slug.current == $slugValue][0]`
+
+export const getUserById = `*[_type == "user" _id == $id][0]`

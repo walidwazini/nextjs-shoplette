@@ -21,12 +21,14 @@ handler.post(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      addresses: user.addresses
     })
     res.send({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      addresses: user.addresses,
       token,
     });
   } else {
