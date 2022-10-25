@@ -53,16 +53,39 @@ export default {
         }
       ]
     },
-    // {
-    //   title: 'Cart',
-    //   name: 'cart',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'reference', of cartItems
+    {
+      title: 'Cart',
+      name: 'cart',
+      type: 'object',
+      fields: [
+        {
+          title: 'Cart Items',
+          name: 'items',
+          type: 'array',
+          of: [
+            {
+              name: 'cartItem',
+              type: 'object',
+              fields: [
+                {
+                  name: 'product',
+                  type: 'reference',
+                  to: [{ type: 'product' }]
+                },
+                {
+                  title: 'quantity',
+                  name: 'quantity',
+                  type: 'number',
+                },
+              ]
+            }
+          ]
+        },
 
-    //     }
-    //   ]
-    // }
+        { name: 'totalProduct', type: 'number' },
+        { name: 'totalAmount', type: 'number' },
+      ],
+
+    }
   ],
 };

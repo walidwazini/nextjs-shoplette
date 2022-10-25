@@ -54,12 +54,6 @@ const Navbar = () => {
     setMounted(true);
   }, []);
 
-  const logoutHandler = () => {
-    dispatch(userActions.userLogout());
-    localStorage.removeItem("online-user");
-    router.push("/");
-  };
-
   return (
     <nav
       className={`relative top-0 bg-red-500 sm:bg-red-700 w-full h-[18vh] 

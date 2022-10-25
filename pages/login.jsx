@@ -61,6 +61,7 @@ const LoginScreen = () => {
           password: input.password,
         });
         dispatch(userActions.userLogin(data));
+        console.log(data);
         localStorage.setItem("online-user", JSON.stringify(data));
         router.push("/");
       } catch (err) {
