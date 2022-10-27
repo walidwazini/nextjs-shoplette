@@ -25,6 +25,28 @@ export default {
       type: 'boolean',
     },
     {
+      name: 'defaultAddress',
+      title: 'Default Address',
+      type: 'object',
+      fields: [
+        {
+          title: 'State,Area',
+          name: 'state',
+          type: 'string'
+        },
+        {
+          title: 'Postal Code',
+          name: 'postal',
+          type: 'number',
+        },
+        {
+          title: 'House,Building,Street Name',
+          name: 'street',
+          type: 'string'
+        }
+      ]
+    },
+    {
       name: 'addresses',
       title: 'Addresses',
       type: 'array',
