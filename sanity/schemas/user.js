@@ -30,6 +30,11 @@ export default {
       type: 'object',
       fields: [
         {
+          title: 'Address Key',
+          name: 'refKey',
+          type: 'string'
+        },
+        {
           title: 'State,Area',
           name: 'state',
           type: 'string'
