@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 import User from "..";
 import client from "../../../utils/client";
 import { useRouter } from "next/router";
+import { userActions } from "../../../store/user-slice";
 
 const AddressItem = ({
   street,
@@ -16,11 +17,19 @@ const AddressItem = ({
   addressKey,
 }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const setDefaultHandler = async (id) => {
     await axios.put(`http://localhost:3000/api/users/${id}`, {
       _key: addressKey,
     });
+    const { addresses } = await client.fetch(
+      `*[_type == 'user' && _id == '${userId}'][0]`
+    );
+    const updatedDefAddress = addresses.filter((a) => a._key === addressKey)[0];
+    // const updatedDefAddress = ans[0];
+    console.log(updatedDefAddress);
+    dispatch(userActions.newDefaultAddress(updatedDefAddress));
     router.push("/user/account/addresses");
   };
 

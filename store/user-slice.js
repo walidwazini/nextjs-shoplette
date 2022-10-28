@@ -13,9 +13,16 @@ const userSlice = createSlice({
     },
     userLogout: (state, action) => {
       state.userInfo = []
+    },
+    newDefaultAddress: (state, action) => {
+      state.userInfo.defaultAddress = action.payload
     }
   }
 })
+
+export const setDefaultAddress = (details) => (dispatch, getState) => {
+  dispatch(userActions.newDefaultAddress(details))
+}
 
 export const userActions = userSlice.actions
 
