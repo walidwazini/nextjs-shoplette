@@ -24,7 +24,7 @@ const ProfilePage = () => {
             <form className={`h-full flex flex-col`}>
               {mount && (
                 <div className={` basis-4/5 flex flex-col p-2 gap-4 `}>
-                  <div className={` flex h-12 py-1 px-4 gap-4 bg-red-500`}>
+                  <div className={` flex h-12 py-1 px-4 gap-4 `}>
                     <label
                       className={` flex justify-end items-center text-sm 
                       basis-[30%] `}
@@ -72,11 +72,9 @@ const ProfilePage = () => {
               </div>
             </form>
           </div>
-          <div
-            className={`basis-2/5 bg-green-500 lg:basis-[30%] h-[40%] flex `}
-          >
+          <div className={`basis-2/5 lg:basis-[30%] h-[40%] flex `}>
             <span className='p-[1px] bg-indigo-300 h-full mr-3 '></span>
-            <form
+            <div
               className={`flex flex-col gap-2 w-full justify-center items-center`}
             >
               {mount && (
@@ -91,7 +89,7 @@ const ProfilePage = () => {
               >
                 Select Image
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

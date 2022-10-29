@@ -33,9 +33,6 @@ export const fetchProducts = () => async (dispatch) => {
   // API call
   try {
     const products = await client.fetch(getAllProducts())
-
-    console.log(products)
-
     dispatch(productActions.success(products))
   } catch (err) {
     dispatch(productActions.fail(err.message))

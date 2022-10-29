@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ErrorSnackBar from "../components/ErrorSnackBar";
-import client from "../utils/client";
-import { getAllProducts } from "../utils/queries";
 import ProductCard from "../components/ProductCard";
 import Layout from "../components/Layout";
 import { fetchProducts } from "../store/product-slice";
 
 const Home = () => {
-  const [state, setState] = useState({
-    produks: [],
-    errorMessage: "",
-    loading: true,
-  });
-
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product);
   const { items: productsList, loading, errorMessage } = productState;

@@ -6,6 +6,7 @@ import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+
 import { userActions } from "../store/user-slice";
 
 const initialInputState = { email: "", password: "", confirmPassword: "" };

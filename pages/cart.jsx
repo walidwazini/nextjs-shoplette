@@ -79,9 +79,6 @@ const CartItem = ({
           className='mx-2 border text-center w-10 text-base-200 '
           type='text'
           value={count}
-          // onKeyDown={(event) => {
-          //   event.preventDefault();
-          // }}
         />
         <button
           className='disabled:text-slate-700 text-white '
