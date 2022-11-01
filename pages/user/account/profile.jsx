@@ -11,7 +11,6 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      console.log("Hello");
       router.push("/login");
     }
   }, [router, isAuthenticated]);

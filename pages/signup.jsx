@@ -3,9 +3,9 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { userActions } from "../store/user-slice";
 
@@ -13,11 +13,19 @@ const initialInputState = { email: "", password: "", confirmPassword: "" };
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
+  const onlineUser =
+    typeof window !== "undefined" && localStorage.getItem("online-user")
+      ? JSON.parse(localStorage.getItem("online-user"))
+      : null;
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState(initialInputState);
   const passwordToggle = () => setShowPassword((prevState) => !prevState);
+
+  useEffect(() => {
+    if (onlineUser) router.push("/");
+  }, [router, onlineUser]);
 
   const submitHandler = async (ev) => {
     ev.preventDefault();

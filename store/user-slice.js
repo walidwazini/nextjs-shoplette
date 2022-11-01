@@ -11,15 +11,22 @@ const userSlice = createSlice({
       ? JSON.parse(localStorage.getItem("online-user"))
       : [],
     isAuthenticated: false,
+    error: null,
   },
   reducers: {
-    userLogin: (state, action) => {
+    loginSuccess: (state, action) => {
       state.userInfo = action.payload
+      state.error = null
       state.isAuthenticated = true
+    },
+    loginFail: (state, action) => {
+      state.error = action.payload
+      state.isAuthenticated = false
     },
     userLogout: (state, action) => {
       state.userInfo = []
       state.isAuthenticated = false
+      state.error = null
     },
     newDefaultAddress: (state, action) => {
       state.userInfo.defaultAddress = action.payload
@@ -29,6 +36,19 @@ const userSlice = createSlice({
 
 export const userActions = userSlice.actions
 
+export const userSignIn = (input) => async (dispatch) => {
+  try {
+    const { data } = await axios.post("/api/users/login", {
+      email: input.email,
+      password: input.password,
+    });
+    dispatch(userActions.loginSuccess(data));
+    localStorage.setItem("online-user", JSON.stringify(data));
+  } catch (err) {
+    console.log(err.response.data.message)
+    dispatch(userActions.loginFail(err.response.data.message))
+  }
+}
 
 export const setDefaultAddress = (details) => async (dispatch, getState) => {
 
