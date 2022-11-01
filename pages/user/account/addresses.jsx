@@ -73,9 +73,16 @@ const AddressItem = ({
 };
 
 const Addresses = () => {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const loggedInUser = useSelector((state) => state.user.userInfo);
-  const { addresses, _id, defaultAddress } = loggedInUser;
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
+  const { addresses, _id, defaultAddress } = userInfo;
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [router, isAuthenticated]);
 
   useEffect(() => setMounted(true));
 

@@ -1,11 +1,20 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import User from "..";
 
 const ProfilePage = () => {
   const sampleAvatar = "https://www.w3schools.com/howto/img_avatar.png";
-  const loggedInUser = useSelector((state) => state.user.userInfo);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const [mount, setMount] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log("Hello");
+      router.push("/login");
+    }
+  }, [router, isAuthenticated]);
 
   useEffect(() => {
     setMount(true);
@@ -33,7 +42,7 @@ const ProfilePage = () => {
                     </label>
                     <input
                       className={`text-sm p-2 basis-[70%] `}
-                      placeholder={loggedInUser.name}
+                      placeholder={userInfo.name}
                     />
                   </div>
                   <div className={`flex h-12 py-1 px-4 gap-4`}>
@@ -45,7 +54,7 @@ const ProfilePage = () => {
                     </label>
                     <input
                       className={`text-sm p-2 basis-[70%] `}
-                      placeholder={loggedInUser.email}
+                      placeholder={userInfo.email}
                     />
                   </div>
                   <div className={` flex h-12 py-1 px-4 gap-4`}>

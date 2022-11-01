@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
@@ -104,8 +104,16 @@ const CartItem = ({
 const CartPage = () => {
   const router = useRouter();
   const cartState = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { items, totalQuantity, totalProduct, totalAmount } = cartState;
   const shippingCharge = 7;
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [router, isAuthenticated]);
+
   return (
     <>
       <Head>

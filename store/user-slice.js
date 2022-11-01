@@ -9,14 +9,17 @@ const userSlice = createSlice({
   initialState: {
     userInfo: typeof window !== "undefined" && localStorage.getItem("online-user")
       ? JSON.parse(localStorage.getItem("online-user"))
-      : []
+      : [],
+    isAuthenticated: false,
   },
   reducers: {
     userLogin: (state, action) => {
       state.userInfo = action.payload
+      state.isAuthenticated = true
     },
     userLogout: (state, action) => {
       state.userInfo = []
+      state.isAuthenticated = false
     },
     newDefaultAddress: (state, action) => {
       state.userInfo.defaultAddress = action.payload
