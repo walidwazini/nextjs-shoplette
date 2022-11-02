@@ -6,7 +6,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
-import { userActions } from "../store/user-slice";
+import { userSignOut } from "../store/user-slice";
 
 const CartNavbar = () => {
   const router = useRouter();
@@ -31,8 +31,7 @@ const CartNavbar = () => {
       id: "m1",
       title: "Logout",
       function: () => {
-        dispatch(userActions.userLogout());
-        localStorage.removeItem("online-user");
+        dispatch(userSignOut());
         router.push("/");
       },
     },
@@ -41,8 +40,6 @@ const CartNavbar = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  console.log(onlineUser.name);
 
   return (
     <nav className={`relative top-0  w-full h-[18vh] flex flex-col `}>

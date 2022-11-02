@@ -1,0 +1,1 @@
+export const ONLINE_USER = 'ONLINE_USER'

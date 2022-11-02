@@ -1,4 +1,3 @@
-import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -9,14 +8,15 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 import SWhite1 from "../components/svg/conv-swhite1.svg";
-import { userActions, userSignIn } from "../store/user-slice";
+import { userSignIn } from "../store/user-slice";
+import { ONLINE_USER } from "../constants/user-redux";
 
 const LoginScreen = () => {
   const router = useRouter();
   const { isAuthenticated, error } = useSelector((state) => state.user);
   const onlineUser =
-    typeof window !== "undefined" && localStorage.getItem("online-user")
-      ? JSON.parse(localStorage.getItem("online-user"))
+    typeof window !== "undefined" && localStorage.getItem(ONLINE_USER)
+      ? JSON.parse(localStorage.getItem(ONLINE_USER))
       : null;
 
   const dispatch = useDispatch();

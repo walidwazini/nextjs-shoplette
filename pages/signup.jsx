@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ONLINE_USER } from "../constants/user-redux";
 import { userActions } from "../store/user-slice";
 
 const initialInputState = { email: "", password: "", confirmPassword: "" };
@@ -14,8 +15,8 @@ const initialInputState = { email: "", password: "", confirmPassword: "" };
 const SignUpPage = () => {
   const dispatch = useDispatch();
   const onlineUser =
-    typeof window !== "undefined" && localStorage.getItem("online-user")
-      ? JSON.parse(localStorage.getItem("online-user"))
+    typeof window !== "undefined" && localStorage.getItem(ONLINE_USER)
+      ? JSON.parse(localStorage.getItem(ONLINE_USER))
       : null;
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();

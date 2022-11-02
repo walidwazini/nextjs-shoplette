@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+import { ONLINE_USER } from "../constants/user-redux"
 import client from "../utils/client"
 import { getUserById } from "../utils/queries"
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    userInfo: typeof window !== "undefined" && localStorage.getItem("online-user")
-      ? JSON.parse(localStorage.getItem("online-user"))
+    userInfo: typeof window !== "undefined" && localStorage.getItem(ONLINE_USER)
+      ? JSON.parse(localStorage.getItem(ONLINE_USER))
       : [],
     isAuthenticated: false,
     error: null,
@@ -43,11 +44,16 @@ export const userSignIn = (input) => async (dispatch) => {
       password: input.password,
     });
     dispatch(userActions.loginSuccess(data));
-    localStorage.setItem("online-user", JSON.stringify(data));
+    localStorage.setItem(ONLINE_USER, JSON.stringify(data));
   } catch (err) {
     console.log(err.response.data.message)
     dispatch(userActions.loginFail(err.response.data.message))
   }
+}
+
+export const userSignOut = () => (dispatch) => {
+  localStorage.removeItem(ONLINE_USER);
+  dispatch(userActions.userLogout())
 }
 
 export const setDefaultAddress = (details) => async (dispatch, getState) => {

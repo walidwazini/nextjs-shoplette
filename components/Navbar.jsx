@@ -3,11 +3,11 @@ import Link from "next/link";
 import { BsCart4, BsMenuApp } from "react-icons/bs";
 import { AiOutlineLogout } from "react-icons/ai";
 import { GoSearch } from "react-icons/go";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import SWhite1 from "./svg/conv-swhite1.svg";
-import { userActions } from "../store/user-slice";
-import { useRouter } from "next/router";
+import { userSignOut } from "../store/user-slice";
 
 const recentSearch = [
   "Keyboard",
@@ -43,8 +43,7 @@ const Navbar = () => {
       id: "m1",
       title: "Logout",
       function: () => {
-        dispatch(userActions.userLogout());
-        localStorage.removeItem("online-user");
+        dispatch(userSignOut());
         router.push("/");
       },
     },
