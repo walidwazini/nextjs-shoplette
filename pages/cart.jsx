@@ -8,8 +8,8 @@ import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 
-import CartNavbar from "../components/CartNavbar";
 import { minusOne, plusOne, removeItemFromCart } from "../store/cart-slice";
+import NavBar2 from "../components/NavBar2";
 
 const unsplashPhoto1 =
   "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80";
@@ -114,12 +114,16 @@ const CartPage = () => {
     }
   }, [router, isAuthenticated]);
 
+  const checkoutHandler = () => {
+    router.push("/checkout");
+  };
+
   return (
     <>
       <Head>
         <title>{"Shopping Cart"}</title>
       </Head>
-      <CartNavbar />
+      <NavBar2 isCart={true} title='Shopping Cart' />
       <div className='container mx-auto mt-10 w-full flex justify-center '>
         <div className='flex shadow-md my-6 w-[95%]'>
           <div id='order_details' className='w-3/4 bg-gray-900 px-10 py-16'>
@@ -251,6 +255,7 @@ const CartPage = () => {
               </div>
               <button
                 disabled={!totalProduct}
+                onClick={checkoutHandler}
                 className='disabled:bg-slate-400 bg-indigo-900 font-semibold hover:bg-indigo-700 py-3 text-sm text-white uppercase w-full'
               >
                 Checkout

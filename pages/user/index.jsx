@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { IoMdPerson } from "react-icons/io";
 import { CgFileDocument } from "react-icons/cg";
 import { RiCoinLine } from "react-icons/ri";
-import Link from "next/link";
+import { useSelector } from "react-redux";
 
 import Layout from "../../components/Layout";
 
@@ -11,8 +11,11 @@ const profileRoute = "/user/account/profile";
 const addressesRoute = "/user/account/addresses";
 
 const User = ({ children }) => {
+  const sampleAvatar = "https://www.w3schools.com/howto/img_avatar.png";
   const router = useRouter();
+  const [mount, setMount] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
 
   const accountRouteHandler = () => {
     setAccountOpen(true);
@@ -21,6 +24,16 @@ const User = ({ children }) => {
 
   const openMyAccount =
     router.asPath === profileRoute || router.asPath === addressesRoute;
+
+  useEffect(() => {
+    setMount(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [router, isAuthenticated]);
 
   useEffect(() => {
     if (openMyAccount) {
@@ -61,10 +74,21 @@ const User = ({ children }) => {
         <div className={`basis-1/5 h-full`}>
           <div
             id='drawer'
-            className={`h-3/4 w-full flex flex-col bg-teal-200 p-2 `}
+            className={`h-3/4 w-full flex flex-col bg-[#f3f3f5] p-2 `}
           >
-            <div className='basis-1/5 text-lg text-white '>
-              <h1>User name and edit-profile</h1>
+            <div
+              className={`basis-1/5 flex justify-evenly items-center text-black  `}
+            >
+              {mount && (
+                <>
+                  <img
+                    className={`mt-2 rounded-full h-10 `}
+                    alt='profile_image'
+                    src={sampleAvatar}
+                  />
+                  <h1>{userInfo.name}</h1>
+                </>
+              )}
             </div>
             <div className={`basis-4/5 flex flex-col py-1 gap-2 `}>
               <NavButton

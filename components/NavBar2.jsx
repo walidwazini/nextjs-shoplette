@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SWhite1 from "./svg/conv-swhite1.svg";
 import { userSignOut } from "../store/user-slice";
 
-const CartNavbar = () => {
+const NavBar2 = ({ isCart, title }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const onlineUser = useSelector((state) => state.user.userInfo);
@@ -112,8 +112,6 @@ const CartNavbar = () => {
               )}
             </>
           )}
-          {/* <Link href={"/login"}>Online User</Link> */}
-          {/* </span> */}
         </div>
       </div>
       <div
@@ -123,7 +121,7 @@ const CartNavbar = () => {
       `}
       >
         <div id='link' className={`basis-1/2  flex items-center justify-start`}>
-          <div className='flex items-center divide-x w-auto '>
+          <div className='flex items-center w-auto h-full '>
             <div className='px-6'>
               <Link className='' href={"/"}>
                 <div className='hover:cursor-pointer'>
@@ -131,40 +129,43 @@ const CartNavbar = () => {
                 </div>
               </Link>
             </div>
+            <span className='p-[0.1rem] bg-white w-auto h-2/3'></span>
             <div
               className={`flex px-6 justify-center items-center
             text-white lg:text-3xl md:text-2xl text-lg `}
             >
-              Shopping Cart
+              {title}
             </div>
           </div>
         </div>
-        <div
-          className={`basis-1/2 p-4 flex justify-center items-center`}
-          id='search'
-        >
-          <form className={`relative h-14 md:w-[520px] lg:w-[620px] px-4`}>
-            <input
-              type='search'
-              id='default-search'
-              className={`block px-2 py-2 pl-10 w-full text-lg h-full
+        {isCart && (
+          <div
+            className={`basis-1/2 p-4 flex justify-center items-center`}
+            id='search'
+          >
+            <form className={`relative h-14 md:w-[520px] lg:w-[620px] px-4`}>
+              <input
+                type='search'
+                id='default-search'
+                className={`block px-2 py-2 pl-10 w-full text-lg h-full
                bg-slate-300 `}
-              placeholder='Search your cart...'
-              required=''
-            />
-            <button
-              type='submit'
-              className={`text-white absolute right-6 top-[0.4rem] 
+                placeholder='Search your cart...'
+                required=''
+              />
+              <button
+                type='submit'
+                className={`text-white absolute right-6 top-[0.4rem] 
               md:font-medium rounded-lg text-sm px-3 md:px-4 py-3
                 bg-red-700 hover:bg-red-800`}
-            >
-              <GoSearch className='text-lg' />
-            </button>
-          </form>
-        </div>
+              >
+                <GoSearch className='text-lg' />
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </nav>
   );
 };
 
-export default CartNavbar;
+export default NavBar2;
