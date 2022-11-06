@@ -11,7 +11,9 @@ const userSlice = createSlice({
     userInfo: typeof window !== "undefined" && localStorage.getItem(ONLINE_USER)
       ? JSON.parse(localStorage.getItem(ONLINE_USER))
       : [],
-    isAuthenticated: false,
+    isAuthenticated: typeof window !== "undefined" && localStorage.getItem(ONLINE_USER)
+      ? true
+      : false,
     error: null,
   },
   reducers: {

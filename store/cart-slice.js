@@ -49,8 +49,8 @@ const originalStates = {
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: originalStates,
-  // initialState: dummyStates,
+  // initialState: originalStates,
+  initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload

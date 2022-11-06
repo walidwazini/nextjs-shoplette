@@ -1,128 +1,128 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { GoSearch } from "react-icons/go";
-import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { MdLocationOn } from "react-icons/md";
+
 import NavBar2 from "../components/NavBar2";
+const sampleImage = "https://picsum.photos/id/60/300/300";
+
+const ProductOrderItem = ({ name, brand, unitPrice, qty }) => {
+  return (
+    <li className={` flex flex-col h-40 bg-[#89b6c9]`}>
+      <div className='flex h-2/3 w-full px-2 '>
+        <div className='w-1/2  flex flex-col p-2 gap-2 '>
+          <div className='text-xs font-semibold '>{brand}</div>
+          <div className={`flex justify-start items-center gap-2 `}>
+            <img className='h-16' src={sampleImage} />
+            <div>{name}</div>
+          </div>
+        </div>
+        <div className={`w-1/6 flex justify-center items-center `}>
+          RM {unitPrice}
+        </div>
+        <div className='w-1/6 flex justify-center items-center '>{qty}</div>
+        <div className='w-1/6 flex justify-center items-center '>
+          RM {unitPrice * qty}
+        </div>
+      </div>
+      <div className={`h-1/3 flex bg-[#ececec] `}>
+        <div
+          className={`basis-2/5 p-3  gap-2 flex justify-center items-center `}
+        >
+          <div className='text-xs'>Message :</div>
+          <input
+            className='text-2xs py-1 px-3 '
+            placeholder='(Optional) Leave message to seller.'
+          />
+        </div>
+      </div>
+    </li>
+  );
+};
 
 const CheckoutScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const onlineUser = useSelector((state) => state.user.userInfo);
+  const { defaultAddress } = useSelector((state) => state.user.userInfo);
+  const { items, totalAmount } = useSelector((state) => state.cart);
   const [mounted, setMounted] = useState(false);
 
-  const dropdownMenu = [
-    {
-      id: "m2",
-      title: "My Account",
-      function: () => {
-        router.push("/user/account/profile");
-      },
-    },
-    {
-      id: "m3",
-      title: "My Purchase",
-      function: () => router.push("/user/purchase"),
-    },
-    {
-      id: "m1",
-      title: "Logout",
-      function: () => {
-        dispatch(userSignOut());
-        router.push("/");
-      },
-    },
-  ];
+  // console.log(defaultAddress);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (items.length < 1) router.push("/");
+  });
+
+  // console.log(items);
 
   return (
     <>
       <Head>
         <title>Checkout</title>
       </Head>
-      {/* <nav className={`relative top-0 w-full h-[18vh] flex flex-col `}>
+      <NavBar2 title={"Checkout"} />
+      <div className='container  mx-auto my-5 min-h-[80vh] w-full'>
         <div
-          id='upper'
-          className={`basis-1/5 flex justify-between items-center
-      bg-red-700 md:px-16
-      `}
+          className={`flex flex-col justify-center items-center gap-3 p-1 w-full h-full `}
         >
-          <div className={` text-white text-[0.65rem] md:text-sm flex `}>
-            <span className='hover:text-red-300 mr-2'>
-              <Link href={"/"}>Seller Centre</Link>
-            </span>
-            <span className='hover:text-red-300 mx-2'>
-              <Link href={"/"}>Download</Link>
-            </span>
-            <span className='hover:text-red-300 mx-2 '>
-              <Link href={"/"}>Follow us on...</Link>
-            </span>
+          <div
+            className={`flex flex-col w-full py-5 px-5 gap-3 shadow-md  
+            text-black border-t-2  bg-[#FDFCDC] `}
+          >
+            <div
+              className={`text-[#EF233C] w-full flex gap-1 justify-start items-center `}
+            >
+              <MdLocationOn />
+              <p>Delivery Address</p>
+            </div>
+            <div className={` w-full flex gap-1 items-center  `}>
+              <div className='basis-3/4 '>
+                {`${defaultAddress.street}, ${defaultAddress.state}, ${defaultAddress.postal}`}
+              </div>
+              <div className='basis-1/4'>
+                <button className='text-blue-500 hover:text-blue-700 font-medium  '>
+                  Change
+                </button>
+              </div>
+            </div>
           </div>
-          <div className={`text-white text-[0.65rem] md:text-sm `}>
-            {mounted && (
-              <>
-                {Array.isArray(onlineUser) && (
-                  <span className='hover:text-red-400 hover:cursor-pointer mr-4'>
-                    <Link href={"/signup"}>Sign Up</Link>
-                  </span>
-                )}
-                {Array.isArray(onlineUser) && (
-                  <span className='hover:text-red-400 hover:cursor-pointer'>
-                    <Link href={"/login"}>Login</Link>
-                  </span>
-                )}
-                {!Array.isArray(onlineUser) && (
-                  <span className='dropdown dropdown-end dropdown-hover '>
-                    <label
-                      tabIndex={0}
-                      className={`mx-2 h-full py-0.5 px-2 flex items-center rounded-md bg-red-800 hover:bg-red-600`}
-                    >
-                      {onlineUser.name}
-                    </label>
-                    <ul
-                      tabIndex={0}
-                      className='dropdown-content p-2 shadow-md bg-rose-600 rounded-md w-40'
-                    >
-                      {dropdownMenu.map((menu) => (
-                        <li key={menu.id} className='hover:bg-red-500 p-1'>
-                          {menu.title !== "Logout" ? (
-                            <button
-                              onClick={menu.function}
-                              className='p-1 rounded-md '
-                            >
-                              {menu.title}
-                            </button>
-                          ) : (
-                            <button
-                              onClick={menu.function}
-                              className='p-1 rounded-md flex justify-between items-center w-full '
-                            >
-                              <span>{menu.title}</span>
-                              <span>
-                                <AiOutlineLogout />
-                              </span>
-                            </button>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </span>
-                )}
-              </>
-            )}
+          <div
+            className={`flex flex-col w-full py-2 px-4 gap-1 shadow-md  
+          text-black  bg-[#4b88a2] `}
+          >
+            <div className='flex my-5 w-full uppercase text-md text-gray-200  '>
+              <h3 className='font-semibold   w-1/2'>Product(s) Ordered</h3>
+              <h3 className='font-semibold  text-center   w-1/6 '>
+                Unit Price
+              </h3>
+              <h3 className='font-semibold   w-1/6 text-center'>Quantity</h3>
+              <h3 className='font-semibold   w-1/6 text-center'>
+                Item Subtotal
+              </h3>
+            </div>
+            <ul
+              className={`flex flex-col lg:h-[70%] w-full gap-2
+               overflow-x-hidden`}
+            >
+              {items.map((item) => (
+                <ProductOrderItem
+                  key={item.id}
+                  name={item.name}
+                  brand={item.brand}
+                  qty={item.quantity}
+                  unitPrice={item.price}
+                />
+              ))}
+            </ul>
           </div>
         </div>
-        <div></div>
-      </nav> */}
-      <NavBar2 title={"Checkout"} />
-      <div className='container mx-auto mt-10 w-full flex justify-center '>
-        Checkout
       </div>
+      <footer>Footer</footer>
     </>
   );
 };
