@@ -44,11 +44,13 @@ const ProductOrderItem = ({ name, brand, unitPrice, qty }) => {
 const CheckoutScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { defaultAddress } = useSelector((state) => state.user.userInfo);
-  const { items, totalAmount } = useSelector((state) => state.cart);
   const [mounted, setMounted] = useState(false);
+  const { items, totalAmount } = useSelector((state) => state.cart);
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const { defaultAddress, addresses } = userInfo;
+  const [selectedAddress, setSelectedAddress] = useState({});
 
-  // console.log(defaultAddress);
+  const showDefault = selectedAddress._key === defaultAddress?.refKey;
 
   useEffect(() => {
     setMounted(true);
@@ -58,7 +60,12 @@ const CheckoutScreen = () => {
     if (items.length < 1) router.push("/");
   });
 
-  // console.log(items);
+  useEffect(() => {
+    const initialAddress = addresses?.find(
+      (item) => item._key === defaultAddress.refKey
+    );
+    setSelectedAddress(initialAddress);
+  });
 
   return (
     <>
@@ -67,60 +74,73 @@ const CheckoutScreen = () => {
       </Head>
       <NavBar2 title={"Checkout"} />
       <div className='container  mx-auto my-5 min-h-[80vh] w-full'>
-        <div
-          className={`flex flex-col justify-center items-center gap-3 p-1 w-full h-full `}
-        >
+        {mounted && (
           <div
-            className={`flex flex-col w-full py-5 px-5 gap-3 shadow-md  
-            text-black border-t-2  bg-[#FDFCDC] `}
+            className={`flex flex-col justify-center items-center gap-3 p-1 w-full h-full `}
           >
             <div
-              className={`text-[#EF233C] w-full flex gap-1 justify-start items-center `}
+              className={`flex flex-col w-full py-5 px-5 gap-3 shadow-md  
+            text-black border-t-2  bg-[#FDFCDC] `}
             >
-              <MdLocationOn />
-              <p>Delivery Address</p>
-            </div>
-            <div className={` w-full flex gap-1 items-center  `}>
-              <div className='basis-3/4 '>
-                {`${defaultAddress.street}, ${defaultAddress.state}, ${defaultAddress.postal}`}
+              <div
+                className={`text-[#EF233C] w-full flex gap-1 justify-start items-center `}
+              >
+                <MdLocationOn />
+                <p>Delivery Address</p>
               </div>
-              <div className='basis-1/4'>
-                <button className='text-blue-500 hover:text-blue-700 font-medium  '>
-                  Change
-                </button>
+              <div className={` w-full flex gap-1 items-center  `}>
+                <div className='basis-3/4 flex gap-2 '>
+                  <span>
+                    {/* {`${defaultAddress.street}, ${defaultAddress.state}, ${defaultAddress.postal}`} */}
+                    {`${selectedAddress.street}, ${selectedAddress.state}, ${selectedAddress.postal}`}
+                  </span>
+                  {showDefault && (
+                    <span
+                      className={`border-2 border-orange-500 p-0.5
+                    text-2xs text-orange-500  font-medium`}
+                    >
+                      Default
+                    </span>
+                  )}
+                </div>
+                <div className='basis-1/4'>
+                  <button className='text-blue-500 hover:text-blue-700 font-medium  '>
+                    Change
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className={`flex flex-col w-full py-2 px-4 gap-1 shadow-md  
+            <div
+              className={`flex flex-col w-full py-2 px-4 gap-1 shadow-md  
           text-black  bg-[#4b88a2] `}
-          >
-            <div className='flex my-5 w-full uppercase text-md text-gray-200  '>
-              <h3 className='font-semibold   w-1/2'>Product(s) Ordered</h3>
-              <h3 className='font-semibold  text-center   w-1/6 '>
-                Unit Price
-              </h3>
-              <h3 className='font-semibold   w-1/6 text-center'>Quantity</h3>
-              <h3 className='font-semibold   w-1/6 text-center'>
-                Item Subtotal
-              </h3>
-            </div>
-            <ul
-              className={`flex flex-col lg:h-[70%] w-full gap-2
-               overflow-x-hidden`}
             >
-              {items.map((item) => (
-                <ProductOrderItem
-                  key={item.id}
-                  name={item.name}
-                  brand={item.brand}
-                  qty={item.quantity}
-                  unitPrice={item.price}
-                />
-              ))}
-            </ul>
+              <div className='flex my-5 w-full uppercase text-md text-gray-200  '>
+                <h3 className='font-semibold   w-1/2'>Product(s) Ordered</h3>
+                <h3 className='font-semibold  text-center   w-1/6 '>
+                  Unit Price
+                </h3>
+                <h3 className='font-semibold   w-1/6 text-center'>Quantity</h3>
+                <h3 className='font-semibold   w-1/6 text-center'>
+                  Item Subtotal
+                </h3>
+              </div>
+              <ul
+                className={`flex flex-col lg:h-[70%] w-full gap-2
+               overflow-x-hidden`}
+              >
+                {items.map((item) => (
+                  <ProductOrderItem
+                    key={item.id}
+                    name={item.name}
+                    brand={item.brand}
+                    qty={item.quantity}
+                    unitPrice={item.price}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <footer>Footer</footer>
     </>
