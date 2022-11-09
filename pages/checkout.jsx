@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdLocationOn } from "react-icons/md";
 
 import NavBar2 from "../components/NavBar2";
+import AddressesModal from "../components/AddressesModal";
+
 const sampleImage = "https://picsum.photos/id/60/300/300";
 
 const ProductOrderItem = ({ name, brand, unitPrice, qty }) => {
@@ -45,12 +47,23 @@ const CheckoutScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
+
   const { items, totalAmount } = useSelector((state) => state.cart);
   const userInfo = useSelector((state) => state.user.userInfo);
   const { defaultAddress, addresses } = userInfo;
-  const [selectedAddress, setSelectedAddress] = useState({});
+  const initialAddress = addresses?.find(
+    (item) => item._key === defaultAddress.refKey
+  );
+  const [selectedAddress, setSelectedAddress] = useState(initialAddress);
+  const showDefault = selectedAddress?._key === defaultAddress?.refKey;
 
-  const showDefault = selectedAddress._key === defaultAddress?.refKey;
+  const addressChangeHandler = (ev) => {
+    const selectedKey = ev.target.value;
+    const selectedAddress = addresses?.find(
+      (item) => item._key === selectedKey
+    );
+    setSelectedAddress(selectedAddress);
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -60,19 +73,20 @@ const CheckoutScreen = () => {
     if (items.length < 1) router.push("/");
   });
 
-  useEffect(() => {
-    const initialAddress = addresses?.find(
-      (item) => item._key === defaultAddress.refKey
-    );
-    setSelectedAddress(initialAddress);
-  });
-
   return (
     <>
       <Head>
         <title>Checkout</title>
       </Head>
       <NavBar2 title={"Checkout"} />
+      {mounted && (
+        <AddressesModal
+          addresses={addresses}
+          htmlFor='addresses-modal'
+          id={"addresses-modal"}
+          onChange={addressChangeHandler}
+        />
+      )}
       <div className='container  mx-auto my-5 min-h-[80vh] w-full'>
         {mounted && (
           <div
@@ -91,7 +105,6 @@ const CheckoutScreen = () => {
               <div className={` w-full flex gap-1 items-center  `}>
                 <div className='basis-3/4 flex gap-2 '>
                   <span>
-                    {/* {`${defaultAddress.street}, ${defaultAddress.state}, ${defaultAddress.postal}`} */}
                     {`${selectedAddress.street}, ${selectedAddress.state}, ${selectedAddress.postal}`}
                   </span>
                   {showDefault && (
@@ -104,9 +117,12 @@ const CheckoutScreen = () => {
                   )}
                 </div>
                 <div className='basis-1/4'>
-                  <button className='text-blue-500 hover:text-blue-700 font-medium  '>
+                  <label
+                    htmlFor='addresses-modal'
+                    className='text-blue-500 hover:text-blue-700 font-medium  '
+                  >
                     Change
-                  </button>
+                  </label>
                 </div>
               </div>
             </div>
