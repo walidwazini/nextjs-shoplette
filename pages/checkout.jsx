@@ -8,6 +8,13 @@ import NavBar2 from "../components/NavBar2";
 import AddressesModal from "../components/AddressesModal";
 
 const sampleImage = "https://picsum.photos/id/60/300/300";
+const paymentMethods = [
+  "Shoplette Pay",
+  "Online Banking",
+  "Credit/Debit Card",
+  "Google Pay",
+  "Apple Pay",
+];
 
 const ProductOrderItem = ({ name, brand, unitPrice, qty }) => {
   return (
@@ -47,6 +54,7 @@ const CheckoutScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [mounted, setMounted] = useState(false);
+  let shippingTotal = 0;
 
   const { items, totalAmount } = useSelector((state) => state.cart);
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -154,6 +162,52 @@ const CheckoutScreen = () => {
                   />
                 ))}
               </ul>
+            </div>
+            <div
+              className={`flex flex-col w-full py-2 px-4 gap-1 shadow-md  
+          text-black  bg-[#4b88a2] min-h-[300px] `}
+            >
+              <div className={`basis-2/6 flex `}>
+                <div className='basis-1/5 flex justify-center items-center '>
+                  Payment Method
+                </div>
+                <div className={`grid grid-cols-3 gap-2 p-3 `}>
+                  {paymentMethods.map((method, i) => (
+                    <div
+                      key={i}
+                      className='border border-gray-100 p-2 text-center text-gray-200 '
+                    >
+                      {method}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={`basis-1/2 flex justify-end p-2 `}>
+                <div className='flex flex-col p-1 gap-2 text-xs  min-w-[230px] '>
+                  <div className='flex justify-between'>
+                    <span>Merchandise Total:</span>
+                    <span>RM {totalAmount}</span>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span>Shipping Total:</span>
+                    <span>RM {shippingTotal}</span>
+                  </div>
+                  <div className=' flex justify-between items-center '>
+                    <span>Shipping Total:</span>
+                    <span className='text-3xl text-white '>
+                      RM {totalAmount + shippingTotal}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className='basis-1/6 flex justify-end p-2 '>
+                <button
+                  className={`m-2 shadow-md  px-6 py-2 rounded-md text-white font-medium
+                  bg-red-600 hover:bg-rose-500 `}
+                >
+                  Place Order
+                </button>
+              </div>
             </div>
           </div>
         )}
