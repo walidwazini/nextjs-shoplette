@@ -10,7 +10,8 @@ const dummyStates = {
       price: 10,
       quantity: 5,
       countInStock: 27,
-      totalPrice: 10
+      totalPrice: 10,
+      isTicked: true,
     },
     {
       id: "1bcdd762-a321-4b4d-80dc-e606a779fc80",
@@ -21,6 +22,7 @@ const dummyStates = {
       quantity: 1,
       countInStock: 32,
       totalPrice: 50,
+      isTicked: true,
     },
     {
       id: "b2f8b8e8-ef59-4140-bab6-f8bf40174dd7",
@@ -31,6 +33,7 @@ const dummyStates = {
       quantity: 2,
       countInStock: 32,
       totalPrice: 10,
+      isTicked: false,
     }
   ],
   totalQuantity: 8,
@@ -44,7 +47,7 @@ const originalStates = {
   totalQuantity: 0,
   totalProduct: 0,
   totalAmount: 0,
-  changed: false
+  changed: false,
 }
 
 const cartSlice = createSlice({

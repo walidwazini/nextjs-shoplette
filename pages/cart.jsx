@@ -7,6 +7,7 @@ import { BsTrashFill, BsArrowLeftCircle } from "react-icons/bs";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
+import axios from "axios";
 
 import { minusOne, plusOne, removeItemFromCart } from "../store/cart-slice";
 import NavBar2 from "../components/NavBar2";
@@ -21,6 +22,7 @@ const CartItem = ({
   price,
   slug,
   id,
+  isTicked,
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -49,8 +51,32 @@ const CartItem = ({
     });
   };
 
+  const testProductById = async () => {
+    // const { data } = await axios.get(`/api/products/${product._id}`);
+    // console.log(data);
+  };
+
+  const tickChange = async (ev) => {
+    const slug = ev.target.value;
+    let isChecked = ev.target.checked === true;
+    if (isChecked) {
+      console.log(slug);
+      // const { data } = await axios.get(`/api/products/${id}`);
+      isTicked = true;
+      console.log(isTicked);
+    }
+  };
+
   return (
     <li className='flex items-center hover:bg-gray-800  py-5 text-white'>
+      <div className='w-[9%] flex justify-center '>
+        <input
+          type={"checkbox"}
+          onChange={tickChange}
+          value={slug}
+          checked={isTicked}
+        />
+      </div>
       <div
         onClick={() => router.push(`/product/${slug}`)}
         className='flex w-2/6 hover:cursor-pointer lg:mr-4'
@@ -108,6 +134,42 @@ const CartPage = () => {
   const { items, totalQuantity, totalProduct, totalAmount } = cartState;
   const shippingCharge = 7;
 
+  const ase = [
+    {
+      id: "c4929a52-670c-426a-bb87-f40dac7e8d74",
+      name: "Reeve Sky Blue Shirt",
+      brand: "Odaman",
+      slug: "reeve-sky-blue-shirt",
+      price: 10,
+      quantity: 5,
+      countInStock: 27,
+      totalPrice: 10,
+      isTicked: true,
+    },
+    {
+      id: "1bcdd762-a321-4b4d-80dc-e606a779fc80",
+      name: "Kiiki Cat T-shirt",
+      brand: "Quever",
+      slug: "kiiki-cat-t-shirt",
+      price: 50,
+      quantity: 1,
+      countInStock: 32,
+      totalPrice: 50,
+      isTicked: true,
+    },
+    {
+      id: "b2f8b8e8-ef59-4140-bab6-f8bf40174dd7",
+      name: "Polar White Sweater",
+      brand: "Kovlar",
+      slug: "polar-white-sweater",
+      price: 5,
+      quantity: 2,
+      countInStock: 32,
+      totalPrice: 10,
+      isTicked: false,
+    },
+  ];
+
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login");
@@ -117,6 +179,16 @@ const CartPage = () => {
   const checkoutHandler = () => {
     router.push("/checkout");
   };
+
+  const tickedItem = items?.filter((item) => item.isTicked === true);
+
+  console.log(tickedItem);
+  let a = 0;
+
+  tickedItem.forEach((item) => {
+    a = a + item.price * item.quantity;
+    console.log(a);
+  });
 
   return (
     <>
@@ -181,6 +253,7 @@ const CartPage = () => {
                       slug={item.slug}
                       productName={item.name}
                       price={item.price}
+                      isTicked={item.isTicked}
                     />
                   ))}
                 </ul>
