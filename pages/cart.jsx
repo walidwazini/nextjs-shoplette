@@ -9,7 +9,13 @@ import { BiMinus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import axios from "axios";
 
-import { minusOne, plusOne, removeItemFromCart } from "../store/cart-slice";
+import {
+  minusOne,
+  plusOne,
+  removeItemFromCart,
+  tickCartItem,
+  untickCartItem,
+} from "../store/cart-slice";
 import NavBar2 from "../components/NavBar2";
 
 const unsplashPhoto1 =
@@ -28,6 +34,7 @@ const CartItem = ({
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [count, setCount] = useState(initialCount ? initialCount : 1);
+  const [tick, setTick] = useState(isTicked ? isTicked : false);
 
   const decrementCount = () => {
     if (count > 1) {
@@ -57,13 +64,15 @@ const CartItem = ({
   };
 
   const tickChange = async (ev) => {
-    const slug = ev.target.value;
-    let isChecked = ev.target.checked === true;
-    if (isChecked) {
-      console.log(slug);
-      // const { data } = await axios.get(`/api/products/${id}`);
-      isTicked = true;
-      console.log(isTicked);
+    const id = ev.target.value;
+    let isChecked = ev.target.checked;
+    console.log(isChecked);
+    if (tick === true) {
+      dispatch(untickCartItem(id));
+      setTick(false);
+    } else if (tick === false) {
+      dispatch(tickCartItem(id));
+      setTick(true);
     }
   };
 
@@ -73,8 +82,8 @@ const CartItem = ({
         <input
           type={"checkbox"}
           onChange={tickChange}
-          value={slug}
-          checked={isTicked}
+          value={id}
+          defaultChecked={tick}
         />
       </div>
       <div
@@ -134,42 +143,6 @@ const CartPage = () => {
   const { items, totalQuantity, totalProduct, totalAmount } = cartState;
   const shippingCharge = 7;
 
-  const ase = [
-    {
-      id: "c4929a52-670c-426a-bb87-f40dac7e8d74",
-      name: "Reeve Sky Blue Shirt",
-      brand: "Odaman",
-      slug: "reeve-sky-blue-shirt",
-      price: 10,
-      quantity: 5,
-      countInStock: 27,
-      totalPrice: 10,
-      isTicked: true,
-    },
-    {
-      id: "1bcdd762-a321-4b4d-80dc-e606a779fc80",
-      name: "Kiiki Cat T-shirt",
-      brand: "Quever",
-      slug: "kiiki-cat-t-shirt",
-      price: 50,
-      quantity: 1,
-      countInStock: 32,
-      totalPrice: 50,
-      isTicked: true,
-    },
-    {
-      id: "b2f8b8e8-ef59-4140-bab6-f8bf40174dd7",
-      name: "Polar White Sweater",
-      brand: "Kovlar",
-      slug: "polar-white-sweater",
-      price: 5,
-      quantity: 2,
-      countInStock: 32,
-      totalPrice: 10,
-      isTicked: false,
-    },
-  ];
-
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login");
@@ -180,14 +153,13 @@ const CartPage = () => {
     router.push("/checkout");
   };
 
+  //  ? To changed totalAmount reactively due to tickedItems
   const tickedItem = items?.filter((item) => item.isTicked === true);
-
   console.log(tickedItem);
   let a = 0;
-
   tickedItem.forEach((item) => {
     a = a + item.price * item.quantity;
-    console.log(a);
+    // console.log(a);
   });
 
   return (

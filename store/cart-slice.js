@@ -52,8 +52,8 @@ const originalStates = {
 
 const cartSlice = createSlice({
   name: 'cart',
-  // initialState: originalStates,
-  initialState: dummyStates,
+  initialState: originalStates,
+  // initialState: dummyStates,
   reducers: {
     getCartData(state, action) {
       state.items = action.payload
@@ -74,6 +74,7 @@ const cartSlice = createSlice({
           image: newItem.image,
           countInStock: newItem.countInStock,
           totalPrice: newItem.price * newItem.quantity,
+          isTicked: false
         })
 
         state.totalQuantity = state.totalQuantity + newItem.quantity
@@ -101,6 +102,33 @@ const cartSlice = createSlice({
         totalQuantity: state.totalQuantity - selectedItem.quantity,
         totalAmount: state.totalAmount - (selectedItem.price * selectedItem.quantity)
       }
+    },
+    tickItem: (state, action) => {
+      const itemId = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => itemId === item.id)
+      const selectedItem = state.items[selectedIndex]
+
+      const newItemDetails = {
+        ...selectedItem,
+        isTicked: true
+      }
+      itemList.splice(selectedIndex, 1, newItemDetails)
+
+    },
+    untickItem: (state, action) => {
+      const itemId = action.payload
+      const itemList = state.items
+
+      const selectedIndex = itemList.findIndex(item => itemId === item.id)
+      const selectedItem = state.items[selectedIndex]
+
+      const newItemDetails = {
+        ...selectedItem,
+        isTicked: false
+      }
+      itemList.splice(selectedIndex, 1, newItemDetails)
     },
     increaseQty: (state, action) => {
       const info = action.payload
@@ -138,7 +166,6 @@ const cartSlice = createSlice({
 
       itemList.splice(selectedIndex, 1, newItemDetails)
     },
-    removeItemFromCart(state, action) { }
   }
 })
 
@@ -161,6 +188,16 @@ export const plusOne = (info) => (dispatch, getState) => {
 
 export const minusOne = (info) => (dispatch) => {
   dispatch(cartActions.decreaseQty(info))
+}
+
+export const tickCartItem = (id) => (dispatch) => {
+  // console.log(id)
+  dispatch(cartActions.tickItem(id))
+}
+
+export const untickCartItem = (id) => (dispatch) => {
+  // console.log(id)
+  dispatch(cartActions.untickItem(id))
 }
 
 export const cartActions = cartSlice.actions
